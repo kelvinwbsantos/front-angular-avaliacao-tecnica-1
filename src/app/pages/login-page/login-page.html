@@ -1,0 +1,42 @@
+<div class="container">
+  <div class="left-panel">
+    <form [formGroup]="form" class="form-container">
+      <!--- cpf -->
+      <mat-form-field>
+        <mat-label>CPF</mat-label>
+        <input matInput formControlName="cpf" placeholder="000.000.000-00" />
+        @if (form.get('cpf')?.hasError('required')) {
+          <mat-error>CPF é obrigatório</mat-error>
+        }
+        @else if (form.get('cpf')?.hasError('pattern')) {
+          <mat-error>Formato de CPF inválido</mat-error>
+        }
+      </mat-form-field>
+
+      <!--- senha -->
+      <mat-form-field>
+        <mat-label>Senha</mat-label>
+        <input
+          matInput
+          formControlName="senha"
+          [type]="hide() ? 'password' : 'text'"
+        />
+        <button
+          matIconButton
+          matSuffix
+          (click)="clickEvent($event)"
+          [attr.aria-label]="'Hide password'"
+          [attr.aria-pressed]="hide()"
+        >
+          <mat-icon>{{ hide() ? 'visibility_off' : 'visibility' }}</mat-icon>
+        </button>
+      </mat-form-field>
+    </form>
+
+    <button class="send-button" (click)="send()" matButton="filled">Entrar</button>
+  </div>
+
+  <div class="right-panel"></div>
+</div>
+
+<router-outlet />
