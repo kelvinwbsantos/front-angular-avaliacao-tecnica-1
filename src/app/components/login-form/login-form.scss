@@ -1,0 +1,44 @@
+.form-container {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 24px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+
+  mat-form-field {
+    width: 100%;
+    margin-bottom: 16px;
+  }
+
+  .send-button {
+    cursor: pointer;
+    width: 100%;
+    margin-top: 16px;
+    background-color: #1976d2;
+    color: #fff;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+      background-color: #1565c0;
+    }
+    &:disabled {
+      background-color: #bdbdbd;
+    }
+  }
+
+  a {
+    cursor: pointer;
+    display: block;
+    margin-top: 16px;
+    text-align: center;
+    color: #1976d2;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
