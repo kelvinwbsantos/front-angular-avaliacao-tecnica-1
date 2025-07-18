@@ -1,0 +1,14 @@
+.vagas-container {
+  height: 100vh;
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.vaga-card {
+  width: 300px;
+  max-height: fit-content;
+  padding: 1rem;
+}
+

@@ -1,0 +1,21 @@
+.container {
+    background-color: #0052cc; /* Azul corporativo */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    
+    img {
+        width: 50rem;
+    }
+
+    .hero-text {
+        color: white;
+        font-size: 2rem;
+        max-width: 800px;
+        text-align: center;
+    }
+}
+
+
