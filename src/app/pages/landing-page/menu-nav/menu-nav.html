@@ -1,15 +1,38 @@
-<nav>
-    <a matButton="tonal" href="#about">Sobre nós
-        <mat-icon>info</mat-icon>
-    </a>
-    <a matButton="tonal" href="#jobs">Vagas
-        <mat-icon>work</mat-icon>
-    </a>
-    <a matButton="tonal" href="#contact">Contato
-        <mat-icon>support_agent</mat-icon>
-    </a>
+<nav class="nav-container" role="navigation" aria-label="Menu principal">
+  <ul class="nav-list">
+    <li>
+      <a mat-button color="primary" href="#about" class="nav-link">
+        <mat-icon aria-hidden="false" aria-label="Ícone Sobre nós">info</mat-icon>
+        Sobre nós
+      </a>
+    </li>
+    <li>
+      <a mat-button color="primary" href="#jobs" class="nav-link">
+        <mat-icon aria-hidden="false" aria-label="Ícone Vagas">work</mat-icon>
+        Vagas
+      </a>
+    </li>
+    <li>
+      <a mat-button color="primary" href="#contact" class="nav-link">
+        <mat-icon aria-hidden="false" aria-label="Ícone Contato">support_agent</mat-icon>
+        Contato
+      </a>
+    </li>
+    <li>
+      <a mat-button color="primary" href="/login" class="nav-link">
+        <mat-icon aria-hidden="false" aria-label="Ícone Login">login</mat-icon>
+        Login
+      </a>
+    </li>
+  </ul>
 
-    <a matButton="tonal" href="/login">Login
-        <mat-icon>login</mat-icon>
-    </a>
+  <button
+    mat-stroked-button
+    class="toggle-theme-btn"
+    (click)="toggleDarkMode()"
+    aria-label="Alternar modo escuro"
+  >
+    <mat-icon>{{ darkMode ? 'light_mode' : 'dark_mode' }}</mat-icon>
+    {{ darkMode ? 'Modo Claro' : 'Modo Escuro' }}
+  </button>
 </nav>

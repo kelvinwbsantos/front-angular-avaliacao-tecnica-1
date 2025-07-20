@@ -9,5 +9,26 @@ import { MatIconModule } from '@angular/material/icon';
   styleUrl: './menu-nav.scss'
 })
 export class MenuNav {
+  darkMode = false;
+  
+  ngOnInit() {
+    const saved = localStorage.getItem('darkMode');
+    this.darkMode = saved === 'true';
+    this.updateHTMLClass();
+  }
+
+  toggleDarkMode() {
+    this.darkMode = !this.darkMode;
+    localStorage.setItem('darkMode', String(this.darkMode));
+    this.updateHTMLClass();
+  }
+
+  private updateHTMLClass() {
+    if (this.darkMode) {
+      document.documentElement.classList.add('dark-mode');
+    } else {
+      document.documentElement.classList.remove('dark-mode');
+    }
+  }
 
 }

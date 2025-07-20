@@ -1,5 +1,5 @@
 .container {
-    background-color: #0052cc; /* Azul corporativo */
+    background-color: var(--mat-sys-tertiary);
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -11,7 +11,7 @@
     }
 
     .hero-text {
-        color: white;
+        color: var(--mat-sys-on-tertiary);
         font-size: 2rem;
         max-width: 800px;
         text-align: center;

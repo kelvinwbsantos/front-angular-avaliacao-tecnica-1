@@ -1,5 +1,5 @@
 .container {
-    background: linear-gradient(135deg, #f0f4f8, #d9e8ff);
+    background-color: var(--mat-sys-surface);
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -7,7 +7,7 @@
     height: 100vh;
 
     .hero-text {
-        color: black;
+        color: var(--mat-sys-on-surface);
         font-size: 2rem;
         max-width: 800px;
         text-align: center;
@@ -15,8 +15,6 @@
 
     .login-button {
         font-size: 32px;
-        background-color: #1976d2;
-        color: white;
         height: 5rem;
         width: 15rem;
     }

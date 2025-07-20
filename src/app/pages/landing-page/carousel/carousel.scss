@@ -3,20 +3,21 @@
   flex-direction: column;
   align-items: center;
   padding: 2rem;
-  height: 100vh;
-  background: linear-gradient(135deg, #f0f4f8, #d9e8ff);
+  height: 95vh;
+  background: var(--mat-sys-surface);
 }
 
 img {
   margin-top: 10rem;
   width: 50rem;
+  padding: 15px;
+  background-color: var(--mat-sys-surface);
 }
-
 
 .carousel {
   width: 100%;
   max-width: 800px;
-  padding-top: 10rem;
+  padding-top: 5rem;
 }
 
 .slide {
@@ -24,9 +25,9 @@ img {
   opacity: 0;
   text-align: center;
   padding: 2rem;
-  background-color: #ffffff;
+  background-color: var(--mat-sys-surface);
   border-radius: 10px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--mat-sys-level5)
 }
 
 .slide.active {
@@ -36,7 +37,7 @@ img {
 
 .slide h2 {
   font-size: 2rem;
-  color: #333;
+  color: var(--mat-sys-on-surface);
   margin-bottom: 1rem;
 }
 

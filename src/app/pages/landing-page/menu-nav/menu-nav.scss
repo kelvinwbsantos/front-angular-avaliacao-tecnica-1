@@ -1,13 +1,38 @@
-nav {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  background: rgba(0, 0, 0, 0.6);
-  padding: 1rem;
+.nav-container {
   display: flex;
-  justify-content: center;
-  gap: 1rem;
-  z-index: 1000;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 1rem;
+  background-color: var(--mat-sys-surface);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  height: 5vh;
 }
 
+.nav-list {
+  list-style: none;
+  display: flex;
+  gap: 1rem;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-link {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-weight: 600;
+  text-decoration: none;
+  color: var(--mat-sys-on-surface);
+}
+
+.nav-link:hover,
+.nav-link:focus {
+  color: var(--mat-sys-primary);
+}
+
+.toggle-theme-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 600;
+}
