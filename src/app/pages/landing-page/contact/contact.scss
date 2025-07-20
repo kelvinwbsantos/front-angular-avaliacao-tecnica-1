@@ -1,0 +1,30 @@
+.container {
+    background-color: var(--mat-sys-tertiary); /* Azul corporativo */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+
+    h1 {
+        color: var(--mat-sys-on-tertiary);
+        font-size: 3rem;
+    }
+
+    .form-container {
+
+        mat-form-field {
+            width: 100%;
+            margin-bottom: 16px;
+        }
+
+        max-width: 400px;
+        padding: 24px;
+        box-shadow: var(--mat-sys-level3)
+    }
+
+}
+
+
+
+

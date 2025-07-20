@@ -1,0 +1,22 @@
+.container {
+    background-color: var(--mat-sys-surface);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+
+    .hero-text {
+        color: var(--mat-sys-on-surface);
+        font-size: 2rem;
+        max-width: 800px;
+        text-align: center;
+    }
+
+    .login-button {
+        font-size: 32px;
+        height: 5rem;
+        width: 15rem;
+    }
+}
+

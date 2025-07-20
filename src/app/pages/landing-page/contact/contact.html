@@ -1,0 +1,40 @@
+<div class="container">
+    <h1>Interessado? Entre em contato!</h1>
+
+    <mat-card class="form-container">
+        <form [formGroup]="contactForm" (submit)="send()">
+
+            <!-- CPF Field -->
+            <mat-form-field>
+                <mat-label>Seu Nome</mat-label>
+                <input
+                matInput
+                formControlName="name"
+                />
+            </mat-form-field>
+
+            <!-- Email Field -->
+            <mat-form-field>
+                <mat-label>Seu melhor email</mat-label>
+                <input
+                matInput
+                formControlName="email"
+                />
+            </mat-form-field>
+
+            <!-- Phone Field -->
+            <mat-form-field>
+                <mat-label>Telefone</mat-label>
+                <input
+                matInput
+                formControlName="phone"
+                />
+            </mat-form-field>
+
+        </form>
+
+        <button matButton="elevated" (click)="send()" class="primary">Eu quero!</button>
+
+    </mat-card>
+
+</div>

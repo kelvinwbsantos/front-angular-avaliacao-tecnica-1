@@ -1,0 +1,21 @@
+<div class="carousel-wrapper">
+    <img src="logo2.png" alt="Logo da empresa" />
+    <div class="carousel">
+        @for (slide of slides; track $index) {
+            <div class="slide" [class.active]="$index === currentSlide">
+                <h2>{{ slide.title }}</h2>
+                <p>{{ slide.description }}</p>
+            </div>
+        }
+    </div>
+
+    <div class="controls">
+        <button matFab (click)="prevSlide()">
+            <mat-icon>chevron_left</mat-icon>
+        </button>
+
+        <button matFab (click)="nextSlide()">
+            <mat-icon>chevron_right</mat-icon>
+        </button>
+    </div>
+</div>

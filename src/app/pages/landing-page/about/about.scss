@@ -1,0 +1,21 @@
+.container {
+    background-color: var(--mat-sys-tertiary);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    
+    img {
+        width: 50rem;
+    }
+
+    .hero-text {
+        color: var(--mat-sys-on-tertiary);
+        font-size: 2rem;
+        max-width: 800px;
+        text-align: center;
+    }
+}
+
+
