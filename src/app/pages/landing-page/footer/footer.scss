@@ -1,0 +1,44 @@
+.footer-container {
+    background-color: #2c2c2c;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+
+
+    .links-container {
+        display: flex;
+        flex-direction: column;
+
+        a {
+            color: #aaa;
+            text-decoration: none;
+        }
+    }
+    
+    .socials-container {
+        display: flex;
+        flex-direction: column;
+
+        img {
+            width: 2.5rem;
+        }
+        img:hover {
+            transform: scale(1.2);
+        }
+    }
+}
+
+.end-container {
+  background-color: #2c2c2c;
+  color: #aaa;
+  text-align: center;
+  padding: 1rem;
+  line-height: 1.5;
+  border-top: 1px solid #444;
+
+  h6 {
+    margin: 0.2rem;
+  }
+}

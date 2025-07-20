@@ -19,6 +19,21 @@ export class Jobs {
       titulo: 'Analista de Sistemas',
       localizacao: 'Remoto',
       descricao: 'Atuação com análise de requisitos e desenvolvimento front-end com Angular Material.'
+    },
+    {
+      titulo: 'Analista de Sistemas',
+      localizacao: 'Remoto',
+      descricao: 'Atuação com análise de requisitos e desenvolvimento front-end com Angular Material.'
+    },
+    {
+      titulo: 'Analista de Sistemas',
+      localizacao: 'Remoto',
+      descricao: 'Atuação com análise de requisitos e desenvolvimento front-end com Angular Material.'
+    },
+    {
+      titulo: 'Analista de Sistemas',
+      localizacao: 'Remoto',
+      descricao: 'Atuação com análise de requisitos e desenvolvimento front-end com Angular Material.'
     }
   ];
 
