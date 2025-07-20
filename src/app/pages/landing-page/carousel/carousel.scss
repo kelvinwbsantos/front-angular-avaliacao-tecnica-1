@@ -1,0 +1,47 @@
+.carousel-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+  height: 100vh;
+  background: linear-gradient(135deg, #f0f4f8, #d9e8ff);
+}
+
+.carousel {
+  width: 100%;
+  max-width: 800px;
+  padding-top: 10rem;
+}
+
+.slide {
+  display: none;
+  opacity: 0;
+  text-align: center;
+  padding: 2rem;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+.slide.active {
+  display: block;
+  opacity: 1;
+}
+
+.slide h2 {
+  font-size: 2rem;
+  color: #333;
+  margin-bottom: 1rem;
+}
+
+.slide p {
+  font-size: 1.1rem;
+  color: #666;
+}
+
+.controls {
+  display: flex;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
