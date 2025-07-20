@@ -1,0 +1,31 @@
+.container {
+    background-color: #0052cc; /* Azul corporativo */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+
+    h1 {
+        color: white;
+        font-size: 3rem;
+    }
+
+    .form-container {
+
+        mat-form-field {
+            width: 100%;
+            margin-bottom: 16px;
+        }
+
+        max-width: 400px;
+        padding: 24px;
+        background-color: #ffffff;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+}
+
+
+
+
