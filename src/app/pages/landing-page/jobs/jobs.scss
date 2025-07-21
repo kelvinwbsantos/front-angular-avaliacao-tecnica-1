@@ -1,16 +1,63 @@
+body {
+  background-color: var(--mat-sys-surface);
+}
+
+h1 {
+  margin-top: 0;
+  padding-top: 30px;
+  padding-left: 20px;
+  padding-right: 20px;
+  text-align: center;
+  font: var(--mat-sys-display-medium);
+  color: var(--mat-sys-on-surface);
+  margin-bottom: 1rem;
+}
+
 .vagas-container {
-  height: 100vh;
   display: flex;
   flex-wrap: wrap;
-  gap: 2rem;
-  justify-content: center;
-  padding: 2rem;
+  gap: 1.5rem;
+  justify-content: center; /* centraliza horizontalmente */
+  padding: 2rem 1rem;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 .vaga-card {
-  width: 300px;
-  max-height: fit-content;
+  flex: 1 1 280px; /* flex-grow 1, flex-shrink 1, base width 280px */
+  max-width: 320px;
+  box-shadow: var(--mat-sys-level3);
+  border-radius: 8px;
   padding: 1rem;
-  box-shadow: var(--mat-sys-level2)
+  background-color: var(--mat-sys-surface);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
+.vaga-card:hover {
+  box-shadow: var(--mat-sys-level5);
+  cursor: pointer;
+}
+
+mat-card-header {
+  margin-bottom: 0.8rem;
+}
+
+mat-card-title {
+  font-weight: 600;
+  font: var(--mat-sys-title-large);
+  color: var(--mat-sys-on-surface)
+}
+
+mat-card-subtitle {
+  font: var(--mat-sys-body-medium);
+  color: var(--mat-sys-on-surface-variant);
+}
+
+mat-card-content p {
+  font: var(--mat-sys-body-large);
+  color: var(--mat-sys-on-surface-variant);
+  margin: 0;
+  min-height: 80px;
+}
