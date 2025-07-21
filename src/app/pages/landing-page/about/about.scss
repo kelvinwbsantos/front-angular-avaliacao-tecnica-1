@@ -1,21 +1,29 @@
 .container {
-    background-color: var(--mat-sys-tertiary);
+    background-image: url('/background-tech.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     height: 100vh;
-    
+    gap: 20px;
+
     img {
-        width: 50rem;
+        width: 100%;
+        max-width: 20rem;
     }
 
-    .hero-text {
-        color: var(--mat-sys-on-tertiary);
-        font-size: 2rem;
+    mat-card {
+        box-shadow: var(--mat-sys-level5);
+        margin-left: 20px;
+        margin-right: 20px;
         max-width: 800px;
+        padding: 15px;
+        background-color: var(--mat-sys-surface);
+        color: var(--mat-sys-on-surface);
         text-align: center;
     }
 }
-
-

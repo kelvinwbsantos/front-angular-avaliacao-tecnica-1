@@ -9,7 +9,6 @@
 
 img {
   width: clamp(150px, 30vw, 300px);
-  margin-top: clamp(2rem, 5vh, 10rem);
   padding: 1rem;
   background-color: var(--mat-sys-surface);
 }
@@ -28,7 +27,6 @@ img {
   opacity: 0;
   transition: opacity 0.5s ease;
   text-align: center;
-  padding: clamp(1rem, 2vw, 2rem);
   background-color: var(--mat-sys-surface);
   border-radius: 10px;
   box-shadow: var(--mat-sys-level5);
