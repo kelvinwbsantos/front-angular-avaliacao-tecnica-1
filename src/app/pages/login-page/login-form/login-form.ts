@@ -5,12 +5,11 @@ import { MatCard } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import { RouterOutlet } from '@angular/router';
 import { NgxMaskDirective } from 'ngx-mask';
 
 @Component({
   selector: 'app-login-form',
-  imports: [RouterOutlet, NgxMaskDirective, MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule, ReactiveFormsModule, MatCard],
+  imports: [NgxMaskDirective, MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule, ReactiveFormsModule, MatCard],
   templateUrl: './login-form.html',
   styleUrl: './login-form.scss'
 })
