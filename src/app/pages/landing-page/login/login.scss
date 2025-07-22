@@ -11,7 +11,7 @@
     padding: 16px;
 
     mat-card {
-        background-color: var(--mat-sys-surface);
+        background-color: var(--mat-sys-primary-container);
         box-shadow: var(--mat-sys-level5);
         padding: 32px 24px;
         max-width: 400px;
@@ -22,7 +22,7 @@
         gap: 24px;
 
         .hero-text {
-            color: var(--mat-sys-on-surface);
+            color: var(--mat-sys-on-primary-container-variant);
             font: var(--mat-sys-display-medium);
             text-align: center;
         }
@@ -31,6 +31,7 @@
             font: var(--mat-sys-display-medium);
             height: 5rem;
             width: 15rem;
+            color: var(--mat-sys-on-primary-container-variant);
         }
     }
 }

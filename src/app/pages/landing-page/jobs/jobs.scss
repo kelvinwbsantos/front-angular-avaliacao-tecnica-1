@@ -29,7 +29,7 @@ h1 {
   box-shadow: var(--mat-sys-level3);
   border-radius: 8px;
   padding: 1rem;
-  background-color: var(--mat-sys-surface);
+  background-color: var(--mat-sys-primary-container);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -47,17 +47,17 @@ mat-card-header {
 mat-card-title {
   font-weight: 600;
   font: var(--mat-sys-title-large);
-  color: var(--mat-sys-on-surface)
+  color: var(--mat-sys-on-primary-container-variant)
 }
 
 mat-card-subtitle {
   font: var(--mat-sys-body-medium);
-  color: var(--mat-sys-on-surface-variant);
+  color: var(--mat-sys-on-primary-container);
 }
 
 mat-card-content p {
   font: var(--mat-sys-body-large);
-  color: var(--mat-sys-on-surface-variant);
+  color: var(--mat-sys-on-primary-container-variant);
   margin: 0;
   min-height: 80px;
 }

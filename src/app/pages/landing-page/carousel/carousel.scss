@@ -10,7 +10,8 @@
 img {
   width: clamp(150px, 30vw, 300px);
   padding: 1rem;
-  background-color: var(--mat-sys-surface);
+  margin-top: 50px;
+  filter: invert(38%) sepia(65%) saturate(300%) hue-rotate(190deg);
 }
 
 .carousel {
@@ -27,7 +28,7 @@ img {
   opacity: 0;
   transition: opacity 0.5s ease;
   text-align: center;
-  background-color: var(--mat-sys-surface);
+  background-color: var(--mat-sys-primary-container);
   border-radius: 10px;
   box-shadow: var(--mat-sys-level5);
 }
@@ -39,12 +40,12 @@ img {
 
 .slide h2 {
   font: var(--mat-sys-title-large);
-  color: var(--mat-sys-on-surface);
+  color: var(--mat-sys-on-primary-container);
 }
 
 .slide p {
   font: var(--mat-sys-title-medium);
-  color: var(--mat-sys-on-surface-variant);
+  color: var(--mat-sys-on-primary-container-variant);
 }
 
 .controls {
