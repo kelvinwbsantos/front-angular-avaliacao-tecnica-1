@@ -1,18 +1,18 @@
 .container {
-    background-color: var(--mat-sys-tertiary); /* Azul corporativo */
+    background-color: var(--mat-sys-tertiary);
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     height: 100vh;
+    padding: 0 16px;
 
     h1 {
         color: var(--mat-sys-on-tertiary);
-        font-size: 3rem;
+        font: var(--mat-sys-display-large);
     }
 
     .form-container {
-
         mat-form-field {
             width: 100%;
             margin-bottom: 16px;
