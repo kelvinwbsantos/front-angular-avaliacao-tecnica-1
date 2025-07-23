@@ -1,0 +1,24 @@
+<mat-drawer-container class="container">
+
+  <mat-drawer #drawer class="sidenav">
+    <ul class="links">
+      <img src="profile-photo-stock.png" class="profile-photo">
+      <li>Perfil</li>
+      <li>Início</li>
+      <li>Convidar Colaboradores</li>
+      <li>Gerencial</li>
+      <li>Sair</li>
+    </ul>
+  </mat-drawer>
+
+  <mat-drawer-content>
+
+
+      <button matIconButton  class="drawer-toggle" (click)="drawer.toggle()">
+        <mat-icon>menu</mat-icon>
+      </button>
+
+
+  </mat-drawer-content>
+
+</mat-drawer-container>
