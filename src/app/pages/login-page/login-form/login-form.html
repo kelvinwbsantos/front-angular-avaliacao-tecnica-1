@@ -31,12 +31,14 @@
       </mat-error>
       }
     </mat-form-field>
+
+    <!-- Submit Button -->
+    <button class="send-button" matButton="filled" (click)="send()" mat-button [disabled]="form.invalid" type="submit">
+      Entrar
+    </button>
   </form>
 
-  <!-- Submit Button -->
-  <button class="send-button" matButton="filled" (click)="send()" mat-button [disabled]="form.invalid">
-    Entrar
-  </button>
+
 
   <!-- Forgot Password Link -->
   <a routerLink="#">esqueci minha senha</a>

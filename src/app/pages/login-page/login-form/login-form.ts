@@ -1,4 +1,3 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, inject, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -8,6 +7,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { NgxMaskDirective } from 'ngx-mask';
 import { AuthService } from '../../../services/auth.service';
+import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 
 @Component({
@@ -19,6 +20,8 @@ import { AuthService } from '../../../services/auth.service';
 export class LoginForm {
 
   private authService = inject(AuthService);
+  private route = inject(Router);
+  private snackBar = inject(MatSnackBar);
 
   form = new FormGroup({
     cpf: new FormControl('', [
@@ -37,42 +40,32 @@ export class LoginForm {
     event.stopPropagation();
   }
 
-send() {
-  if (this.form.invalid) return;
+  send() {
+    if (this.form.invalid) return;
 
-  const { cpf, password } = this.form.value;
+    const { cpf, password } = this.form.value;
 
-  this.authService.login({ cpf: cpf!, password: password! }).subscribe({
-    next: (res) => {
-      const token = res.access_token;
+    this.authService.login({ cpf: cpf!, password: password! }).subscribe({
+      next: (res) => {
+        const token = res.access_token;
 
-      alert(
-        `✅ Login realizado com sucesso!\n\n` +
-        `📌 CPF enviado: ${cpf}\n` +
-        `🔒 Senha enviada: ${password}\n\n` +
-        `📥 Resposta do servidor:\n${JSON.stringify(res, null, 2)}`
-      );
-
-      if (token) {
-        this.authService.storeToken(token);
-        // this.router.navigate(['/dashboard']);
-      } else {
-        alert('⚠️ Token não retornado!');
+        if (token) {
+          this.authService.storeToken(token);
+          this.route.navigate(['/dashboard']);
+          this.snackBar.open('Login realizado com sucesso!', 'Fechar', { duration: 3000 });
+        }
+      },
+      error: (err) => {
+        console.error(err);
+        this.snackBar.open(
+          `${err.error?.message || 'Erro desconhecido'}`,
+          'Fechar',
+          { duration: 5000 }
+        );
       }
-    },
-    error: (err) => {
-      console.error(err);
-      alert(
-        `❌ Erro no login\n\n` +
-        `📌 CPF enviado: ${cpf}\n` +
-        `🔒 Senha enviada: ${password}\n\n` +
-        `🔸 Status: ${err.status}\n` +
-        `🔸 Mensagem: ${err.error?.message || 'Erro desconhecido'}\n\n` +
-        `📄 Detalhes:\n${JSON.stringify(err, null, 2)}`
-      );
-    }
-  });
-}
+    });
+  }
+
 
 }
 
