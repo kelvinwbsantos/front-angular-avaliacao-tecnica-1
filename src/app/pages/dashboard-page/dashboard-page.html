@@ -3,19 +3,22 @@
   <mat-drawer #drawer class="sidenav">
     <ul class="links">
       <img src="profile-photo-stock.png" class="profile-photo">
-      <li>Perfil</li>
-      <li>Início</li>
-      <li>Convidar Colaboradores</li>
-      <li>Gerencial</li>
+      <p>Bem-vindo, {{ payload?.cpf }}!</p>
+      <p>Cargo: {{ payload?.role?.toUpperCase() }}!</p>
+
+      @if (payload?.role == 'administrador' || payload?.role == 'gente_e_cultura') {
+      <app-invite-component></app-invite-component>
+      }
+
       <li (click)="logout()">Sair</li>
     </ul>
   </mat-drawer>
 
   <mat-drawer-content>
 
-      <button matIconButton  class="drawer-toggle" (click)="drawer.toggle()">
-        <mat-icon>menu</mat-icon>
-      </button>
+    <button matIconButton class="drawer-toggle" (click)="drawer.toggle()">
+      <mat-icon>menu</mat-icon>
+    </button>
 
   </mat-drawer-content>
 
