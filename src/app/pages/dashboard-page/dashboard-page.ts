@@ -21,7 +21,7 @@ export class DashboardPage {
   readonly payload = this.authService.getDecodedToken();
 
   logout() {
-    this.authService.logout;
+    this.authService.logout();
     this.snackBar.open('Sessão encerada com sucesso!', 'Fechar', { duration: 3000 });
     this.router.navigate(['/login']);
   }
