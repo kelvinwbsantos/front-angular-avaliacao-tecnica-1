@@ -7,17 +7,15 @@
       <li>Início</li>
       <li>Convidar Colaboradores</li>
       <li>Gerencial</li>
-      <li>Sair</li>
+      <li (click)="logout()">Sair</li>
     </ul>
   </mat-drawer>
 
   <mat-drawer-content>
 
-
       <button matIconButton  class="drawer-toggle" (click)="drawer.toggle()">
         <mat-icon>menu</mat-icon>
       </button>
-
 
   </mat-drawer-content>
 
