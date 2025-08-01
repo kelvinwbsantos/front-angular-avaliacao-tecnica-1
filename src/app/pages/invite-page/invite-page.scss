@@ -1,0 +1,44 @@
+.form-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 24px;
+  background-color: var(--mat-sys-primary-container);
+  box-shadow: var(--mat-sys-level5);
+
+  h1 {
+    color: var(--mat-sys-on-primary-container);
+    font: var(--mat-sys-display-small);
+  }
+
+  mat-form-field {
+    width: 100%;
+    margin-bottom: 16px;
+  }
+
+  .send-button {
+    width: 100%;
+  }
+
+  a {
+    cursor: pointer;
+    display: block;
+    margin-top: 16px;
+    text-align: center;
+    color: var(--mat-sys-on-primary-container);
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+.spinner-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 200px;
+}
+

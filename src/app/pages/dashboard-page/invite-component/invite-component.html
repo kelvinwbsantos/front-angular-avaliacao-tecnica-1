@@ -9,6 +9,6 @@
                 <input matInput type="email" formControlName="email" />
             </mat-form-field>
         </form>
-        <button matButton="filled" type="submit" [disabled]="form.invalid">Enviar</button>
+        <button matButton="filled" type="submit" [disabled]="form.invalid" (click)="inviteButton()">Enviar</button>
     </mat-expansion-panel>
 </mat-accordion>

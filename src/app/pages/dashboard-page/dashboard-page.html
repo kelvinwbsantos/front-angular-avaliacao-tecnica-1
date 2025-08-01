@@ -7,7 +7,7 @@
       <p>Cargo: {{ payload?.role?.toUpperCase() }}!</p>
 
       @if (payload?.role == 'administrador' || payload?.role == 'gente_e_cultura') {
-      <app-invite-component></app-invite-component>
+      <app-invite-component [payload]="payload"></app-invite-component>
       }
 
       <li (click)="logout()">Sair</li>
