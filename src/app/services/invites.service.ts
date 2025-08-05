@@ -1,9 +1,15 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 
-export interface invite {
+export interface InviteRequest {
   email: string;
   sender: string;
+}
+
+export interface InviteResponse {
+  email: string;
+  status: string;
 }
 
 @Injectable({
@@ -14,8 +20,17 @@ export class InviteService {
 
   private http = inject(HttpClient);
 
-  sendInvite(invite: invite) {
+  sendInvite(invite: InviteRequest) {
     return this.http.post(this.baseUrl, invite);
   }
 
+  getInvites(senderEmail?: string): Observable<InviteResponse[]> {
+    let params = new HttpParams();
+
+    if (senderEmail) {
+      params = params.set('senderEmail', senderEmail);
+    }
+
+    return this.http.get<InviteResponse[]>(`${this.baseUrl}/getInvites`, { params: params });
+  }
 }
