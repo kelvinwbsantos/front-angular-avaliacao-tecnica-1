@@ -43,10 +43,16 @@
                     }
                 </mat-form-field>
 
+                <!-- Phonenumber Field -->
+                <mat-form-field appearance="outline">
+                    <mat-label>Numero de telefone</mat-label>
+                    <input matInput formControlName="phonenumber" placeholder="(00) 00000-0000" mask="(00) 00000-0000" [dropSpecialCharacters]="false" />
+                </mat-form-field>
+
                 <!-- CEP Field -->
                 <mat-form-field appearance="outline">
                     <mat-label>CEP</mat-label>
-                    <input matInput formControlName="cep" placeholder="00000-000" mask="00000-000" />
+                    <input matInput formControlName="cep" placeholder="00000-000" mask="00000-000" [dropSpecialCharacters]="false" />
                 </mat-form-field>
 
                 <!-- UF Field -->

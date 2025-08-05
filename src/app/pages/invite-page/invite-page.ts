@@ -9,6 +9,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgxMaskDirective } from 'ngx-mask';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-invite-page',
@@ -30,6 +31,7 @@ export class InvitePage {
   private route = inject(ActivatedRoute);
   private router = inject(Router)
   private http = inject(HttpClient);
+  private authService = inject(AuthService);
 
   // Forms
   form = new FormGroup({
@@ -46,6 +48,9 @@ export class InvitePage {
     password: new FormControl('', [
       Validators.required,
       Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$'),
+    ]),
+    phonenumber: new FormControl('', [
+      Validators.maxLength(20),
     ]),
     cep: new FormControl('', [
       Validators.required,
@@ -73,8 +78,6 @@ export class InvitePage {
 
 
   ngOnInit() {
-
-    // Verifica com o backend a veracidade do token
     this.token = this.route.snapshot.paramMap.get('token') ?? '';
 
     this.http.get<any>(`http://localhost:3000/invites/validateToken?token=${this.token}`).subscribe({
@@ -88,9 +91,8 @@ export class InvitePage {
       }
     });
 
-    // Preenche automaticamente os campos sobre CEP
     this.form.get('cep')?.valueChanges.subscribe((cep) => {
-      if (cep?.length === 8) {
+      if (cep?.length === 9) {
         this.form.get('uf')?.disable();
         this.form.get('localidade')?.disable();
         this.form.get('bairro')?.disable();
@@ -124,22 +126,37 @@ export class InvitePage {
 
   }
 
+  // ...
   submitForm() {
     if (this.form.valid) {
-      const data = this.form.getRawValue();
+      const rawValue = this.form.getRawValue();
 
-      alert(
-        `Dados do formulário:\n\n` +
-        `Nome: ${data.name}\n` +
-        `Email: ${data.email}\n` +
-        `CPF: ${data.cpf}\n` +
-        `Senha: ${data.password}\n` +
-        `CEP: ${data.cep}\n` +
-        `UF: ${data.uf}\n` +
-        `Localidade: ${data.localidade}\n` +
-        `Bairro: ${data.bairro}\n` +
-        `Logradouro: ${data.logradouro}`
-      );
+      const registrationData = {
+        token: this.token,
+        name: rawValue.name ?? '',
+        email: rawValue.email ?? '',
+        cpf: rawValue.cpf ?? '',
+        password: rawValue.password ?? '',
+        phonenumber: rawValue.phonenumber ?? '',
+        cep: rawValue.cep ?? '',
+        uf: rawValue.uf ?? '',
+        city: rawValue.localidade ?? '',
+        neighborhood: rawValue.bairro ?? '',
+        street: rawValue.logradouro ?? ''
+      };
+
+      alert('Dados a serem enviados:\n' + JSON.stringify(registrationData, null, 2));
+
+      this.authService.register(registrationData).subscribe({
+        next: (response) => {
+          console.log('Registro realizado com sucesso!', response);
+          this.router.navigate(['/login']);
+        },
+        error: (err) => {
+          console.error('Erro no registro:', err);
+          alert('Erro ao registrar. Por favor, verifique seus dados.');
+        }
+      });
     } else {
       alert('Formulário inválido. Verifique os campos obrigatórios.');
     }

@@ -5,6 +5,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { InviteService } from '../../../services/invites.service';
 
 @Component({
   selector: 'app-invite-component',
@@ -14,7 +15,7 @@ import { MatInputModule } from '@angular/material/input';
 })
 export class InviteComponent {
 
-  private http = inject(HttpClient);
+  private invitesService = inject(InviteService);
 
   form = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email])
@@ -22,17 +23,27 @@ export class InviteComponent {
 
   readonly panelOpenState = signal(false);
 
-  @Input() payload: any;
-
-  // payload preciso do email
-
+  @Input() senderEmail: string | undefined;
 
   inviteButton() {
-    const email = this.form.get('email')?.value;
+    if (this.form.invalid) {
+      console.error('The form is invalid. Please check the email address.');
+      return;
+    }
 
-    // implementar requisicao
+    if (!this.senderEmail) {
+      console.error('Sender email is not available.');
+      return;
+    }
 
-    this.form.reset();
-    this.form.get('email')?.enable();
+    this.invitesService.sendInvite({
+      email: this.form.value.email!,
+      sender: this.senderEmail!,
+    }).subscribe({
+      next: () => {
+        console.log('Convite enviado com sucesso!');
+        this.form.reset();
+      }
+    });
   }
 }
