@@ -10,7 +10,7 @@
     </button>
 
     <mat-menu #menu="matMenu">
-        <button mat-menu-item>
+        <button mat-menu-item routerLink="/dashboard">
             <mat-icon>home</mat-icon>
             <span>Inicio</span>
         </button>
@@ -22,17 +22,17 @@
 
         @if (true)
         {
-        <button mat-menu-item>
+        <button mat-menu-item routerLink="/dashboard/invite">
             <mat-icon>admin_panel_settings</mat-icon>
-            <a routerLink="/dashboard/invite"><span>Convidar Colaboradores</span></a>
+            <span>Convidar Colaboradores</span>
         </button>
         }
 
         @if (true)
         {
-        <button mat-menu-item>
+        <button mat-menu-item routerLink="/dashboard/admin">
             <mat-icon>admin_panel_settings</mat-icon>
-            <a routerLink="/dashboard/admin"><span>Gerencial</span></a>
+            <span>Gerencial</span>
         </button>
         }
 

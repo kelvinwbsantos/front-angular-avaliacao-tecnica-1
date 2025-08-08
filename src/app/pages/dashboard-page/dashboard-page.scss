@@ -9,8 +9,7 @@
     margin-left: auto;
 }
 
-@media (min-width: 1440px) {
-  .menu-button {
-    display: none;
-  }
+a {
+    text-decoration: none;
+    color: inherit;
 }
