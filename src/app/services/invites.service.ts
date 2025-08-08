@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { inject, Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { inject, Injectable, signal } from '@angular/core';
+import { Observable, tap } from 'rxjs';
 
 export interface InviteRequest {
   email: string;
@@ -17,11 +17,17 @@ export interface InviteResponse {
 })
 export class InviteService {
   private baseUrl = 'http://localhost:3000/invites';
-
   private http = inject(HttpClient);
 
-  sendInvite(invite: InviteRequest) {
-    return this.http.post(this.baseUrl, invite);
+  private refreshSignal = signal(0);
+  public refreshNeeded = this.refreshSignal.asReadonly();
+
+  sendInvite(invite: InviteRequest): Observable<any> {
+    return this.http.post(this.baseUrl, invite, { responseType: 'text' }).pipe(
+      tap(() => {
+        this.refreshSignal.set(this.refreshSignal() + 1);
+      })
+    );
   }
 
   getInvites(senderEmail?: string): Observable<InviteResponse[]> {

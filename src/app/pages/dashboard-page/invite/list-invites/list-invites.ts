@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, effect, inject } from '@angular/core';
 import { InviteService } from '../../../../services/invites.service';
 import { CommonModule } from '@angular/common';
 
@@ -34,10 +34,12 @@ export class ListInvites {
     if (userDataString) {
       this.userEmail = JSON.parse(userDataString).email;
     }
-  }
 
-  ngOnInit() {
-    this.fetchInvites();
+    effect(() => {
+      this.invitesService.refreshNeeded();
+
+      this.fetchInvites();
+    });
   }
 
   fetchInvites() {
