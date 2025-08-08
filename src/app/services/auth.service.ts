@@ -4,6 +4,8 @@ import { Observable } from 'rxjs';
 import { jwtDecode } from 'jwt-decode';
 
 export interface JwtPayload {
+  sub: string;
+  name: string;
   email: string;
   role: string;
 }
@@ -37,17 +39,13 @@ export class AuthService {
   register(registrationData: RegistrationData): Observable<any> {
     return this.http.post(`${this.baseUrl}/register`, registrationData);
   }
-
-  storeToken(token: string) {
-    localStorage.setItem('auth_token', token);
-  }
-
+  
   getToken(): string | null {
     return localStorage.getItem('auth_token');
   }
 
   logout() {
-    localStorage.removeItem('auth_token');
+    localStorage.clear();
   }
 
   isAuthenticated(): boolean {
@@ -66,4 +64,25 @@ export class AuthService {
       return null;
     }
   }
+
+  handleLoginSuccess(token: string) {
+  try {
+
+    const payload: JwtPayload = jwtDecode(token);
+
+    localStorage.setItem('auth_token', token);
+
+    const userData = {
+      id: payload.sub,
+      email: payload.email,
+      nome: payload.name,
+      role: payload.role
+    };
+
+    localStorage.setItem('userData', JSON.stringify(userData));
+
+  } catch (error) {
+    console.error('Erro ao decodificar o token ou salvar os dados:', error);
+  }
+}
 }

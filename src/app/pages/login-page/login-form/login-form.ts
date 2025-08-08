@@ -48,9 +48,10 @@ export class LoginForm {
     this.authService.login({ cpf: cpf!, password: password! }).subscribe({
       next: (res) => {
         const token = res.access_token;
+        const email = res.email;
 
         if (token) {
-          this.authService.storeToken(token);
+          this.authService.handleLoginSuccess(token);
           this.route.navigate(['/dashboard']);
           this.snackBar.open('Login realizado com sucesso!', 'Fechar', { duration: 3000 });
         }

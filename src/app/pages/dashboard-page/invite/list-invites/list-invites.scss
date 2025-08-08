@@ -1,0 +1,24 @@
+.invite-card {
+    background-color: var(--mat-sys-primary-container);
+    margin: 20px;
+}
+
+.table-container {
+    overflow-x: auto;
+}
+
+.chip-pending {
+    background-color: #f0ad4e !important;
+}
+
+.chip-completed {
+    background-color: lightgreen !important;
+}
+
+.chip-expired {
+    background-color: var(--mat-sys-error);
+}
+
+td.mat-mdc-cell {
+    vertical-align: middle;
+}

@@ -3,13 +3,14 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Router } from '@angular/router';
+import { Router, RouterLink, RouterModule } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
-import { InviteComponent } from "./invite-component/invite-component";
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatMenuModule } from '@angular/material/menu';
 
 @Component({
   selector: 'app-dashboard-page',
-  imports: [MatButtonModule, MatIconModule, MatSidenavModule, InviteComponent],
+  imports: [MatButtonModule, MatIconModule, MatSidenavModule, MatToolbarModule, MatMenuModule, RouterLink, RouterModule],
   templateUrl: './dashboard-page.html',
   styleUrl: './dashboard-page.scss'
 })

@@ -24,7 +24,6 @@ export class InviteComponent {
   form = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email])
   })
-
   readonly panelOpenState = signal(false);
 
   @Input() senderEmail: string | undefined;

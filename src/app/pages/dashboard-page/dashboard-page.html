@@ -1,25 +1,42 @@
-<mat-drawer-container class="container">
+<mat-toolbar class="header">
 
-  <mat-drawer #drawer class="sidenav">
-    <ul class="links">
-      <img src="profile-photo-stock.png" class="profile-photo">
-      <p>Bem-vindo, {{ payload?.email }}!</p>
-      <p>Cargo: {{ payload?.role?.toUpperCase() }}!</p>
 
-      @if (payload?.role == 'administrador' || payload?.role == 'gente_e_cultura') {
-      <app-invite-component [senderEmail]="payload?.email"></app-invite-component>
-      }
+    <span class="name">TechnologySolution</span>
 
-      <li (click)="logout()">Sair</li>
-    </ul>
-  </mat-drawer>
 
-  <mat-drawer-content>
-
-    <button matIconButton class="drawer-toggle" (click)="drawer.toggle()">
-      <mat-icon>menu</mat-icon>
+    
+    <button matIconButton [matMenuTriggerFor]="menu" class="menu-button">
+        <mat-icon>more_vert</mat-icon>
     </button>
 
-  </mat-drawer-content>
+    <mat-menu #menu="matMenu">
+        <button mat-menu-item>
+            <mat-icon>home</mat-icon>
+            <span>Inicio</span>
+        </button>
 
-</mat-drawer-container>
+        <button mat-menu-item>
+            <mat-icon>account_circle</mat-icon>
+            <span>Perfil</span>
+        </button>
+
+        @if (true)
+        {
+        <button mat-menu-item>
+            <mat-icon>admin_panel_settings</mat-icon>
+            <a routerLink="/dashboard/invite"><span>Convidar Colaboradores</span></a>
+        </button>
+        }
+
+        @if (true)
+        {
+        <button mat-menu-item>
+            <mat-icon>admin_panel_settings</mat-icon>
+            <a routerLink="/dashboard/admin"><span>Gerencial</span></a>
+        </button>
+        }
+
+    </mat-menu>
+</mat-toolbar>
+
+<router-outlet></router-outlet>
