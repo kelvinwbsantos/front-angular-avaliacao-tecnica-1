@@ -3,11 +3,11 @@
   <mat-drawer #drawer class="sidenav">
     <ul class="links">
       <img src="profile-photo-stock.png" class="profile-photo">
-      <p>Bem-vindo, {{ payload?.cpf }}!</p>
+      <p>Bem-vindo, {{ payload?.email }}!</p>
       <p>Cargo: {{ payload?.role?.toUpperCase() }}!</p>
 
       @if (payload?.role == 'administrador' || payload?.role == 'gente_e_cultura') {
-      <app-invite-component></app-invite-component>
+      <app-invite-component [senderEmail]="payload?.email"></app-invite-component>
       }
 
       <li (click)="logout()">Sair</li>

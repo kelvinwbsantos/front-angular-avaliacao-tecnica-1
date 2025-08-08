@@ -4,8 +4,22 @@ import { Observable } from 'rxjs';
 import { jwtDecode } from 'jwt-decode';
 
 export interface JwtPayload {
-  cpf: string;
+  email: string;
   role: string;
+}
+
+export interface RegistrationData {
+  token: string;
+  cpf: string;
+  name: string;
+  email: string;
+  phonenumber?: string;
+  cep?: string;
+  uf?: string;
+  city?: string;
+  neighborhood?: string;
+  street?: string;
+  password: string;
 }
 
 @Injectable({
@@ -18,6 +32,10 @@ export class AuthService {
 
   login(credentials: { cpf: string; password: string }): Observable<any> {
     return this.http.post(`${this.baseUrl}/login`, credentials);
+  }
+
+  register(registrationData: RegistrationData): Observable<any> {
+    return this.http.post(`${this.baseUrl}/register`, registrationData);
   }
 
   storeToken(token: string) {
@@ -44,6 +62,7 @@ export class AuthService {
       return jwtDecode<JwtPayload>(token);
     } catch (error) {
       console.error('Erro ao decodificar token:', error);
+      this.logout();
       return null;
     }
   }

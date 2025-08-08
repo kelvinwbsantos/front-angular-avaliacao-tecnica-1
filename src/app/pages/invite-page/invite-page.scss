@@ -1,0 +1,81 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  height: fit-content;
+  width: 100%;
+  position: relative;
+}
+
+.left-panel {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 24px;
+  margin: auto;
+  z-index: 1;
+}
+
+.right-panel {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url('/macbook-air-on-desk.jpg') no-repeat center center;
+  background-size: cover;
+  z-index: -1;
+}
+
+@media (min-width: 768px) {
+  .container {
+    flex-direction: row;
+    height: fit-content;
+  }
+
+  .left-panel,
+  .right-panel {
+    flex: 1;
+  }
+
+  .right-panel {
+    position: relative;
+  }
+}
+
+.form-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 24px;
+  background-color: var(--mat-sys-primary-container);
+  box-shadow: var(--mat-sys-level5);
+
+  h1 {
+    color: var(--mat-sys-on-primary-container);
+    font: var(--mat-sys-display-small);
+  }
+
+  mat-form-field {
+    width: 100%;
+    margin-bottom: 16px;
+  }
+
+  .send-button {
+    width: 100%;
+  }
+
+  a {
+    cursor: pointer;
+    display: block;
+    margin-top: 16px;
+    text-align: center;
+    color: var(--mat-sys-on-primary-container);
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
