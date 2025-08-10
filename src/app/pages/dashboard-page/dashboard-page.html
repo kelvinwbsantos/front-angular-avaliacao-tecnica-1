@@ -1,10 +1,6 @@
 <mat-toolbar class="header">
-
-
     <span class="name">TechnologySolution</span>
 
-
-    
     <button matIconButton [matMenuTriggerFor]="menu" class="menu-button">
         <mat-icon>more_vert</mat-icon>
     </button>
@@ -35,6 +31,11 @@
             <span>Gerencial</span>
         </button>
         }
+
+        <button mat-menu-item (click)="logout()">
+            <mat-icon>logout</mat-icon>
+            <span>Log out</span>
+        </button>
 
     </mat-menu>
 </mat-toolbar>
