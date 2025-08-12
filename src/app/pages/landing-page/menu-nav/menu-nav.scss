@@ -1,16 +1,22 @@
+/* Base styles for mobile devices (no media query needed) */
 .btn-top {
   position: fixed;
   bottom: 2rem;
   right: 2rem;
   z-index: 100;
   transition: opacity 0.3s ease;
+  opacity: 0; /* Initially hidden on all screens */
+}
+
+.btn-top.show {
+  opacity: 1; /* A class to show the button with JavaScript */
 }
 
 .navbar {
   display: flex;
   align-items: center;
   padding: 0 1rem;
-  background: var(--mat-sys-surface);
+  background: var(--mat-sys-surface-container);
   height: 56px;
   position: relative;
   z-index: 20;
@@ -18,7 +24,7 @@
 
 .logo {
   height: 40px;
-  margin-left: 1rem;
+  margin-left: 0; /* Start with no margin, as on mobile */
   filter: invert(38%) sepia(65%) saturate(300%) hue-rotate(190deg);
 }
 
@@ -27,21 +33,37 @@
   border: none;
   cursor: pointer;
   font-size: 1.8rem;
-  display: none;
+  display: block; /* Hamburger is visible by default on mobile */
   color: var(--mat-sys-on-surface);
+  padding-left: 10x;
 }
 
 .nav-links {
-  display: flex;
+  position: absolute;
+  top: 40px;
+  left: 0;
+  right: 0;
+  background: var(--mat-sys-surface-container);
+  flex-direction: column;
+  display: none; /* Nav links are hidden by default */
   list-style: none;
-  gap: 1.5rem;
-  margin-left: auto;
+  padding: 1rem 1.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  border-radius: 0 0 8px 8px;
+}
+
+.nav-links.open {
+  display: flex; /* Display the menu when the .open class is added */
+}
+
+.nav-links li {
+  margin-bottom: 1rem;
 }
 
 .nav-links li a {
   text-decoration: none;
   color: var(--mat-sys-on-surface);
-  font-weight: 600;
+  font: var(--mat-sys-title-medium);
 }
 
 .nav-links li a:hover,
@@ -50,41 +72,35 @@
 }
 
 .dark-mode-toggle {
-  margin-left: 1.5rem;
+  margin-left: auto;
   color: var(--mat-sys-on-surface);
 }
 
-@media (max-width: 768px) {
+@media (min-width: 769px) {
   .hamburger {
-    display: block;
+    display: none;
   }
 
   .nav-links {
-    position: absolute;
-    top: 56px;
-    left: 0;
-    right: 0;
-    background: var(--mat-sys-surface);
-    flex-direction: column;
-    display: none;
-    padding: 1rem 1.5rem;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    border-radius: 0 0 8px 8px;
-  }
-
-  .nav-links.open {
+    position: static;
     display: flex;
-  }
-
-  .nav-links li {
-    margin-bottom: 1rem;
-  }
-
-  .dark-mode-toggle {
+    flex-direction: row;
+    gap: 1.5rem;
+    padding: 0;
+    box-shadow: none;
+    border-radius: 0;
     margin-left: auto;
+  }
+  
+  .nav-links li {
+    margin-bottom: 0;
   }
 
   .logo {
-    margin-left: 0;
+    margin-left: 1rem;
+  }
+
+  .dark-mode-toggle {
+    margin-left: 1.5rem;
   }
 }
