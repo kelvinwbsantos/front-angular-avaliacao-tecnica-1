@@ -3,12 +3,11 @@
   flex-direction: column;
   align-items: center;
   padding: 2rem;
-  min-height: 95vh;
-  background: var(--mat-sys-surface);
+  background: var(--mat-sys-surface-container);
 }
 
 img {
-  width: clamp(150px, 30vw, 300px);
+  width: clamp(300px, 30vw, 500px);
   padding: 1rem;
   margin-top: 50px;
   filter: invert(38%) sepia(65%) saturate(300%) hue-rotate(190deg);
@@ -25,10 +24,11 @@ img {
 .slide {
   position: absolute;
   width: 100%;
+  min-height: 200px;
   opacity: 0;
   transition: opacity 0.5s ease;
   text-align: center;
-  background-color: var(--mat-sys-primary-container);
+  background-color: var(--mat-sys-secondary-container);
   border-radius: 10px;
   box-shadow: var(--mat-sys-level5);
 }
@@ -39,13 +39,12 @@ img {
 }
 
 .slide h2 {
-  font: var(--mat-sys-title-large);
-  color: var(--mat-sys-on-primary-container);
+  font: var(--mat-sys-display-small);
+  color: var(--mat-sys-on-secondary-container);
 }
 
 .slide p {
-  font: var(--mat-sys-title-medium);
-  color: var(--mat-sys-on-primary-container-variant);
+  font: var(--mat-sys-body-large);
 }
 
 .controls {
