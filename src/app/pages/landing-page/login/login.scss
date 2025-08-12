@@ -20,15 +20,23 @@
         flex-direction: column;
         align-items: center;
         gap: 24px;
+        margin: 16px;
 
-        .hero-text {
-            color: var(--mat-sys-on-primary-container-variant);
-            font: var(--mat-sys-display-medium);
+        mat-card-header {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
             text-align: center;
         }
 
+        .hero-text {
+            color: var(--mat-sys-on-primary-container-variant);
+            font: var(--mat-sys-title-large);
+        }
+
         .login-button {
-            font: var(--mat-sys-display-medium);
+            font: var(--mat-sys-display-small);
             height: 5rem;
             width: 15rem;
             color: var(--mat-sys-on-primary-container-variant);
