@@ -9,20 +9,34 @@ import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { catchError, debounceTime, map, merge, of, startWith, switchMap } from 'rxjs';
 import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatDialog } from '@angular/material/dialog';
+import { UserDetails } from './components/user-details/user-details';
 
 @Component({
   selector: 'app-list-users',
-  imports: [MatButtonModule, MatTableModule, MatPaginatorModule, MatCardModule, MatFormFieldModule, MatProgressSpinnerModule, ReactiveFormsModule, MatInputModule],
+  imports: [MatIconModule, MatButtonModule, MatTableModule, MatPaginatorModule, MatCardModule, MatFormFieldModule, MatProgressSpinnerModule, ReactiveFormsModule, MatInputModule],
   templateUrl: './list-users.html',
   styleUrl: './list-users.scss'
 })
 export class ListUsers {
   private adminService = inject(AdminService);
+  private readonly dialog = inject(MatDialog)
 
-  displayedColumns: string[] = ['name', 'email'];
+  displayedColumns: string[] = ['name', 'email', 'actions'];
   dataSource: User[] = [];
   totalUsers = 0;
   isLoading = true;
+
+  openUserDetails(userId: number): void {
+    this.dialog.open(UserDetails, {
+      width: '500px',
+      enterAnimationDuration: '300ms',
+      exitAnimationDuration: '300ms',
+
+      data: { userId },
+    });
+  }
 
   filterForm = new FormGroup({
     name: new FormControl(''),

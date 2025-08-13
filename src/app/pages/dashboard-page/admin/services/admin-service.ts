@@ -22,6 +22,19 @@ export interface User {
   cpf: string;
 }
 
+export interface FullUserResponse {
+  id: number;
+  name: string;
+  email: string;
+  cpf: string
+  phonenumber: string;
+  cep: string;
+  uf: string;
+  city: string;
+  neighborhood: string;
+  street: string;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -45,5 +58,9 @@ export class AdminService {
     }
 
     return this.http.get<UserApiResponse>(`${this.baseUrl}/users`, { params: httpParams });
+  }
+
+  findById(userId: string): Observable<FullUserResponse> {
+    return this.http.get<FullUserResponse>(`${this.baseUrl}/user/${userId}`);
   }
 }
