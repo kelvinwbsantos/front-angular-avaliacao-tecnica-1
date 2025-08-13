@@ -80,7 +80,7 @@ export class InvitePage {
   ngOnInit() {
     this.token = this.route.snapshot.paramMap.get('token') ?? '';
 
-    this.http.get<any>(`http://localhost:3000/invites/validateToken?token=${this.token}`).subscribe({
+    this.http.get<any>(`http://localhost:3000/invites/validate?token=${this.token}`).subscribe({
       next: (res) => {
         this.form.patchValue({ email: res.email });
         this.form.get('email')?.disable();
