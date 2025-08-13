@@ -1,5 +1,5 @@
 .invite-card {
-    background-color: var(--mat-sys-primary-container);
+    background-color: var(--mat-sys-secondary-container);
     margin: 20px;
 }
 
@@ -7,14 +7,17 @@
     overflow-x: auto;
 }
 
-.chip-pending {
-    background-color: #f0ad4e !important;
+table {
+    background-color: var(--mat-sys-background);
 }
 
-.chip-completed {
-    background-color: lightgreen !important;
+mat-card-subtitle {
+    font: var(--mat-sys-label-large);
+    color: var(--mat-sys-on-secondary-container);
+    margin-bottom: 10px;
 }
 
-.chip-expired {
-    background-color: var(--mat-sys-error);
+mat-card-title {
+    font: var(--mat-sys-title-large);
+    color: var(--mat-sys-on-primary-container);
 }

@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, EventEmitter, inject, Output } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { InviteService } from '../../../../services/invites.service';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -18,6 +18,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 export class SendInvite {
   private invitesService = inject(InviteService);
   userEmail: string | null = null;
+
+  @Output() inviteSent = new EventEmitter<void>();
 
   private snackBar = inject(MatSnackBar);
   public loading = false;
@@ -49,6 +51,7 @@ export class SendInvite {
         next: () => {
           this.snackBar.open('Convite enviado com sucesso!', 'Fechar', { duration: 3000 });
           this.form.reset();
+          this.inviteSent.emit();
         },
         error: (err) => {
           console.error('Failed to send invite:', err);

@@ -1,33 +1,47 @@
-import { Component, effect, inject } from '@angular/core';
-import { InviteService } from '../../../../services/invites.service';
+import { Component, OnInit, ViewChild, inject, AfterViewInit, effect } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
-import { MatTableModule } from '@angular/material/table';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatCardModule } from '@angular/material/card';
+import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/paginator';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatChipsModule } from '@angular/material/chips';
+import { InviteService } from '../../../../services/invites.service';
 
 interface InviteResponse {
-  email: string;
-  status: string;
+  invites: {
+    email: string;
+    status: string;
+  }[];
+  total: number;
 }
 
 @Component({
   selector: 'app-list-invites',
+  standalone: true,
   imports: [
     CommonModule,
     MatTableModule,
     MatCardModule,
+    MatPaginatorModule,
+    MatProgressSpinnerModule,
     MatChipsModule
   ],
   templateUrl: './list-invites.html',
-  styleUrl: './list-invites.scss'
+  styleUrls: ['./list-invites.scss']
 })
-export class ListInvites {
+export class ListInvites implements OnInit {
   private invitesService = inject(InviteService);
 
   displayedColumns: string[] = ['email', 'status'];
-  invites: InviteResponse[] = [];
+  dataSource = new MatTableDataSource<InviteResponse['invites'][0]>();
+
+  isLoading = true;
   userEmail: string | null = null;
+  totalInvites = 0;
+  
+  // New properties for pagination state
+  pageSize = 10;
+  pageIndex = 0;
 
   constructor() {
     const userDataString = localStorage.getItem('userData');
@@ -35,26 +49,55 @@ export class ListInvites {
       this.userEmail = JSON.parse(userDataString).email;
     }
 
-    effect(() => {
-      this.invitesService.refreshNeeded();
-
-      this.fetchInvites();
+      effect(() => {
+        this.invitesService.refreshNeeded();
+        this.fetchInvites();
     });
   }
 
-  fetchInvites() {
-    if (this.userEmail) {
-      this.invitesService.getInvites(this.userEmail).subscribe({
-        next: (data) => {
-          this.invites = data.map(invite => ({
-            email: invite.email,
-            status: invite.status
-          }));
-        },
-        error: (error) => {
-          console.error('Error fetching invites:', error);
-        }
-      });
+  ngOnInit(): void {
+    this.fetchInvites();
+  }
+
+  fetchInvites(): void {
+    if (!this.userEmail) {
+      console.error("User email not found, cannot fetch invites.");
+      this.isLoading = false;
+      return;
+    }
+
+    this.isLoading = true;
+    
+    this.invitesService.getInvites(this.userEmail, this.pageIndex + 1, this.pageSize).subscribe({
+      next: (response: InviteResponse) => {
+        this.dataSource.data = response.invites; // Assign the paginated data
+        this.totalInvites = response.total; // Use the total from the API response
+        this.isLoading = false;
+      },
+      error: (error) => {
+        console.error('Error fetching invites:', error);
+        this.isLoading = false;
+        this.dataSource.data = [];
+      }
+    });
+  }
+
+  handlePageEvent(event: PageEvent) {
+    this.pageIndex = event.pageIndex;
+    this.pageSize = event.pageSize;
+    this.fetchInvites();
+  }
+
+  getStatusColor(status: string): 'primary' | 'accent' | 'warn' {
+    switch (status.toLowerCase()) {
+      case 'pending':
+        return 'primary';
+      case 'completed':
+        return 'accent';
+      case 'expired':
+        return 'warn';
+      default:
+        return 'primary';
     }
   }
 }
