@@ -1,45 +1,59 @@
 <mat-card class="form-container">
   <h1>TechnologySolutions</h1>
 
-  <form [formGroup]="form">
-    <!-- CPF Field -->
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
     <mat-form-field appearance="outline">
       <mat-label>CPF</mat-label>
-      <input matInput formControlName="cpf" placeholder="000.000.000-00" mask="000.000.000-00"
-        [dropSpecialCharacters]="false" />
+      <input 
+        matInput 
+        formControlName="cpf" 
+        placeholder="000.000.000-00" 
+        mask="000.000.000-00" 
+      />
       @if (form.get('cpf')?.hasError('required')) {
-      <mat-error>CPF é obrigatório</mat-error>
+        <mat-error>CPF é obrigatório</mat-error>
       }
     </mat-form-field>
 
-    <!-- Password Field -->
     <mat-form-field appearance="outline">
       <mat-label>Senha</mat-label>
-      <input matInput formControlName="password" [type]="hide() ? 'password' : 'text'" />
-      <button mat-icon-button matSuffix (click)="clickEvent($event)" [attr.aria-label]="'Hide password'"
-        [attr.aria-pressed]="hide()">
-        <mat-icon>{{ hide() ? 'visibility_off' : 'visibility' }}</mat-icon>
+      <input 
+        matInput 
+        formControlName="password" 
+        [type]="hidePassword() ? 'password' : 'text'" 
+      />
+      <button 
+        mat-icon-button 
+        matSuffix 
+        type="button" 
+        (click)="togglePasswordVisibility($event)"
+      >
+        <mat-icon>{{ hidePassword() ? 'visibility_off' : 'visibility' }}</mat-icon>
       </button>
 
       @if (form.get('password')?.hasError('required')) {
-      <mat-error>A senha é obrigatória</mat-error>
-      }
-      @if (form.get('password')?.hasError('pattern')) {
-      <mat-error>
-        A senha deve ter no mínimo 8 caracteres, letra maiúscula, letra minúscula,
-        números e caracteres especiais
-      </mat-error>
+        <mat-error>A senha é obrigatória</mat-error>
+      } @else if (form.get('password')?.hasError('pattern') || form.get('password')?.hasError('minlength')) {
+        <mat-error>
+          A senha deve ser mais forte (mín. 8 caracteres, maiúsculas, minúsculas, números e símbolos).
+        </mat-error>
       }
     </mat-form-field>
 
-    <!-- Submit Button -->
-    <button class="send-button" matButton="filled" (click)="send()" mat-button [disabled]="form.invalid" type="submit">
-      Entrar
+    <button
+      class="send-button"
+      mat-raised-button
+      color="primary"
+      type="submit"
+      [disabled]="form.invalid || isSubmitting()"
+    >
+      @if (isSubmitting()) {
+        <mat-spinner [diameter]="24"></mat-spinner>
+      } @else {
+        Entrar
+      }
     </button>
   </form>
 
-
-
-  <!-- Forgot Password Link -->
-  <a routerLink="#">esqueci minha senha</a>
+  <a routerLink="/forgot-password">Esqueci minha senha</a>
 </mat-card>

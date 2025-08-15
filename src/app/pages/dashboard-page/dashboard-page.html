@@ -16,17 +16,17 @@
             <span>Perfil</span>
         </button>
 
-        @if (true)
+        @if (this.authService.hasRole("administrador") || this.authService.hasRole("gente_e_cultura"))
         {
-        <button mat-menu-item routerLink="/dashboard/invite">
+        <button mat-menu-item routerLink="invite">
             <mat-icon>admin_panel_settings</mat-icon>
             <span>Convidar Colaboradores</span>
         </button>
         }
 
-        @if (true)
+        @if (this.authService.hasRole("administrador") || this.authService.hasRole("gente_e_cultura"))
         {
-        <button mat-menu-item routerLink="/dashboard/admin">
+        <button mat-menu-item routerLink="admin">
             <mat-icon>admin_panel_settings</mat-icon>
             <span>Gerencial</span>
         </button>
@@ -40,4 +40,4 @@
     </mat-menu>
 </mat-toolbar>
 
-<router-outlet></router-outlet>
+<router-outlet>

@@ -3,10 +3,10 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Router, RouterLink, RouterModule } from '@angular/router';
-import { AuthService } from '../../services/auth.service';
+import { RouterLink, RouterModule } from '@angular/router';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatMenuModule } from '@angular/material/menu';
+import { AuthService } from '../../core/services/auth.service';
 
 @Component({
   selector: 'app-dashboard-page',
@@ -15,15 +15,11 @@ import { MatMenuModule } from '@angular/material/menu';
   styleUrl: './dashboard-page.scss'
 })
 export class DashboardPage {
-  private router = inject(Router);
   private snackBar = inject(MatSnackBar);
-  private authService = inject(AuthService);
-
-  readonly payload = this.authService.getDecodedToken();
+  readonly authService = inject(AuthService);
 
   logout() {
     this.authService.logout();
     this.snackBar.open('Sessão encerada com sucesso!', 'Fechar', { duration: 3000 });
-    this.router.navigate(['/login']);
   }
 }
