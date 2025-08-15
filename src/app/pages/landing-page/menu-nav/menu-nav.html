@@ -12,22 +12,14 @@
     <li><a href="/login" (click)="closeMenu()">Login</a></li>
   </ul>
 
-  <mat-slide-toggle
-    (change)="toggleDarkMode()"
-    [checked]="darkMode"
-    aria-label="Alternar modo escuro"
-    class="dark-mode-toggle"
-  >
+  <mat-slide-toggle (change)="toggleDarkMode()" [checked]="darkMode" aria-label="Alternar modo escuro"
+    class="dark-mode-toggle">
     <mat-icon>{{ darkMode ? 'dark_mode' : 'light_mode' }}</mat-icon>
   </mat-slide-toggle>
 </nav>
 
-<button
-  mat-fab
-  color="primary"
-  class="btn-top"
-  (click)="scrollToTop()"
-  aria-label="Voltar ao topo"
->
+
+<button mat-fab class="btn-top" [class.show]="showButton" (click)="scrollToTop()"
+  aria-label="Voltar ao topo">
   <mat-icon>arrow_upward</mat-icon>
 </button>

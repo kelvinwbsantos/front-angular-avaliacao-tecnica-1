@@ -1,15 +1,16 @@
-/* Base styles for mobile devices (no media query needed) */
 .btn-top {
   position: fixed;
   bottom: 2rem;
   right: 2rem;
   z-index: 100;
   transition: opacity 0.3s ease;
-  opacity: 0; /* Initially hidden on all screens */
+  opacity: 0;
+  background-color: var(--mat-sys-primary);
+  color: var(--mat-sys-on-primary);
 }
 
 .btn-top.show {
-  opacity: 1; /* A class to show the button with JavaScript */
+  opacity: 1;
 }
 
 .navbar {
@@ -24,7 +25,7 @@
 
 .logo {
   height: 40px;
-  margin-left: 0; /* Start with no margin, as on mobile */
+  margin-left: 0;
   filter: invert(38%) sepia(65%) saturate(300%) hue-rotate(190deg);
 }
 
@@ -33,7 +34,7 @@
   border: none;
   cursor: pointer;
   font-size: 1.8rem;
-  display: block; /* Hamburger is visible by default on mobile */
+  display: block;
   color: var(--mat-sys-on-surface);
   padding-left: 10x;
 }
@@ -45,7 +46,7 @@
   right: 0;
   background: var(--mat-sys-surface-container);
   flex-direction: column;
-  display: none; /* Nav links are hidden by default */
+  display: none;
   list-style: none;
   padding: 1rem 1.5rem;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
@@ -53,7 +54,7 @@
 }
 
 .nav-links.open {
-  display: flex; /* Display the menu when the .open class is added */
+  display: flex;
 }
 
 .nav-links li {

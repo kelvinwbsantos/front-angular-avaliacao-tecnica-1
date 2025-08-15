@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
@@ -16,6 +16,19 @@ export class MenuNav {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
+  showButton = false;
+
+  constructor() { }
+
+  @HostListener('window:scroll', [])
+  onWindowScroll(): void {
+    if (window.pageYOffset > 200) {
+      this.showButton = true;
+    } else {
+      this.showButton = false;
+    }
+  }
+
   menuOpen = false;
 
   toggleMenu() {
@@ -28,7 +41,7 @@ export class MenuNav {
 
 
   darkMode = false;
-  
+
   ngOnInit() {
     const saved = localStorage.getItem('darkMode');
     this.darkMode = saved === 'true';
