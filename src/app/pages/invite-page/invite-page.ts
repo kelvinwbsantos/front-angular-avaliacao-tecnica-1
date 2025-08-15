@@ -87,7 +87,7 @@ export class InvitePage {
       },
       error: (err) => {
         console.error(err);
-        this.router.navigate(['/']);
+        this.router.navigate(['/invite/expired']);
       }
     });
 

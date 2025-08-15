@@ -40,6 +40,8 @@ export class AuthService {
 
   readonly isLoggedIn = computed(() => !!this.#decodedToken());
   readonly userRole = computed(() => this.#decodedToken()?.role);
+  readonly userEmail = computed(() => this.#decodedToken()?.email);
+  readonly userName = computed(() => this.#decodedToken()?.name);
 
   login(credentials: LoginCredentials): Observable<LoginResponse> {
     return this.http.post<LoginResponse>(`${this.baseUrl}/login`, credentials).pipe(

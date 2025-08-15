@@ -6,6 +6,7 @@ import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/p
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatChipsModule } from '@angular/material/chips';
 import { InviteService } from '../../../../services/invites.service';
+import { AuthService } from '../../../../core/services/auth.service';
 
 interface InviteResponse {
   invites: {
@@ -30,24 +31,22 @@ interface InviteResponse {
   styleUrls: ['./list-invites.scss']
 })
 export class ListInvites implements OnInit {
-  private invitesService = inject(InviteService);
+  private readonly invitesService = inject(InviteService);
+  private readonly authService = inject(AuthService);
+
+  userEmail: string | undefined
 
   displayedColumns: string[] = ['email', 'status'];
   dataSource = new MatTableDataSource<InviteResponse['invites'][0]>();
 
   isLoading = true;
-  userEmail: string | null = null;
   totalInvites = 0;
   
-  // New properties for pagination state
   pageSize = 10;
   pageIndex = 0;
 
   constructor() {
-    const userDataString = localStorage.getItem('userData');
-    if (userDataString) {
-      this.userEmail = JSON.parse(userDataString).email;
-    }
+    this.userEmail = this.authService.userEmail();
 
       effect(() => {
         this.invitesService.refreshNeeded();
