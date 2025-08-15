@@ -81,6 +81,7 @@ export class LoginForm {
             'Fechar',
             { duration: 5000 }
           );
+          this.form.reset();
         }
       });
   }
