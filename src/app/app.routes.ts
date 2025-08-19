@@ -6,7 +6,7 @@ import { authGuard } from './core/guards/auth-guard';
 import { Expired } from './pages/invite-page/expired/expired';
 
 export const routes: Routes = [
-    { path: 'login', component: LoginPage },
+    { path: 'login', component: LoginPage, title: 'TechSolutions - Login' },
     { path: '', component: LandingPage },
     {
         path: 'dashboard',

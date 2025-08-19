@@ -2,9 +2,9 @@ import { Component, OnInit, ViewChild, inject, AfterViewInit, effect } from '@an
 import { CommonModule } from '@angular/common';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatCardModule } from '@angular/material/card';
-import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/paginator';
+import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatChipsModule } from '@angular/material/chips';
+import { MatChip, MatChipsModule } from '@angular/material/chips';
 import { InviteService } from '../../../../services/invites.service';
 import { AuthService } from '../../../../core/services/auth.service';
 
@@ -89,11 +89,11 @@ export class ListInvites implements OnInit {
 
   getStatusColor(status: string): 'primary' | 'accent' | 'warn' {
     switch (status.toLowerCase()) {
-      case 'pending':
+      case 'Em aberto':
         return 'primary';
-      case 'completed':
+      case 'Finalizado':
         return 'accent';
-      case 'expired':
+      case 'Expirado':
         return 'warn';
       default:
         return 'primary';
