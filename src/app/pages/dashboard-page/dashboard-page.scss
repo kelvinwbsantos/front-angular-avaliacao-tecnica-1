@@ -1,15 +1,23 @@
-.header {
-    background-color: var(--mat-sys-secondary-container);
+:host {
     display: flex;
-    align-items: center;
-    justify-content: center;
+    flex-direction: row;
+    background-color: var(--mat-sys-surface);
 }
 
-.menu-button {
-    margin-left: auto;
+.left-panel {
+    background-color: var(--mat-sys-primary);
+    border-radius: 32px;
+    box-shadow: var(--mat-sys-level3);
+    height: 95vh;
+    display: flex;
+    flex-direction: column;
+    padding: 8px;
+    margin: 12px;
+    gap: 8px;
+    justify-items: auto;
+    align-items: flex-start;
 }
 
-a {
-    text-decoration: none;
-    color: inherit;
+.right-panel {
+    flex: 5;
 }

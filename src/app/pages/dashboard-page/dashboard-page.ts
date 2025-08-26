@@ -10,7 +10,7 @@ import { AuthService } from '../../core/services/auth.service';
 
 @Component({
   selector: 'app-dashboard-page',
-  imports: [MatButtonModule, MatIconModule, MatSidenavModule, MatToolbarModule, MatMenuModule, RouterLink, RouterModule],
+  imports: [MatButtonModule, MatIconModule, MatSidenavModule, MatToolbarModule, MatMenuModule, RouterLink, RouterModule, MatMenuModule],
   templateUrl: './dashboard-page.html',
   styleUrl: './dashboard-page.scss'
 })

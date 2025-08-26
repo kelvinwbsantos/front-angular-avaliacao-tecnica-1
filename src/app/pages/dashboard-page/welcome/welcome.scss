@@ -1,0 +1,43 @@
+:host {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    text-align: center;
+    padding: 20px;
+    background-color: var(--mat-sys-surface);
+}
+
+.welcome-box {
+    background: #fff;
+    padding: 40px 60px;
+    border-radius: 12px;
+    box-shadow: var(--mat-sys-level3);
+    animation: fadeIn 1s ease-in-out;
+}
+
+.welcome-box h1 {
+    font-size: 2.5rem;
+    font-weight: 300;
+    margin-bottom: 10px;
+    color: #1f2937;
+}
+
+.welcome-box p {
+    font-size: 1.2rem;
+    font-weight: 400;
+    color: #6b7280;
+}
+
+/* Animação para a entrada suave da caixa de boas-vindas */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
