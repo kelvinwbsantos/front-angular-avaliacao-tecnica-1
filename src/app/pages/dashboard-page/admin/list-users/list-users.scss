@@ -1,6 +1,7 @@
 .user-card {
   margin: 20px;
   padding: 16px;
+  display: flex;
 }
 
 .filter-form {
@@ -17,7 +18,8 @@
 
 .table-container {
   position: relative;
-  min-height: 300px;
+  display: flex;
+  overflow-x: auto;
 }
 
 .spinner-overlay {
@@ -32,4 +34,25 @@
   align-items: center;
   z-index: 10;
   border-radius: 4px;
+}
+
+mat-card-actions {
+justify-content: space-between;
+}
+
+@media (max-width: 600px) {
+  /* Reduce table font size and padding */
+  .mat-table {
+    font-size: 12px;
+  }
+
+  .mat-cell,
+  .mat-header-cell {
+    padding: 8px; /* Reduce padding */
+  }
+
+  /* Hide Actions column on mobile */
+  [matColumnDef="actions"] {
+    display: none;
+  }
 }

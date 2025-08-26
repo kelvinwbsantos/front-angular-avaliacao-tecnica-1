@@ -1,27 +1,49 @@
 @if (user()) {
 
-    <h2 mat-dialog-title>Dados do usuário</h2>
+<h2 mat-dialog-title>Dados do usuário</h2>
 
-    <mat-dialog-content>
-        <p><strong>Nome:</strong> {{ user()?.name }}</p>
-        <p><strong>Email:</strong> {{ user()?.email }}</p>
-        <p><strong>Cpf:</strong> {{ user()?.cpf }}</p>
-        <p><strong>Telefone:</strong> {{ user()?.phonenumber }}</p>
-        <p><strong>Cep:</strong> {{ user()?.cep }}</p>
-        <p><strong>UF:</strong> {{ user()?.uf }}</p>
-        <p><strong>Cidade:</strong> {{ user()?.city }}</p>
-        <p><strong>Bairro:</strong> {{ user()?.neighborhood }}</p>
-        <p><strong>Rua:</strong> {{ user()?.street }}</p>
-    </mat-dialog-content>
+<mat-dialog-content>
+    <p><strong>Nome:</strong> {{ user()?.name }}</p>
+    <p><strong>Email:</strong> {{ user()?.email }}</p>
+    <p><strong>Cpf:</strong> {{ user()?.cpf }}</p>
+    <p><strong>Telefone:</strong> {{ user()?.phonenumber }}</p>
+    <p><strong>Cep:</strong> {{ user()?.cep }}</p>
+    <p><strong>UF:</strong> {{ user()?.uf }}</p>
+    <p><strong>Cidade:</strong> {{ user()?.city }}</p>
+    <p><strong>Bairro:</strong> {{ user()?.neighborhood }}</p>
+    <p><strong>Rua:</strong> {{ user()?.street }}</p>
 
+    <mat-form-field>
+        <mat-label>Tipo de usuário</mat-label>
 
+        <mat-select [value]="selectedRole()" (selectionChange)="selectedRole.set($event.value)">
 
-    <mat-dialog-actions>
-        <button matButton mat-dialog-close>
-            <mat-icon>exit_to_app</mat-icon>Voltar
-        </button>
-    </mat-dialog-actions>
+            @for (option of roles; track option.key) {
+            <mat-option [value]="option.key">{{ option.value }}</mat-option>
+            }
+        </mat-select>
+    </mat-form-field>
 
-    } @else {
-    <p>Carregando detalhes do usuário...</p>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+    @if (hasChanges()) {
+    <button mat-raised-button matButton="filled" (click)="onSave()">
+        <mat-icon>save</mat-icon>
+        Salvar alterações
+    </button>
+    }
+
+    <button mat-raised-button matButton="filled" (click)="generatePassword()">
+        <mat-icon>key</mat-icon>
+        Gerar senha
+    </button>
+
+    <button mat-raised-button mat-dialog-close>
+        <mat-icon>exit_to_app</mat-icon>Voltar
+    </button>
+</mat-dialog-actions>
+
+} @else {
+<p>Carregando detalhes do usuário...</p>
 }

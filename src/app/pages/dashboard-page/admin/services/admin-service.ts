@@ -20,6 +20,7 @@ export interface User {
   name: string;
   email: string;
   cpf: string;
+  role: string;
 }
 
 export interface FullUserResponse {
@@ -33,6 +34,7 @@ export interface FullUserResponse {
   city: string;
   neighborhood: string;
   street: string;
+  role: string;
 }
 
 @Injectable({
