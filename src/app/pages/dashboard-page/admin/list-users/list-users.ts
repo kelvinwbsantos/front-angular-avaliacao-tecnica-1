@@ -74,4 +74,32 @@ export class ListUsers {
   resetFilters() {
     this.filterForm.reset();
   }
+
+  export(): void {
+    const filters = this.filterForm.value;
+
+    this.adminService.exportUsers({
+      name: filters.name ?? undefined,
+      email: filters.email ?? undefined,
+      cpf: filters.cpf ?? undefined
+    })
+      .subscribe({
+        next: (blob) => {
+          const url = window.URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = `relatorio_usuarios_${new Date().toISOString().split('T')[0]}.xlsx`;
+          document.body.appendChild(a);
+          a.click();
+
+          window.URL.revokeObjectURL(url);
+          document.body.removeChild(a);
+
+        },
+        error: (err) => {
+          console.error('Erro ao exportar:', err);
+
+        }
+      });
+  }
 }

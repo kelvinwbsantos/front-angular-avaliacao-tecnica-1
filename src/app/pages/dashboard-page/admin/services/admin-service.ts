@@ -65,4 +65,16 @@ export class AdminService {
   findById(userId: string): Observable<FullUserResponse> {
     return this.http.get<FullUserResponse>(`${this.baseUrl}/user/${userId}`);
   }
+
+  exportUsers(filters: { name?: string, email?: string, cpf?: string }): Observable<Blob> {
+    let params = new HttpParams();
+    if (filters.name) params = params.set('name', filters.name);
+    if (filters.email) params = params.set('email', filters.email);
+    if (filters.cpf) params = params.set('cpf', filters.cpf);
+
+    return this.http.get(`${this.baseUrl}/users/exportXlsx`, { 
+      params,
+      responseType: 'blob'
+    });
+  }
 }
