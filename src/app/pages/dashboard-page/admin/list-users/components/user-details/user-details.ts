@@ -62,11 +62,15 @@ export class UserDetails {
       console.error('Não é possível salvar: Faltam dados do usuário ou da nova role.');
       return;
     }
-    
-    console.log(`Salvando... Usuário ID: ${userId}, Novo Papel: ${newRole}`);
+
+    this.adminService.updateUserRole(userId, newRole).subscribe({
+      next: () => {
+        alert('Role atualizada com sucesso!');
+      }
+    });
   }
 
   generatePassword() {
-    
+
   }
 }

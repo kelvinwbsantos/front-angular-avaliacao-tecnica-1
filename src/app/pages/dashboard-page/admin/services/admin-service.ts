@@ -77,4 +77,9 @@ export class AdminService {
       responseType: 'blob'
     });
   }
+
+  updateUserRole(userId: number, roleName: string): Observable<User> {
+    const payload = { roleName };
+    return this.http.patch<User>(`${this.baseUrl}/user/${userId}/role`, payload);
+  }
 }
