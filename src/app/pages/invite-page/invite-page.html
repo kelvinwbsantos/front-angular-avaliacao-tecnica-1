@@ -1,0 +1,95 @@
+<div class="container">
+    <div class="left-panel">
+        <mat-card class="form-container">
+
+            <h1>Cadastre-se</h1>
+
+            <form [formGroup]="form">
+                <!-- Name Field -->
+                <mat-form-field appearance="outline">
+                    <mat-label>Nome Completo</mat-label>
+                    <input matInput formControlName="name" maxlength="100" />
+                </mat-form-field>
+
+                <!-- Email Field -->
+                <mat-form-field appearance="outline">
+                    <mat-label>Email</mat-label>
+                    <input matInput formControlName="email" />
+                </mat-form-field>
+
+                <!-- CPF Field -->
+                <mat-form-field appearance="outline">
+                    <mat-label>CPF</mat-label>
+                    <input matInput formControlName="cpf" placeholder="000.000.000-00" mask="000.000.000-00"
+                        [dropSpecialCharacters]="false" />
+                    @if (form.get('cpf')?.hasError('required')) {
+                    <mat-error>CPF é obrigatório</mat-error>
+                    }
+                </mat-form-field>
+
+                <!-- Password Field -->
+                <mat-form-field appearance="outline">
+                    <mat-label>Senha</mat-label>
+                    <input matInput formControlName="password" type="password" />
+
+                    @if (form.get('password')?.hasError('required')) {
+                    <mat-error>A senha é obrigatória</mat-error>
+                    }
+                    @if (form.get('password')?.hasError('pattern')) {
+                    <mat-error>
+                        A senha deve ter no mínimo 8 caracteres, letra maiúscula, letra minúscula,
+                        números e caracteres especiais
+                    </mat-error>
+                    }
+                </mat-form-field>
+
+                <!-- Phonenumber Field -->
+                <mat-form-field appearance="outline">
+                    <mat-label>Numero de telefone</mat-label>
+                    <input matInput formControlName="phonenumber" placeholder="(00) 00000-0000" mask="(00) 00000-0000" [dropSpecialCharacters]="false" />
+                </mat-form-field>
+
+                <!-- CEP Field -->
+                <mat-form-field appearance="outline">
+                    <mat-label>CEP</mat-label>
+                    <input matInput formControlName="cep" placeholder="00000-000" mask="00000-000" [dropSpecialCharacters]="false" />
+                </mat-form-field>
+
+                <!-- UF Field -->
+                <mat-form-field appearance="outline">
+                    <mat-label>UF</mat-label>
+                    <input matInput formControlName="uf" maxlength="2" />
+                </mat-form-field>
+
+                <!-- Localidade Field -->
+                <mat-form-field appearance="outline">
+                    <mat-label>Localidade</mat-label>
+                    <input matInput formControlName="localidade" maxlength="30" />
+                </mat-form-field>
+
+                <!-- Bairro Field -->
+                <mat-form-field appearance="outline">
+                    <mat-label>Bairro</mat-label>
+                    <input matInput formControlName="bairro" maxlength="40" />
+                </mat-form-field>
+
+                <!-- Logradouro Field -->
+                <mat-form-field appearance="outline">
+                    <mat-label>Logradouro</mat-label>
+                    <input matInput formControlName="logradouro" maxlength="100" />
+                </mat-form-field>
+
+                <!-- Submit Button -->
+                <button class="send-button" matButton="filled" mat-button [disabled]="form.invalid" type="submit"
+                    (click)="submitForm()">
+                    Entrar
+                </button>
+            </form>
+
+            <!-- Forgot Password Link -->
+            <a routerLink="#">esqueci minha senha</a>
+
+        </mat-card>
+    </div>
+    <div class="right-panel"></div>
+</div>

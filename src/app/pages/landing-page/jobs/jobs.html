@@ -1,18 +1,21 @@
-<div class="vagas-container">
-    @for (vaga of vagas; track $index) {
-        <mat-card class="vaga-card">
-            <mat-card-header>
-                <mat-card-title>{{ vaga.titulo }}</mat-card-title>
-                <mat-card-subtitle>{{ vaga.localizacao }}</mat-card-subtitle>
-            </mat-card-header>
+<body>
+    <h1>Trabalhe Conosco</h1>
+    <div class="vagas-container">
+        @for (vaga of vagas; track $index) {
+            <mat-card class="vaga-card">
+                <mat-card-header>
+                    <mat-card-title>{{ vaga.titulo }}</mat-card-title>
+                    <mat-card-subtitle>{{ vaga.localizacao }}</mat-card-subtitle>
+                </mat-card-header>
 
-            <mat-card-content>
-                <p>{{ vaga.descricao }}</p>
-            </mat-card-content>
+                <mat-card-content>
+                    <p>{{ vaga.descricao }}</p>
+                </mat-card-content>
 
-            <mat-card-actions>
-                <a mat-button color="primary" href="#contact">Candidatar-se</a>
-            </mat-card-actions>
-        </mat-card>
-    }
-</div>
+                <mat-card-actions>
+                    <a matButton="filled" color="primary" href="#contact">Candidatar-se</a>
+                </mat-card-actions>
+            </mat-card>
+        }
+    </div>
+</body>

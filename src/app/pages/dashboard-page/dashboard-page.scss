@@ -1,0 +1,23 @@
+:host {
+    display: flex;
+    flex-direction: row;
+    background-color: var(--mat-sys-surface);
+}
+
+.left-panel {
+    background-color: var(--mat-sys-primary);
+    border-radius: 32px;
+    box-shadow: var(--mat-sys-level3);
+    height: 95vh;
+    display: flex;
+    flex-direction: column;
+    padding: 8px;
+    margin: 12px;
+    gap: 8px;
+    justify-items: auto;
+    align-items: flex-start;
+}
+
+.right-panel {
+    flex: 5;
+}

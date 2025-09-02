@@ -1,38 +1,25 @@
-<nav class="nav-container" role="navigation" aria-label="Menu principal">
-  <ul class="nav-list">
-    <li>
-      <a mat-button color="primary" href="#about" class="nav-link">
-        <mat-icon aria-hidden="false" aria-label="Ícone Sobre nós">info</mat-icon>
-        Sobre nós
-      </a>
-    </li>
-    <li>
-      <a mat-button color="primary" href="#jobs" class="nav-link">
-        <mat-icon aria-hidden="false" aria-label="Ícone Vagas">work</mat-icon>
-        Vagas
-      </a>
-    </li>
-    <li>
-      <a mat-button color="primary" href="#contact" class="nav-link">
-        <mat-icon aria-hidden="false" aria-label="Ícone Contato">support_agent</mat-icon>
-        Contato
-      </a>
-    </li>
-    <li>
-      <a mat-button color="primary" href="/login" class="nav-link">
-        <mat-icon aria-hidden="false" aria-label="Ícone Login">login</mat-icon>
-        Login
-      </a>
-    </li>
+<nav class="navbar">
+  <button class="hamburger" aria-label="Abrir menu" (click)="toggleMenu()" [attr.aria-expanded]="menuOpen">
+    <mat-icon>{{ menuOpen ? 'close' : 'menu' }}</mat-icon>
+  </button>
+
+  <img src="logo2.png" alt="Logo" class="logo" />
+
+  <ul class="nav-links" [class.open]="menuOpen">
+    <li><a href="#about" (click)="closeMenu()">Sobre nós</a></li>
+    <li><a href="#jobs" (click)="closeMenu()">Vagas</a></li>
+    <li><a href="#contact" (click)="closeMenu()">Contato</a></li>
+    <li><a href="/login" (click)="closeMenu()">Login</a></li>
   </ul>
 
-  <button
-    mat-stroked-button
-    class="toggle-theme-btn"
-    (click)="toggleDarkMode()"
-    aria-label="Alternar modo escuro"
-  >
-    <mat-icon>{{ darkMode ? 'light_mode' : 'dark_mode' }}</mat-icon>
-    {{ darkMode ? 'Modo Claro' : 'Modo Escuro' }}
-  </button>
+  <mat-slide-toggle (change)="toggleDarkMode()" [checked]="darkMode" aria-label="Alternar modo escuro"
+    class="dark-mode-toggle">
+    <mat-icon>{{ darkMode ? 'dark_mode' : 'light_mode' }}</mat-icon>
+  </mat-slide-toggle>
 </nav>
+
+
+<button mat-fab class="btn-top" [class.show]="showButton" (click)="scrollToTop()"
+  aria-label="Voltar ao topo">
+  <mat-icon>arrow_upward</mat-icon>
+</button>

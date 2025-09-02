@@ -1,0 +1,25 @@
+<mat-card class="invite-card">
+    <mat-card-header>
+        <mat-card-title>Convidar Colaborador</mat-card-title>
+        <mat-card-subtitle>Envie um convite para um futuro colaborador</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+        <form (ngSubmit)="sendInvite()" class="invite-form" [formGroup]="form">
+            <mat-form-field appearance="outline" class="full-width">
+                <mat-label>E-mail do Colaborador</mat-label>
+                <input matInput type="email" placeholder="ex: colega@email.com" formControlName="newInviteEmail" required>
+                @if (form.get('newInviteEmail')?.hasError('email')) {
+                    <mat-error>Por favor, insira um e-mail válido.</mat-error>
+                }
+            </mat-form-field>
+
+            <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid || loading()">
+                @if (loading()) {
+                    <mat-spinner [diameter]="24"></mat-spinner>
+                } @else {
+                    <span>Enviar Convite</span>
+                }
+            </button>
+        </form>
+    </mat-card-content>
+</mat-card>

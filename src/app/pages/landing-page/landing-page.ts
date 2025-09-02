@@ -14,5 +14,4 @@ import { Login } from "./login/login";
   styleUrl: './landing-page.scss'
 })
 export class LandingPage {
-  
 }

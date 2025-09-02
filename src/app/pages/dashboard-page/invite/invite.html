@@ -1,0 +1,12 @@
+<mat-tab-group dynamicHeight>
+  <mat-tab label="Convidar">
+    <div>
+      <app-send-invite (inviteSent)="changeTab(1)"></app-send-invite>
+    </div>
+  </mat-tab>
+  <mat-tab label="Convites enviados">
+    <div>
+      <app-list-invites></app-list-invites>
+    </div>
+  </mat-tab>
+</mat-tab-group>

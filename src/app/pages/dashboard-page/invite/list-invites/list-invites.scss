@@ -1,0 +1,19 @@
+.invite-card {
+    background-color: var(--mat-sys-secondary-container);
+    margin: 20px;
+}
+
+table {
+    background-color: var(--mat-sys-background);
+}
+
+mat-card-subtitle {
+    font: var(--mat-sys-label-large);
+    color: var(--mat-sys-on-secondary-container);
+    margin-bottom: 10px;
+}
+
+mat-card-title {
+    font: var(--mat-sys-title-large);
+    color: var(--mat-sys-on-primary-container);
+}

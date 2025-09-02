@@ -1,0 +1,49 @@
+:host {
+  display: block;
+  height: 100%;
+  width: 100%;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  padding: 16px;
+  background-color: var(--mat-sys-surface-container-low);
+}
+
+.expired-card {
+  max-width: 450px;
+  width: 100%;
+  padding: 24px;
+  text-align: center;
+}
+
+.card-header {
+  justify-content: center;
+  margin-bottom: 16px;
+}
+
+.icon-area mat-icon {
+  font-size: 64px;
+  width: 64px;
+  height: 64px;
+}
+
+h1 {
+  font: var(--mat-sys-headline-small);
+  margin-bottom: 8px;
+}
+
+p {
+  font: var(--mat-sys-body-medium);
+  color: var(--mat-sys-on-surface-variant);
+  margin-bottom: 24px;
+}
+
+mat-card-actions {
+  display: flex;
+  justify-content: center;
+  padding: 0;
+}

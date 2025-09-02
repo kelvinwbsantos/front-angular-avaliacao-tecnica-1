@@ -1,0 +1,36 @@
+<div class="left-panel">
+        <button matButton="filled" routerLink="/dashboard">
+            <mat-icon>home</mat-icon>
+            <span>Inicio</span>
+        </button>
+
+        <button matButton="filled" routerLink="profile">
+            <mat-icon>account_circle</mat-icon>
+            <span>Perfil</span>
+        </button>
+
+        @if (this.authService.hasRole("administrador") || this.authService.hasRole("gente_e_cultura"))
+        {
+        <button matButton="filled" routerLink="invite">
+            <mat-icon>admin_panel_settings</mat-icon>
+            <span>Convidar Colaboradores</span>
+        </button>
+        }
+
+        @if (this.authService.hasRole("administrador") || this.authService.hasRole("gente_e_cultura"))
+        {
+        <button matButton="filled" routerLink="admin">
+            <mat-icon>admin_panel_settings</mat-icon>
+            <span>Gerencial</span>
+        </button>
+        }
+
+        <button matButton="filled" (click)="logout()">
+            <mat-icon>logout</mat-icon>
+            <span>Log out</span>
+        </button>
+</div>
+
+<div class="right-panel">
+    <router-outlet></router-outlet>
+</div>
