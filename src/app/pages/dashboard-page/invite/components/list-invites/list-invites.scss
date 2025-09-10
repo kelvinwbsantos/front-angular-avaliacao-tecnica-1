@@ -17,3 +17,10 @@ mat-card-title {
     font: var(--mat-sys-title-large);
     color: var(--mat-sys-on-primary-container);
 }
+
+form {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-bottom: 8px;
+}

@@ -1,17 +1,25 @@
-import { Component, OnInit, ViewChild, inject, AfterViewInit, effect } from '@angular/core';
+import { Component, OnInit, inject, effect } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatCardModule } from '@angular/material/card';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatChip, MatChipsModule } from '@angular/material/chips';
-import { InviteService } from '../../../../services/invites.service';
-import { AuthService } from '../../../../core/services/auth.service';
+import { MatChipsModule } from '@angular/material/chips';
+import { InviteService } from '../../services/invites.service';
+import { AuthService } from '../../../../../core/services/auth.service';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { DatePipe } from '@angular/common';
+import { MatIconModule } from '@angular/material/icon';
 
 interface InviteResponse {
   invites: {
     email: string;
     status: string;
+    createdAt: Date;
+    expiresAt: Date;
   }[];
   total: number;
 }
@@ -25,8 +33,15 @@ interface InviteResponse {
     MatCardModule,
     MatPaginatorModule,
     MatProgressSpinnerModule,
-    MatChipsModule
+    MatChipsModule,
+    MatFormFieldModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatInputModule,
+    MatButtonModule,
+    MatIconModule
   ],
+  providers: [DatePipe],
   templateUrl: './list-invites.html',
   styleUrls: ['./list-invites.scss']
 })
@@ -34,23 +49,28 @@ export class ListInvites implements OnInit {
   private readonly invitesService = inject(InviteService);
   private readonly authService = inject(AuthService);
 
+  filterForm = new FormGroup({
+    email: new FormControl(''),
+    status: new FormControl(''),
+  });
+
   userEmail: string | undefined
 
-  displayedColumns: string[] = ['email', 'status'];
+  displayedColumns: string[] = ['email', 'status', 'createdAt', 'expiresAt'];
   dataSource = new MatTableDataSource<InviteResponse['invites'][0]>();
 
   isLoading = true;
   totalInvites = 0;
-  
+
   pageSize = 10;
   pageIndex = 0;
 
   constructor() {
     this.userEmail = this.authService.userEmail();
 
-      effect(() => {
-        this.invitesService.refreshNeeded();
-        this.fetchInvites();
+    effect(() => {
+      this.invitesService.refreshNeeded();
+      this.fetchInvites();
     });
   }
 
@@ -66,11 +86,14 @@ export class ListInvites implements OnInit {
     }
 
     this.isLoading = true;
-    
-    this.invitesService.getInvites(this.userEmail, this.pageIndex + 1, this.pageSize).subscribe({
+
+    const emailFilter = this.filterForm.get('email')?.value || '';
+    const statusFilter = this.filterForm.get('status')?.value || '';
+
+    this.invitesService.getInvites(this.userEmail, emailFilter, statusFilter, this.pageIndex + 1, this.pageSize).subscribe({
       next: (response: InviteResponse) => {
-        this.dataSource.data = response.invites; // Assign the paginated data
-        this.totalInvites = response.total; // Use the total from the API response
+        this.dataSource.data = response.invites;
+        this.totalInvites = response.total;
         this.isLoading = false;
       },
       error: (error) => {
@@ -87,16 +110,22 @@ export class ListInvites implements OnInit {
     this.fetchInvites();
   }
 
-  getStatusColor(status: string): 'primary' | 'accent' | 'warn' {
+  clearFilters(): void {
+    this.filterForm.reset();
+
+    this.fetchInvites();
+  }
+
+  getIconForStatus(status: string): string {
     switch (status.toLowerCase()) {
-      case 'Em aberto':
-        return 'primary';
-      case 'Finalizado':
-        return 'accent';
-      case 'Expirado':
-        return 'warn';
+      case 'em aberto':
+        return 'hourglass_empty';
+      case 'finalizado':
+        return 'check_circle';
+      case 'vencido':
+        return 'error';
       default:
-        return 'primary';
+        return 'help';
     }
   }
 }
