@@ -24,7 +24,15 @@
             <span>Gerencial</span>
         </button>
         }
-
+        <!-- NOVO ITEM: Certificações -->
+        @if (this.authService.hasRole("administrador") || this.authService.hasRole("gente_e_cultura"))
+        {
+        <button matButton="filled" routerLink="certifications">
+            <mat-icon>workspace_premium</mat-icon>
+            <span>Certificações</span>
+        </button>
+        }
+        <!-- FIM NOVO ITEM -->
         <button matButton="filled" (click)="logout()">
             <mat-icon>logout</mat-icon>
             <span>Log out</span>

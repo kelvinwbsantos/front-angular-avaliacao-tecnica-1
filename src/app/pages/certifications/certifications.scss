@@ -1,7 +1,8 @@
-.user-card {
+.cert-card {
   margin: 20px;
   padding: 16px;
   display: flex;
+  flex-direction: column; 
   box-shadow: 12px 12px 20px rgba(0, 0, 0, 0.3);
 }
 
@@ -21,6 +22,7 @@
   position: relative;
   display: flex;
   overflow-x: auto;
+  border-radius: 4px;
 }
 
 .spinner-overlay {
@@ -37,9 +39,9 @@
   border-radius: 12px;
 }
   
-
 mat-card-actions {
-justify-content: space-between;
+  justify-content: space-between;
+  padding-top: 16px !important;
 }
 
 @media (max-width: 600px) {
@@ -50,11 +52,6 @@ justify-content: space-between;
 
   .mat-cell,
   .mat-header-cell {
-    padding: 8px; /* Reduce padding */
-  }
-
-  /* Hide Actions column on mobile */
-  [matColumnDef="actions"] {
-    display: none;
+    padding: 8px; 
   }
 }
