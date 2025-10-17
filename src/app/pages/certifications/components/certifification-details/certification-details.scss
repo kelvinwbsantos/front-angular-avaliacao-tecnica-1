@@ -1,0 +1,122 @@
+.dialog-content {
+    padding: 20px 24px;
+    min-width: 550px; // Aumentado para acomodar a tabela
+    display: flex;
+    flex-direction: column;
+    //min-height: 50vh;
+}
+
+.spinner-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.8);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+    border-radius: 12px;
+}
+
+.config-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.config-fields {
+    padding-top: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+// Estilo da Área de Upload
+.upload-area {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 70px;
+    border: 3px dashed var(--mat-sys-primary);
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+    background-color: var(--mat-sys-primary-container);
+    color: var(--mat-sys-on-primary-container);
+    cursor: pointer;
+    transition: background-color 0.2s;
+
+    &:hover {
+        background-color: rgba(var(--mat-sys-primary-rgb), 0.1); // Cor mais clara no hover
+    }
+}
+
+.mt-4 {
+    margin-top: 1rem;
+}
+
+.table-container {
+    overflow-x: auto;
+    border-radius: 4px;
+    position: relative;
+    max-height: 500px;
+    flex-grow: 1;
+}
+
+// Tabela de Questões
+.mat-table {
+    min-width: 100%;
+    //Garante que as colunas fixas, evitando scroll horizontal
+    table-layout: fixed;
+}
+
+.mat-column-id {
+    width: 60px;
+    padding-right: 0;
+}
+
+.mat-column-validUntil {
+    width: 120px;
+}
+
+.mat-column-isActive {
+    width: 80px;
+    text-align: center;
+}
+
+.mat-column-actions {
+    width: 100px;
+    text-align: center;
+}
+
+.mat-column-questionText {
+    // Permite que esta coluna use todo o espaço restante
+    flex: 1;
+}
+
+.mat-column-validUntil {
+    width: 120px;
+}
+
+.mat-column-isActive {
+    width: 80px;
+    text-align: center;
+}
+
+.mat-column-actions {
+    width: 100px;
+    text-align: center;
+}
+
+// Responsividade para telas menores
+@media (max-width: 800px) {
+    .dialog-content {
+        min-width: 100%;
+        padding: 16px;
+    }
+}
+

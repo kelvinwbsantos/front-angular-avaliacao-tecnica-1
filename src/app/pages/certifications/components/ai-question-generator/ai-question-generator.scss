@@ -1,0 +1,92 @@
+
+// Caminho: certifications/components/ai-question-generator/ai-question-generator.scss
+
+// Estilos para o componente de Geração de Questões com I.A. (Revisão)
+
+/* Aumenta a largura da modal (mat-dialog-container) */
+// :host {
+//     /* Usa a variável CSS e ::ng-deep para afetar o container global do Material */
+//     ::ng-deep .mat-mdc-dialog-container {
+//         /* Configura a largura desejada para 800px */
+//         --mdc-dialog-container-width: 800px;
+//         min-width: 900px; 
+//         max-width: 90vw !important; /* Mantém responsividade em telas menores */
+//     }
+// }
+
+/* CORREÇÃO DE LARGURA DO MODAL: Aumenta a largura (mat-dialog-container) */
+:host {
+    /* Usa ::ng-deep e !important para forçar a sobreposição dos estilos do Material */
+    ::ng-deep .mat-mdc-dialog-container {
+        /* Configura a largura desejada (900px) */
+        --mdc-dialog-container-width: 1000px; 
+        
+        /* FORÇA explícita da largura e largura mínima para evitar sobreposição */
+        width: 1000px !important;
+        min-width: 1000px !important; 
+        
+        /* Mantém responsividade em telas menores */
+        max-width: 90vw !important; 
+    }
+}
+
+
+// Estilo da Área de Upload
+.upload-area {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 70px;
+    border: 3px dashed var(--mat-sys-primary);
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+    background-color: var(--mat-sys-primary-container);
+    color: var(--mat-sys-on-primary-container);
+    cursor: pointer;
+    transition: background-color 0.2s;
+
+    &:hover {
+        background-color: rgba(var(--mat-sys-primary-rgb), 0.1); // Cor mais clara no hover
+    }
+}
+
+/* Estilização da tabela de revisão */
+.table-container {
+    overflow-x: auto;
+    border-radius: 4px;
+    flex-grow: 1;
+    max-height: 400px; /* Limita a altura para scroll */
+}
+
+/* Garante que os botões de ação na célula da tabela fiquem em linha */
+.action-buttons-cell {
+    display: flex;
+    justify-content: flex-end; /* Alinha os botões à direita */
+    gap: 2px; /* Espaçamento entre os botões */
+    
+    // Alinhamento do conteúdo da célula de cabeçalho
+    &.mat-column-actions {
+        text-align: right;
+    }
+}
+
+/* Estilos para as colunas da tabela */
+.mat-column-questionText {
+    width: 60%;
+}
+
+.mat-column-correctAnswer {
+    width: 25%;
+}
+
+.mat-column-actions {
+    width: 20%;
+    min-width: 130px;
+}
+
+// Ocultar a linha de rodapé padrão se não houver paginator
+.mat-table-footer-row {
+    display: none;
+}
