@@ -1,6 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
-import { ListInvites } from "./list-invites/list-invites";
-import { SendInvite } from "./send-invite/send-invite";
+import { ListInvites } from "./components/list-invites/list-invites";
+import { SendInvite } from "./components/send-invite/send-invite";
 import { MatTabGroup, MatTabsModule } from '@angular/material/tabs';
 
 @Component({

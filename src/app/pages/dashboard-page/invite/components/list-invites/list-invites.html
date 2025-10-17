@@ -5,6 +5,25 @@
   </mat-card-header>
 
   <mat-card-content>
+    <!-- Seção de Filtros -->
+    <form [formGroup]="filterForm" class="filter-form">
+      <mat-form-field appearance="outline">
+        <mat-label>Email</mat-label>
+        <input matInput formControlName="email" placeholder="Filtrar por e-mail">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Status</mat-label>
+        <input matInput formControlName="status" placeholder="Filtrar por status">
+      </mat-form-field>
+
+      <!-- Botão para Buscar com Filtro -->
+      <button matButton="filled" type="button" (click)="fetchInvites()">Buscar</button>
+
+      <!-- Botão para Limpar Filtros -->
+      <button matButton="filled" type="button" (click)="clearFilters()">Limpar Filtros</button>
+    </form>
+
     <div class="table-container">
 
       @if (isLoading) {
@@ -23,10 +42,23 @@
         <ng-container matColumnDef="status">
           <th mat-header-cell *matHeaderCellDef> Status </th>
           <td mat-cell *matCellDef="let invite">
-            <mat-chip [color]="getStatusColor(invite.status)" selected>
-              {{invite.status | titlecase}}
+            <mat-chip>
+              {{ invite.status | titlecase }}
+              <mat-icon>
+                {{ getIconForStatus(invite.status) }}
+              </mat-icon>
             </mat-chip>
           </td>
+        </ng-container>
+
+        <ng-container matColumnDef="createdAt">
+          <th mat-header-cell *matHeaderCellDef> Data de criação </th>
+          <td mat-cell *matCellDef="let invite"> {{ invite.createdAt | date: 'dd/MM/yyyy HH:mm' }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="expiresAt">
+          <th mat-header-cell *matHeaderCellDef> Data de expiração </th>
+          <td mat-cell *matCellDef="let invite"> {{ invite.expiresAt | date: 'dd/MM/yyyy HH:mm' }} </td>
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
@@ -46,4 +78,3 @@
     </div>
   </mat-card-content>
 </mat-card>
-
