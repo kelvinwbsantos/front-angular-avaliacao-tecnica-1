@@ -1,0 +1,107 @@
+
+<mat-dialog-content class="dialog-content">
+    <mat-card class="question-bank-card">
+
+        <mat-card-header class="custom-card-header">
+            <div>
+                <mat-card-title class="!mb-1">Gerenciamento de Questões</mat-card-title>
+                <mat-card-subtitle class="!mb-0">Crie, visualize e gerencie questões                 
+                </mat-card-subtitle>
+                <mat-card-subtitle class="!mb-0">
+                    @if (certificationId) {
+                        Certificação: "{{ certificationTitle }}"
+                    }
+                </mat-card-subtitle>
+            </div>
+
+            <div class="header-actions">
+                <button mat-flat-button color="accent" (click)="openAiGenerator()" matTooltip="Gerar/Adicionar questões com base em um PDF">
+                    <mat-icon>psychology</mat-icon> Adicionar com I.A.
+                </button>
+                <button mat-raised-button color="primary" (click)="openQuestionDetails()">
+                    <mat-icon>add</mat-icon> Adicionar Nova Questão
+                </button>
+            </div>
+        </mat-card-header>
+
+        <mat-card-content>
+            <form [formGroup]="filterForm" class="filter-form">
+                <mat-form-field appearance="outline">
+                    <mat-label>Texto da Questão</mat-label>
+                    <input matInput formControlName="questionText" placeholder="Filtrar por texto">
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                    <mat-label>Status</mat-label>
+                    <mat-select formControlName="isActive">
+                        <mat-option [value]="null">Todos os Status</mat-option>
+                        <mat-option [value]="true">Ativas</mat-option>
+                        <mat-option [value]="false">Inativas</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <button mat-stroked-button color="warn" (click)="resetFilters()" type="button" class="h-[52px]">
+                    <mat-icon>delete_forever</mat-icon> Limpar Filtros
+                </button>
+            </form>
+
+            <div class="table-container">
+                @if (isLoading) {
+                    <div class="spinner-overlay">
+                        <mat-progress-spinner color="primary" mode="indeterminate"></mat-progress-spinner>
+                    </div>
+                }
+                <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 w-full">
+                    <ng-container matColumnDef="question">
+                       <th mat-header-cell *matHeaderCellDef> Questão </th>
+                       <td mat-cell *matCellDef="let q" [matTooltip]="q.question"> {{ q.question | slice:0:80 }}{{ q.question?.length > 80 ? '...' : '' }}
+                       </td>
+                   </ng-container>
+                   <ng-container matColumnDef="isActive">
+                       <th mat-header-cell *matHeaderCellDef> Status </th>
+                       <td mat-cell *matCellDef="let q">
+                           <span [ngClass]="q.isActive ? 'status-active' : 'status-inactive'">
+                               {{ q.isActive ? 'Ativa' : 'Inativa' }}
+                           </span>
+                       </td>
+                   </ng-container>
+                   <ng-container matColumnDef="createdAt">
+                       <th mat-header-cell *matHeaderCellDef> Data Criação </th> <td mat-cell *matCellDef="let q">
+                           {{ q.createdAt | date:'dd/MM/yyyy' }}
+                       </td>
+                   </ng-container>
+                   <ng-container matColumnDef="actions">
+                       <th mat-header-cell *matHeaderCellDef class="!text-right"> Ações </th>
+                       <td mat-cell *matCellDef="let q" class="actions-cell">
+                           <button mat-icon-button (click)="openQuestionDetails(q)" matTooltip="Editar Questão" color="primary">
+                               <mat-icon>edit_note</mat-icon>
+                           </button>
+                           <button mat-icon-button (click)="deleteQuestion(q)" matTooltip="Excluir Questão" color="warn">
+                               <mat-icon>delete</mat-icon>
+                           </button>
+                       </td>
+                   </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                    <tr class="mat-row" *matNoDataRow>
+                        <td class="mat-cell" [attr.colspan]="displayedColumns.length">
+                            Nenhuma questão encontrada com os filtros aplicados.
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </mat-card-content>
+
+        <mat-card-actions class="!justify-start">
+            <mat-paginator [length]="totalQuestions"
+                           [pageSize]="10"
+                           [pageSizeOptions]="[5, 10, 25, 100]"
+                           (page)="onPageChange($event)"
+                           aria-label="Selecione a página de questões">
+            </mat-paginator>
+        </mat-card-actions>
+    </mat-card>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+    <button mat-button (click)="dialogRef.close(false)">Fechar</button>
+</mat-dialog-actions>

@@ -30,7 +30,8 @@ export class ListUsers {
 
   openUserDetails(userId: number): void {
     this.dialog.open(UserDetails, {
-      width: '500px',
+      width: '900px',
+      maxWidth: '95vw',
       enterAnimationDuration: '300ms',
       exitAnimationDuration: '300ms',
 

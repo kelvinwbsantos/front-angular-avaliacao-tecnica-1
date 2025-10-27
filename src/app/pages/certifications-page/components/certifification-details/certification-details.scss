@@ -112,6 +112,18 @@
     text-align: center;
 }
 
+// Garante o alinhamento correto do ícone e texto dentro do span no botão
+.button-content-wrapper {
+  display: inline-flex; // Usa inline-flex para o span se comportar como bloco flex mas em linha
+  align-items: center; // Alinha verticalmente o ícone e o texto
+  gap: 6px; // Adiciona um pequeno espaço entre o ícone e o texto (ajuste se necessário)
+}
+
+// Opcional: Ajuste fino da posição do ícone se necessário
+.button-content-wrapper mat-icon {
+  // vertical-align: middle; // Pode ajudar em alguns casos, mas align-items geralmente é suficiente
+}
+
 // Responsividade para telas menores
 @media (max-width: 800px) {
     .dialog-content {

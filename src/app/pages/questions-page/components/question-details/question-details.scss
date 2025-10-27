@@ -1,0 +1,45 @@
+// src/app/pages/certifications/components/questions/question-details.scss
+
+// v2 - Estilização básica para o diálogo de detalhes da questão
+
+.dialog-content {
+    padding: 20px 24px;
+    min-width: 550px;
+    
+}
+
+.config-form {
+    display: flex;
+    gap: 16px;
+    margin: -16px; // Remove a margem do mat-card dentro do dialog
+    padding: 16px;
+    display: flex;
+    flex-direction: column; 
+    box-shadow: none; // Modal já tem sombra
+}
+
+.config-fields {
+    padding-top: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.mat-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+// Garante que o input de texto dentro da opção use 100% da largura disponível
+.mat-form-field {
+    width: 100%;
+}
+
+// Adicionando responsividade
+@media (max-width: 600px) {
+    .dialog-content {
+        min-width: 100%;
+        padding: 16px;
+    }
+}
