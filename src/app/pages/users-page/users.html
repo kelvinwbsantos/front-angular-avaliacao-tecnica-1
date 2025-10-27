@@ -1,0 +1,78 @@
+<mat-card class="user-card">
+    <mat-card-header class="custom-card-header"> <div>
+            <mat-card-title>Painel de Usuários</mat-card-title>
+            <mat-card-subtitle>Filtre e visualize os usuários do sistema</mat-card-subtitle>
+        </div>
+        <div class="header-actions">
+            <button *ngIf="authService.hasPermission('INVITE_USER')" mat-flat-button color="primary" (click)="openInviteModal()" matTooltip="Convidar novo usuário">
+                <mat-icon>person_add</mat-icon> Convidar Usuário
+            </button>
+            <button *ngIf="authService.hasPermission('EXPORT_USERS')" mat-stroked-button (click)="export()" matTooltip="Exportar lista filtrada para Excel">
+                <mat-icon>download</mat-icon> Exportar Tabela
+            </button>
+        </div>
+    </mat-card-header>
+
+    <mat-card-content>
+        <form [formGroup]="filterForm" class="filter-form">
+            <mat-form-field appearance="outline">
+                <mat-label>Nome</mat-label>
+                <input matInput formControlName="name" placeholder="Filtrar por nome">
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>E-mail</mat-label>
+                <input matInput formControlName="email" placeholder="Filtrar por e-mail">
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>CPF</mat-label>
+                <input matInput formControlName="cpf" placeholder="Filtrar por CPF">
+            </mat-form-field>
+            <button mat-stroked-button color="warn" (click)="resetFilters()" type="button">Limpar Filtros</button>
+        </form>
+
+        <div class="table-container">
+            @if (isLoading) {
+                <div class="spinner-overlay"> <mat-progress-spinner color="primary" mode="indeterminate"></mat-progress-spinner> </div>
+            }
+
+            <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+                <ng-container matColumnDef="name">
+                    <th mat-header-cell *matHeaderCellDef> Nome </th>
+                    <td mat-cell *matCellDef="let user"> {{user.name}} </td>
+                </ng-container>
+                <ng-container matColumnDef="email">
+                    <th mat-header-cell *matHeaderCellDef> E-mail </th>
+                    <td mat-cell *matCellDef="let user"> {{user.email}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="actions">
+                    <th mat-header-cell *matHeaderCellDef> Ações </th>
+                    <td mat-cell *matCellDef="let user" class="actions-cell">
+                        <button *ngIf="authService.hasPermission('READ_USERS') || authService.hasPermission('EDIT_USER_PROFILE')"
+                                mat-icon-button color="primary" (click)="openUserDetails(user.id)" matTooltip="Ver/Editar Detalhes">
+                            <mat-icon>search</mat-icon> </button>
+                        <button *ngIf="authService.hasPermission('ASSIGN_USER_ROLES')"
+                                mat-icon-button color="accent" (click)="openEditRolesModal(user)" matTooltip="Alterar Permissões/Role">
+                            <mat-icon>manage_accounts</mat-icon>
+                        </button>
+                        <button *ngIf="authService.hasPermission('DELETE_USER')"
+                                mat-icon-button color="warn" (click)="deleteUser(user)" matTooltip="Excluir Usuário">
+                            <mat-icon>delete</mat-icon>
+                        </button>
+                    </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                <tr class="mat-row" *matNoDataRow>
+                    <td class="mat-cell" [attr.colspan]="displayedColumns.length"> Nenhum usuário encontrado com os filtros aplicados. </td>
+                </tr>
+            </table>
+        </div>
+    </mat-card-content>
+
+    <mat-card-actions class="custom-card-actions"> <mat-paginator [length]="totalUsers" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]"
+                       (page)="onPageChange($event)" aria-label="Selecione a página de usuários">
+        </mat-paginator>
+        </mat-card-actions>
+</mat-card>

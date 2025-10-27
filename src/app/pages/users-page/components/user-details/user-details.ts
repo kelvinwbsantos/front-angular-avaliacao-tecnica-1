@@ -2,7 +2,7 @@ import { Component, computed, effect, inject, signal, WritableSignal } from '@an
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
-import { AdminService } from '../../../services/admin-service';
+import { UserService } from '../../services/user.service';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
@@ -16,6 +16,7 @@ export interface RoleOption {
 
 @Component({
   selector: 'app-user-details',
+  standalone: true,
   imports: [MatDialogModule, MatCardModule, MatButtonModule, MatInputModule, MatProgressSpinnerModule, MatIconModule, MatSelectModule],
   templateUrl: './user-details.html',
   styleUrl: './user-details.scss'
@@ -23,7 +24,7 @@ export interface RoleOption {
 export class UserDetails {
   private readonly data: { userId: string } = inject(MAT_DIALOG_DATA);
 
-  private readonly adminService = inject(AdminService);
+  private readonly userService = inject(UserService);
 
   readonly roles: RoleOption[] = [
     { key: 'administrador', value: 'Administrador' },
@@ -32,7 +33,7 @@ export class UserDetails {
   ];
 
   readonly user = toSignal(
-    this.adminService.findById(this.data.userId)
+    this.userService.findById(this.data.userId)
   );
 
   readonly userRole = computed(() => this.user()?.role);
@@ -63,7 +64,7 @@ export class UserDetails {
       return;
     }
 
-    this.adminService.updateUserRole(userId, newRole).subscribe({
+    this.userService.updateUserRole(userId, newRole).subscribe({
       next: () => {
         alert('Role atualizada com sucesso!');
       }
