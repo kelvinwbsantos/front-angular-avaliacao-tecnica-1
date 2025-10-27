@@ -3,7 +3,7 @@ import { DashboardPage } from './dashboard-page';
 import { roleGuard } from '../../core/guards/role-guard';
 import { Profile } from './profile/profile';
 import { Welcome } from './welcome/welcome';
-import { CertificationsPage } from '../certifications/certifications'; 
+import { CertificationsPage } from '../certifications-page/certifications'; 
 
 
 export const DASHBOARD_ROUTES: Routes = [

@@ -1,0 +1,156 @@
+<h2 mat-dialog-title>
+    {{ data.isCreation ? 'Nova Certificação' : 'Detalhes da Certificação' }}
+    @if (!data.isCreation && data.certification) {
+        <span>: {{ data.certification.name }}</span>
+    }
+</h2>
+
+<mat-dialog-content class="dialog-content">
+
+    @if (isLoadingDetails) {
+        <div class="spinner-overlay">
+            <mat-progress-spinner color="primary" mode="indeterminate"></mat-progress-spinner>
+            <p>Carregando detalhes...</p>
+        </div>
+    }
+
+    @if (!isLoadingDetails) {
+
+        <form [formGroup]="certificationForm" class="config-form">
+            <mat-card>
+                <mat-card-header>
+                    <mat-card-title>Informações Básicas</mat-card-title>
+                </mat-card-header>
+                <mat-card-content class="config-fields grid grid-cols-1 md:grid-cols-2 gap-x-4">
+
+                    <mat-form-field appearance="outline" class="w-full">
+                        <mat-label>Título (Nome)</mat-label>
+                        <input matInput formControlName="name" placeholder="Ex: Fundamentos de IA">
+                        @if (certificationForm.get('name')?.invalid && certificationForm.get('name')?.touched) {
+                            <mat-error>O título é obrigatório.</mat-error>
+                        }
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline" class="w-full">
+                        <mat-label>Descrição Curta</mat-label>
+                        <input matInput formControlName="shortDescription" placeholder="Breve descrição para listagem">
+                        @if (certificationForm.get('shortDescription')?.invalid && certificationForm.get('shortDescription')?.touched) {
+                            <mat-error>A descrição curta é obrigatória.</mat-error>
+                        }
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline" class="w-full">
+                        <mat-label>Modalidade</mat-label>
+                        <mat-select formControlName="modality">
+                            <mat-option value="online">Online</mat-option>
+                            <mat-option value="inPerson">Presencial</mat-option>
+                        </mat-select>
+                        @if (certificationForm.get('modality')?.invalid && certificationForm.get('modality')?.touched) {
+                            <mat-error>A modalidade é obrigatória.</mat-error>
+                        }
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline" class="w-full">
+                        <mat-label>Nota Mínima (%)</mat-label>
+                        <input matInput type="number" formControlName="passingScore" placeholder="Ex: 70">
+                        @if (certificationForm.get('passingScore')?.invalid && certificationForm.get('passingScore')?.touched) {
+                            <mat-error>Nota inválida (0-100).</mat-error>
+                        }
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline" class="w-full">
+                        <mat-label>Duração (Horas)</mat-label>
+                        <input matInput type="number" formControlName="durationHours" placeholder="Ex: 8">
+                        @if (certificationForm.get('durationHours')?.invalid && certificationForm.get('durationHours')?.touched) {
+                            <mat-error>Duração inválida (mínimo 1).</mat-error>
+                        }
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline" class="w-full md:col-span-2">
+                        <mat-label>Descrição Completa</mat-label>
+                        <textarea matInput formControlName="description" rows="4" placeholder="Descrição detalhada sobre o conteúdo..."></textarea>
+                    </mat-form-field>
+
+                </mat-card-content>
+
+                @if (!data.isCreation) {
+                    <mat-card-actions class="px-6 pb-4">
+                        <mat-slide-toggle formControlName="isActive" color="primary">
+                            Certificação Ativa
+                        </mat-slide-toggle>
+                        <mat-hint class="ml-2">[Se inativo, usuários não poderão se inscrever]</mat-hint>
+                    </mat-card-actions>
+                }
+            </mat-card>
+        </form>
+        @if (data.isCreation) {
+            <mat-card class="mt-4">
+                <mat-card-header>
+                    <mat-card-title>Arquivo Matriz (Opcional para Geração com I.A.)</mat-card-title>
+                </mat-card-header>
+                <mat-card-content class="upload-area cursor-pointer" (click)="triggerFileInput()">
+                    <input #fileInput type="file" accept="application/pdf" (change)="onFileSelected($event)" hidden>
+                    <div class="flex flex-col items-center justify-center p-4">
+                        <mat-icon color="primary" style="font-size: 48px; width: 48px; height: 48px;">cloud_upload</mat-icon>
+                        <p class="text-lg mt-2">Clique para selecionar o PDF ou arraste e solte</p>
+                        <p class="text-sm text-gray-500 mt-1">Arquivo: {{ fileName }}</p>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+        }
+        @if (!data.isCreation) {
+            <mat-card class="mt-4">
+                <mat-card-header>
+                    <mat-card-title>Arquivo Matriz (PDF)</mat-card-title>
+                </mat-card-header>
+                <input #fileInput type="file" accept="application/pdf" (change)="onFileSelected($event)" hidden>
+                <mat-card-content class="pdf-section-edit p-4">
+                    @if (existingPdfFileName && !selectedFile) {
+                        <div class="flex items-center justify-between gap-4">
+                            <div class="flex items-center gap-2"> <mat-icon color="warn">picture_as_pdf</mat-icon> <span class="font-medium" [matTooltip]="existingPdfFileName"> {{ existingPdfFileName | slice:0:40 }}{{ (existingPdfFileName?.length || 0) > 40 ? '...' : '' }} </span> </div>
+                            <button mat-stroked-button color="primary" (click)="triggerFileInput()"> <mat-icon>upload_file</mat-icon> Substituir PDF </button>
+                        </div>
+                    } @else if (selectedFile) {
+                         <div class="flex items-center justify-between gap-4">
+                            <div class="flex items-center gap-2 text-primary"> <mat-icon>attach_file</mat-icon> <span class="font-medium" [matTooltip]="fileName"> {{ fileName | slice:0:40 }}{{ (fileName?.length || 0) > 40 ? '...' : '' }} </span> <span class="text-sm text-gray-500">(Novo)</span> </div>
+                            <button mat-stroked-button color="accent" (click)="triggerFileInput()"> <mat-icon>cached</mat-icon> Alterar Seleção </button>
+                        </div>
+                    } @else {
+                        <div class="upload-area cursor-pointer text-center" (click)="triggerFileInput()"> <mat-icon color="primary" style="font-size: 48px; width: 48px; height: 48px;">cloud_upload</mat-icon> <p class="text-lg mt-2">Clique para adicionar o PDF</p> <p class="text-sm text-gray-500 mt-1">(Opcional)</p> </div>
+                    }
+                </mat-card-content>
+            </mat-card>
+        }
+
+    } </mat-dialog-content>
+
+<mat-dialog-actions align="end">
+    @if (!data.isCreation) {
+        <button mat-stroked-button color="warn"
+                class="mr-auto" (click)="deleteCertification()"
+                [disabled]="isLoadingQuestions || isDeleting">
+            @if (isDeleting) {
+                <mat-progress-spinner diameter="20" mode="indeterminate" class="mr-2"></mat-progress-spinner> Excluindo...
+            } @else {
+                <span class="button-content-wrapper"> <mat-icon>delete_forever</mat-icon> Excluir Certificação</span>
+            }
+        </button>
+    }
+    
+    @if (data.isCreation) {
+        <button mat-flat-button (click)="saveCertificationDetails(true)" [disabled]="certificationForm.invalid || isLoadingQuestions"> Salvar Certificação </button>
+
+        <button mat-raised-button color="primary" (click)="openQuestionBank()" [disabled]="certificationForm.invalid || !selectedFile || isLoadingQuestions">
+            @if (isLoadingQuestions) { <mat-progress-spinner diameter="20" mode="indeterminate" class="mr-2"></mat-progress-spinner> Salvando... } @else { Salvar & Gerar Questões com IA }
+        </button>
+    }
+    <button mat-button (click)="dialogRef.close(false)" [disabled]="isLoadingQuestions">Cancelar</button>
+    @if (!data.isCreation) {
+        
+        <button mat-flat-button (click)="openQuestionBank()" [disabled]="isLoadingQuestions"> <mat-icon>list_alt</mat-icon> Acessar Banco de Questões </button>
+        
+        <button mat-raised-button color="primary" (click)="saveCertificationDetails(true)" [disabled]="certificationForm.invalid || isLoadingQuestions">
+             @if (isLoadingQuestions) { <mat-progress-spinner diameter="20" mode="indeterminate" class="mr-2"></mat-progress-spinner> Salvando... } @else { Salvar Alterações }
+        </button>
+    }
+</mat-dialog-actions>

@@ -1,0 +1,101 @@
+// Caminho: src/app/pages/questions/questions.component.scss
+// v1.1 - Adiciona estilos SCSS para o cabeçalho
+
+// Estilo geral do card dentro do dialog
+.question-bank-card {
+    margin: -16px; // Compensa o padding do dialog-content
+    display: flex;
+    flex-direction: column;
+    box-shadow: none;
+}
+
+// Estilo para o cabeçalho do card
+.custom-card-header {
+    display: flex;                 // Usa Flexbox
+    flex-wrap: wrap;               // Permite quebra de linha em telas pequenas
+    justify-content: space-between; // Título à esquerda, botões à direita
+    align-items: center;           // Alinha verticalmente
+    align-content: flex-start;   // Alinha o conteúdo ao topo se quebrar linha
+    gap: 1rem;                     // Espaço entre título e botões (se quebrar linha)
+    padding: 1rem 1.5rem;          // Padding interno (ajuste conforme necessário)
+    border-bottom: 1px solid rgba(0,0,0,0.12); // Linha separadora opcional
+}
+
+// Estilo para o container dos botões no cabeçalho
+.header-actions {
+    display: flex;     // Botões em linha
+    flex-wrap: wrap;   // Permite quebra de linha dos botões
+    gap: 0.5rem;       // Espaço ENTRE os botões
+}
+
+// Remove margem padrão do texto do cabeçalho que pode atrapalhar o flex
+:host ::ng-deep .mat-mdc-card-header-text {
+    margin: 0 !important;
+}
+
+// Formulário de Filtros
+.filter-form {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    padding: 16px 1.5rem; // Adiciona padding horizontal
+    flex-wrap: wrap;
+
+    mat-form-field {
+        flex: 1 1 200px; // Cresce e permite quebra de linha
+        min-width: 200px; // Largura mínima
+    }
+
+    button {
+       height: 52px; // Alinha altura com os form-fields outline
+    }
+}
+
+// Container da Tabela
+.table-container {
+    position: relative;
+    overflow-x: auto; // Permite scroll horizontal se necessário
+    margin: 0 1.5rem 1rem; // Adiciona margens laterais e inferior
+}
+
+// Overlay de Carregamento
+.spinner-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+    border-radius: 4px; // Arredonda junto com a tabela
+}
+
+// Estilos de Status (Ativa/Inativa)
+.status-active {
+    color: #28a745;
+    font-weight: 500;
+}
+.status-inactive {
+    color: #dc3545;
+    font-weight: 500;
+}
+
+// Célula de Ações
+.actions-cell {
+    text-align: right;
+    // Adiciona espaço mínimo para os botões não quebrarem feio
+    min-width: 100px;
+}
+
+// Ajuste fino do padding do conteúdo do card
+mat-card-content {
+    padding: 0 !important; // Remove padding padrão para controlar com .filter-form e .table-container
+}
+
+// Ajuste do paginador
+mat-card-actions {
+    padding: 0 1.5rem 1rem; // Adiciona padding
+}

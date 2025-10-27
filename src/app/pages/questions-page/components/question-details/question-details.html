@@ -1,0 +1,56 @@
+<h2 mat-dialog-title>
+    @if (isEditing) {
+        Editar Questão (V/F)
+    } @else {
+        Nova Questão (Manual - V/F)
+    }
+</h2>
+
+<mat-dialog-content class="dialog-content">
+    <form class="config-form" [formGroup]="questionForm">
+
+        @if (!isEditing) {
+            <p class="mb-4 text-sm text-gray-600">Criando nova questão (Verdadeiro/Falso).</p>
+        }
+
+        <div class="config-fields">
+
+            <mat-form-field appearance="outline" class="w-full">
+                <mat-label>Texto da Questão</mat-label>
+                <textarea matInput formControlName="question" rows="4"></textarea>
+                @if (questionForm.get('question')?.invalid && questionForm.get('question')?.touched) {
+                    <mat-error>O texto da questão é obrigatório.</mat-error>
+                }
+            </mat-form-field>
+
+           <mat-form-field appearance="outline" class="w-full">
+                <mat-label>Validade (Meses)</mat-label>
+                <input matInput type="number" formControlName="validity_months" placeholder="Ex: 12">
+                 @if (questionForm.get('validity_months')?.invalid) {
+                    <mat-error>Deve ser um número (mínimo 1).</mat-error>
+                }
+            </mat-form-field>
+            
+            <div class="toggles-group">
+                <mat-slide-toggle formControlName="answer" color="primary" class="mt-2 mb-4">
+                    Resposta: <strong>{{ questionForm.get('answer')?.value ? 'Verdadeiro' : 'Falso' }}</strong>
+                </mat-slide-toggle>
+
+                <mat-slide-toggle formControlName="isActive" color="accent" class="mt-2 mb-4 ml-4">
+                    Questão Ativa
+                </mat-slide-toggle>
+            </div>
+
+        </div> </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+    <button mat-button (click)="dialogRef.close(false)" [disabled]="isSaving">Cancelar</button>
+    <button mat-raised-button color="primary" (click)="saveQuestion()" [disabled]="questionForm.invalid || isSaving">
+        @if (isSaving) {
+            Salvando...
+        } @else {
+            Salvar Questão
+        }
+    </button>
+</mat-dialog-actions>

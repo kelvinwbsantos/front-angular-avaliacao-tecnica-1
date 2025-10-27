@@ -3,34 +3,6 @@
 
 // Estilos para o componente de Geração de Questões com I.A. (Revisão)
 
-/* Aumenta a largura da modal (mat-dialog-container) */
-// :host {
-//     /* Usa a variável CSS e ::ng-deep para afetar o container global do Material */
-//     ::ng-deep .mat-mdc-dialog-container {
-//         /* Configura a largura desejada para 800px */
-//         --mdc-dialog-container-width: 800px;
-//         min-width: 900px; 
-//         max-width: 90vw !important; /* Mantém responsividade em telas menores */
-//     }
-// }
-
-/* CORREÇÃO DE LARGURA DO MODAL: Aumenta a largura (mat-dialog-container) */
-:host {
-    /* Usa ::ng-deep e !important para forçar a sobreposição dos estilos do Material */
-    ::ng-deep .mat-mdc-dialog-container {
-        /* Configura a largura desejada (900px) */
-        --mdc-dialog-container-width: 1000px; 
-        
-        /* FORÇA explícita da largura e largura mínima para evitar sobreposição */
-        width: 1000px !important;
-        min-width: 1000px !important; 
-        
-        /* Mantém responsividade em telas menores */
-        max-width: 90vw !important; 
-    }
-}
-
-
 // Estilo da Área de Upload
 .upload-area {
     display: flex;

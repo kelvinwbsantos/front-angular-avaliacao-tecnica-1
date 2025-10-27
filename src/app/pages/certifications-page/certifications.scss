@@ -38,6 +38,20 @@
   z-index: 10;
   border-radius: 12px;
 }
+
+/* Estilo para a coluna do PDF */
+.pdf-cell {
+    text-align: center; // Centraliza o ícone
+
+    mat-icon[matTooltip] {
+        color: #c9302c; // Um tom de vermelho PDF
+        cursor: help; // Mostra que é interativo (ao passar o mouse)
+        font-size: 20px;
+        height: 20px;
+        width: 20px;
+    }
+}
+
   
 mat-card-actions {
   justify-content: space-between;
