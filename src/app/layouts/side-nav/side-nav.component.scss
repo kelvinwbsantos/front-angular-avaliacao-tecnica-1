@@ -1,0 +1,21 @@
+// Remove padding padrão para controlar melhor
+mat-nav-list {
+  padding-top: 0;
+}
+
+// Estilo para o link ativo
+.active-link {
+  background-color: rgba(63, 81, 181, 0.1); // Cor primária com transparência (exemplo)
+  color: #3f51b5; // Cor primária (exemplo)
+
+  mat-icon {
+    color: #3f51b5; // Cor primária (exemplo)
+  }
+}
+
+// Ajustes visuais opcionais
+a[mat-list-item] {
+  margin: 4px 8px; // Adiciona margem
+  border-radius: 4px; // Arredonda cantos
+  height: 44px; // Altura padrão
+}

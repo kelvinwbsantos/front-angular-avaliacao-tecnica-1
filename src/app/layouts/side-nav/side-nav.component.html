@@ -1,0 +1,13 @@
+<mat-nav-list>
+  @for (item of navItems; track item.link) {
+    @if (canView(item)) {
+      <a mat-list-item
+         [routerLink]="item.link"
+         routerLinkActive="active-link"
+         [routerLinkActiveOptions]="{exact: item.link === '/app/dashboard'}">
+        <mat-icon matListItemIcon>{{ item.icon }}</mat-icon>
+        <span matListItemTitle>{{ item.label }}</span>
+      </a>
+    }
+  }
+</mat-nav-list>

@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { LoginForm } from "./login-form/login-form";
 import { Router } from '@angular/router';
-import { AuthService } from '../../services/auth.service';
+import { AuthService } from '../../core/services/auth.service';
 
 @Component({
   selector: 'app-login-page',
@@ -14,8 +14,10 @@ export class LoginPage {
   private authService = inject(AuthService);
 
   ngOnInit() {
-    if (this.authService.isAuthenticated()) {
-      this.router.navigate(['/dashboard']);
+    if (this.authService.isLoggedIn()) { // <-- Trocado para isLoggedIn()
+      console.log("Login Page: Já logado, redirecionando...");
+      // Verifique se a rota '/dashboard' é a correta ou se deve ser '/app/dashboard'
+      this.router.navigate(['/app/dashboard']);
     }
   }
 

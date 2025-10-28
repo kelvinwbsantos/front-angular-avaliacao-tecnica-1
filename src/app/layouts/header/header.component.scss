@@ -1,0 +1,84 @@
+.main-header {
+  // position: sticky; // Descomente se quiser o header fixo no topo
+  // top: 0;
+  // z-index: 1000;
+}
+
+.logo { // Aplica-se à tag <img>
+  display: block; // Garante que a imagem se comporte como bloco para margens
+  height: 80px;   // <-- AUMENTE A ALTURA AQUI (ex: 50px, ajuste conforme necessário)
+  max-height: calc(100% - 16px); // Garante que não ultrapasse a altura do toolbar (menos um padding)
+  width: auto;    // Mantém a proporção
+  margin-left: 16px;
+  object-fit: contain; // Garante que a imagem inteira caiba sem distorcer (como em um 'quadro')
+}
+
+.spacer {
+  flex-grow: 1;
+}
+
+// ... (outros estilos) ...
+
+// --- RESPONSIVIDADE (Opcional) ---
+@media (max-width: 600px) {
+  .logo {
+    height: 40px; // <-- Reduz a altura em telas menores (ex: 40px)
+    margin-left: 8px; // Reduz a margem
+  }
+
+  .user-name {
+    display: none; // Já existia
+  }
+
+  .header-content {
+    padding: 0 8px; // Reduz padding geral do header
+  }
+}
+.header-content {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 0 16px; // Espaçamento interno
+}
+
+.logo {
+  margin-left: 16px;
+  font-size: 1.2rem;
+  font-weight: 500;
+}
+
+.spacer {
+  flex-grow: 1; // Empurra os itens seguintes para a direita
+}
+
+.notification-button {
+  margin-right: 8px;
+}
+
+.user-menu-button {
+  border-radius: 20px; // Arredonda o botão do menu
+}
+
+.user-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  margin-right: 8px;
+  object-fit: cover;
+}
+
+.user-name {
+  margin: 0 8px;
+  display: inline-block; // Garante que o span não quebre linha facilmente
+  max-width: 150px; // Limita largura do nome
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+// Esconde o nome em telas muito pequenas (opcional)
+@media (max-width: 600px) {
+  .user-name {
+    display: none;
+  }
+}
