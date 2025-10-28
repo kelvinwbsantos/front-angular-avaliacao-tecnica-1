@@ -1,0 +1,16 @@
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); // Cria colunas responsivas
+  gap: 20px; // Espaço entre os cards
+}
+
+.dashboard-card {
+  // Estilos opcionais para os cards
+}
+
+.metric {
+  font-size: 2.5rem; // Tamanho grande para o número
+  font-weight: bold;
+  text-align: center;
+  margin-top: 10px;
+}

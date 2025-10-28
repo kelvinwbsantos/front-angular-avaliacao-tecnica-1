@@ -9,7 +9,7 @@ import {
   UserApiResponse,
   User,
   FullUserResponse
-} from '../models/users-models';
+} from '../models/users.models';
 
 
 @Injectable({

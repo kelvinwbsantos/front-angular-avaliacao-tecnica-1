@@ -1,0 +1,42 @@
+<mat-toolbar color="primary" class="main-header">
+  <div class="header-content">
+    <!-- Botão Hamburger para alternar Sidenav -->
+    <button mat-icon-button (click)="emitToggleSidenav()" aria-label="Toggle sidenav">
+      <mat-icon>{{ sidenavOpen ? 'menu_open' : 'menu' }}</mat-icon>
+    </button>
+
+    <!-- Logo ou Título (Opcional) -->
+    <!-- <span class="logo">Tech Solutions</span> -->
+    <img src="/TSLogoBlack.jpg" alt="Logo TechSolutions" class="logo">
+    <!-- Espaçador para empurrar itens para a direita -->
+    <span class="spacer"></span>
+
+    <!-- Botão de Notificações (Exemplo) -->
+    <button mat-icon-button aria-label="Notificações" class="notification-button">
+       <mat-icon matBadge="{{ notificationCount > 0 ? notificationCount : '' }}"
+                 matBadgeColor="warn"
+                 [matBadgeHidden]="notificationCount === 0">notifications</mat-icon>
+    </button>
+
+    <!-- Menu do Usuário -->
+    <button mat-button [matMenuTriggerFor]="userMenu" class="user-menu-button">
+      <!-- Foto/Ícone do Usuário -->
+      <img *ngIf="false; else defaultIcon" src="url_da_foto.jpg" alt="Foto do usuário" class="user-avatar">
+      <ng-template #defaultIcon>
+        <mat-icon>account_circle</mat-icon>
+      </ng-template>
+      <span class="user-name">{{ userData?.nome || 'Usuário' }}</span>
+      <mat-icon>arrow_drop_down</mat-icon>
+    </button>
+    <mat-menu #userMenu="matMenu">
+      <button mat-menu-item (click)="navigateToProfile()">
+        <mat-icon>person</mat-icon>
+        <span>Meu Perfil</span>
+      </button>
+      <button mat-menu-item (click)="logout()">
+        <mat-icon>logout</mat-icon>
+        <span>Sair</span>
+      </button>
+    </mat-menu>
+  </div>
+</mat-toolbar>

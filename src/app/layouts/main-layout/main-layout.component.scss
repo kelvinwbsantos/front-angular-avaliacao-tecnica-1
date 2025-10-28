@@ -1,0 +1,35 @@
+.main-container {
+  height: 100vh; // Ocupa toda a altura da tela
+  width: 100vw;  // Ocupa toda a largura da tela
+  display: flex;
+}
+
+.sidenav {
+  width: 240px; // Largura do menu lateral (ajuste conforme necessário)
+  background-color: #f5f5f5; // Cor de fundo do menu (exemplo)
+  border-right: 1px solid rgba(0, 0, 0, 0.12);
+  padding-top: 10px; // Espaço acima do menu
+}
+
+.main-content {
+  display: flex;
+  flex-direction: column; // Header em cima, conteúdo embaixo
+  height: 100%;
+  width: 100%;
+  overflow: hidden; // Evita barras de rolagem duplas
+}
+
+.page-content {
+  flex-grow: 1; // Faz o conteúdo ocupar o espaço restante
+  padding: 20px; // Espaçamento interno da área de conteúdo
+  overflow-y: auto; // Adiciona scroll vertical apenas se necessário
+  background-color: #e9eef6; // Um fundo leve para a área de conteúdo (opcional)
+}
+
+// Estilos adicionais para transição suave (opcional)
+mat-sidenav {
+  transition: width 0.3s ease-in-out;
+}
+mat-sidenav-content {
+  transition: margin-left 0.3s ease-in-out;
+}

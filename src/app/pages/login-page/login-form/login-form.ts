@@ -71,7 +71,7 @@ export class LoginForm {
       .pipe(finalize(() => this.isSubmitting.set(false)))
       .subscribe({
         next: () => {
-          this.router.navigate(['/dashboard']);
+          this.router.navigate(['app/dashboard']);
           this.snackBar.open('Login realizado com sucesso!', 'Fechar', { duration: 3000 });
         },
         error: (err) => {
