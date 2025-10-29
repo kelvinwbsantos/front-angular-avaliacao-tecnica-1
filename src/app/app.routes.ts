@@ -45,8 +45,6 @@ export const routes: Routes = [
                 path: 'users',
                 loadChildren: () => import('./pages/users-page/users.routes').then(m => m.USERS_ROUTES),
                 canActivate: [PermissionGuard], // Usar guarda de permissão aqui
-                //canActivate: [roleGuard], // Manter roleGuard por enquanto
-                //data: { roles: ['administrador', 'gente_e_cultura'] } // Mudar para permissions depois
                 data: { permissions: ['READ_USERS'] }
             },
             {
@@ -54,16 +52,12 @@ export const routes: Routes = [
                 // Usando loadChildren para consistência (precisa criar certifications.routes.ts)
                 loadChildren: () => import('./pages/certifications-page/certifications.routes').then(m => m.CERTIFICATIONS_ROUTES),
                 canActivate: [PermissionGuard],
-                //canActivate: [roleGuard], // Manter roleGuard por enquanto
-                //data: { roles: ['administrador', 'gente_e_cultura'] } // Mudar para permissions depois
                 data: { permissions: ['READ_CERTIFICATIONS'] }
             },
             {
                 path: 'invite',
                 loadChildren: () => import('./pages/invite/invite.routes').then(m => m.INVITE_ROUTES),
                 canActivate: [PermissionGuard],
-                //canActivate: [roleGuard], // Manter roleGuard por enquanto
-                //data: { roles: ['administrador', 'gente_e_cultura'] } // Mudar para permissions depois
                 data: { permissions: ['INVITE_USER'] }
             },
             {
@@ -74,22 +68,22 @@ export const routes: Routes = [
             {
                 path: 'available-certifications', // Ou 'my-certifications'
                 loadComponent: () => import('./pages/available-certifications-page/available-certifications.component').then(m => m.AvailableCertificationsComponent),
-                // canActivate: [PermissionGuard], // Proteger com permissão de candidato
-                // data: { permissions: ['TAKE_CERTIFICATIONS'] } // Exemplo
-                },
+                 canActivate: [PermissionGuard], // Proteger com permissão de candidato
+                 data: { permissions: ['TAKE_CERTIFICATIONS'] } // Exemplo
+            },
 
-                // { // Rota para detalhes da certificação (visão candidato)
-                // path: 'available-certifications/:id',
-                // loadComponent: () => import('./pages/certification-take-page/certification-take.component').then(m => m.CertificationTakeComponent),
-                // // canActivate: [PermissionGuard],
-                // // data: { permissions: ['TAKE_CERTIFICATIONS'] }
-                // },
-                // { // Rota para a REALIZAÇÃO da prova em si
-                // path: 'exam/:certificationId',
-                // loadComponent: () => import('./pages/exam-page/exam.component').then(m => m.ExamComponent),
-                // // canActivate: [PermissionGuard],
-                // // data: { permissions: ['TAKE_CERTIFICATIONS', 'SIMULATE_EXAM'] } // Permitir ambos
-                // },
+            // { // Rota para detalhes da certificação (visão candidato)
+            // path: 'available-certifications/:id',
+            // loadComponent: () => import('./pages/certification-take-page/certification-take.component').then(m => m.CertificationTakeComponent),
+            // // canActivate: [PermissionGuard],
+            // // data: { permissions: ['TAKE_CERTIFICATIONS'] }
+            // },
+            // { // Rota para a REALIZAÇÃO da prova em si
+            // path: 'exam/:certificationId',
+            // loadComponent: () => import('./pages/exam-page/exam.component').then(m => m.ExamComponent),
+            // // canActivate: [PermissionGuard],
+            // // data: { permissions: ['TAKE_CERTIFICATIONS', 'SIMULATE_EXAM'] } // Permitir ambos
+            // },
             //outras rotas filhas aqui
         ]
     },
