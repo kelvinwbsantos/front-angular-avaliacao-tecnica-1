@@ -43,6 +43,14 @@ export class SideNavComponent {
     // Certificações - Usando permissão READ_CERTIFICATIONS
     { link: '/app/certifications', label: 'Certificações', icon: 'workspace_premium', requiredPermission: 'READ_CERTIFICATIONS' },
 
+    // --- Certificações Disponíveis ---
+    {
+        link: '/app/available-certifications', // Rota do candidato
+        label: 'Certificações Disponíveis',    // Nome do link no menu
+        icon: 'school',                       // Ícone (pode escolher outro)
+        requiredPermission: 'TAKE_CERTIFICATIONS' // Permissão que você mockou!
+    },
+
     // Convidar Colaboradores - Usando permissão INVITE_USER
     { link: '/app/invite', label: 'Convidar', icon: 'person_add', requiredPermission: 'INVITE_USER' }, // Ícone atualizado
 

@@ -8,13 +8,14 @@ export interface JwtPayload {
   // iat?: number; // Issued at
   // exp?: number; // Expiration time
 }
-
-// Interface para os dados do usuário armazenados localmente
-export interface UserData {
-    id: string;
+// --- Interface para Payload JWT (Usada pelo AuthService) ---
+export interface JwtPayload {
+    sub: string; // User ID (geralmente string UUID ou número como string)
+    name: string;
     email: string;
-    nome: string;
     role: string;
+    iat?: number;
+    exp?: number;
 }
 
 // --- Interfaces para API de Listagem/Filtro ---
@@ -40,21 +41,6 @@ export interface User {
   role: string;
 }
 
-// --- Interface Completa do Usuário (Detalhes) ---
-export interface FullUserResponse {
-  id: number;
-  name: string;
-  email: string;
-  cpf: string;
-  phonenumber?: string;
-  cep?: string;
-  uf?: string;
-  city?: string;
-  neighborhood?: string;
-  street?: string;
-  role: string;
-}
-
 // --- Interface para Registro (Usada pelo AuthService) ---
 export interface RegistrationData {
   token?: string; // Token pode ser de convite, opcional dependendo do fluxo
@@ -70,20 +56,37 @@ export interface RegistrationData {
   password: string;
 }
 
-// --- Interface para Payload JWT (Usada pelo AuthService) ---
-export interface JwtPayload {
-    sub: string; // User ID (geralmente string UUID ou número como string)
-    name: string;
-    email: string;
-    role: string;
-    iat?: number;
-    exp?: number;
+// --- Interface para Dados do Usuário no LocalStorage/Componentes ---
+export interface UserData {
+    id: string;         // Do token 'sub'
+    email: string;      // Do token 'email'
+    name: string;       // <- MUDANÇA: Usar 'name' como principal (do token 'name')
+    role: string;       // Do token 'role'
+    // Tornar estes opcionais, pois não vêm diretamente do token
+    firstName?: string;
+    lastName?: string;
+    // Manter outros campos opcionais que podem vir do perfil completo
+    profilePictureUrl?: string;
+    phone?: string;
+    cep?: string;
+    street?: string;
+    neighborhood?: string;
+    city?: string;
+    uf?: string;
 }
 
-// --- Interface para Dados do Usuário no LocalStorage (Usada pelo AuthService) ---
-export interface UserData {
-    id: string;
-    email: string;
-    nome: string;
-    role: string;
+// Garanta que FullUserResponse TENHA a propriedade 'name'
+export interface FullUserResponse {
+  id: string; // ID do usuário como string
+  name: string; //  Nome completo do usuário
+  email: string;
+  cpf?: string; // CPF pode ser opcional dependendo da API
+  phonenumber?: string;
+  cep?: string;
+  street?: string;
+  neighborhood?: string;
+  city?: string;
+  uf?: string;
+  profilePictureUrl?: string; 
+  role: string;
 }

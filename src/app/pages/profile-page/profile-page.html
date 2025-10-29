@@ -1,0 +1,95 @@
+<div class="profile-container">
+  <mat-card class="profile-card">
+    <mat-card-header class="profile-card-header">
+      <mat-card-title>Meu Perfil</mat-card-title>
+      <mat-card-subtitle>Visualize e edite suas informações</mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+      <div class="profile-avatar-section">
+        <img
+          [src]="profilePicturePreview"
+          alt="Foto de Perfil"
+          class="profile-image"
+          (click)="triggerImageUpload()" [class.editable]="isEditing" />
+        <span *ngIf="isEditing" class="text-sm text-gray-500 mt-2">(Upload de foto não implementado)</span>
+      </div>
+
+      <form [formGroup]="profileForm" class="profile-form">
+        <mat-form-field appearance="outline">
+          <mat-label>Email</mat-label>
+          <input matInput formControlName="email" readonly />
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Nome</mat-label>
+          <input matInput formControlName="firstName" />
+          <mat-error *ngIf="profileForm.get('firstName')?.hasError('required') && profileForm.get('firstName')?.touched">
+            Nome é obrigatório.
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Sobrenome</mat-label>
+          <input matInput formControlName="lastName" />
+          <mat-error *ngIf="profileForm.get('lastName')?.hasError('required') && profileForm.get('lastName')?.touched">
+            Sobrenome é obrigatório.
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Telefone</mat-label>
+          <input matInput formControlName="phone" placeholder="(XX) XXXXX-XXXX" />
+          <mat-error *ngIf="profileForm.get('phone')?.hasError('pattern') && profileForm.get('phone')?.touched">
+            Formato inválido. Ex: (11) 98765-4321
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>CEP</mat-label>
+          <input matInput formControlName="cep" placeholder="00000-000" maxlength="9" />
+           <mat-icon *ngIf="isFetchingCep" matSuffix> <mat-spinner [diameter]="20"></mat-spinner> </mat-icon>
+          <mat-error *ngIf="profileForm.get('cep')?.hasError('pattern') && profileForm.get('cep')?.touched">
+            Formato inválido (00000-000 ou 00000000).
+          </mat-error>
+           <mat-hint *ngIf="!isFetchingCep && profileForm.get('cep')?.valid && profileForm.get('cep')?.value">
+             Digite o CEP para buscar o endereço.
+           </mat-hint>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Rua (Logradouro)</mat-label>
+          <input matInput formControlName="street" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Bairro</mat-label>
+          <input matInput formControlName="neighborhood" />
+        </mat-form-field>
+
+         <div class="city-state-row">
+            <mat-form-field appearance="outline" class="city-field">
+              <mat-label>Cidade</mat-label>
+              <input matInput formControlName="city" />
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="uf-field">
+              <mat-label>UF</mat-label>
+              <input matInput formControlName="uf" maxlength="2" />
+            </mat-form-field>
+        </div>
+
+        <div class="profile-actions">
+          <button mat-raised-button color="primary" *ngIf="!isEditing" (click)="toggleEditMode()">
+            <mat-icon>edit</mat-icon> Editar Perfil
+          </button>
+          <ng-container *ngIf="isEditing">
+            <button mat-raised-button color="accent" (click)="onSave()" [disabled]="profileForm.invalid || isLoading || isFetchingCep">
+              <mat-spinner *ngIf="isLoading" [diameter]="20"></mat-spinner>
+              <span *ngIf="!isLoading">Salvar Alterações</span>
+            </button>
+            <button mat-stroked-button color="warn" (click)="onCancel()" [disabled]="isLoading">
+              <mat-icon>cancel</mat-icon> Cancelar
+            </button>
+          </ng-container>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

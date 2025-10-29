@@ -163,8 +163,9 @@ export class AuthService {
     const mockPermissions: string[] = [
         "READ_USERS", "INVITE_USER", "CREATE_USER", "EDIT_USER_PROFILE",
         "ASSIGN_USER_ROLES", "DELETE_USER", "EXPORT_USERS",
-        "READ_CERTIFICATIONS", "MANAGE_CERTIFICATIONS", "VIEW_DASHBOARD" // Adicionada permissão do dashboard
-        // Ajuste conforme roles (Admin, RH, Mentor)
+        "READ_CERTIFICATIONS", "MANAGE_CERTIFICATIONS", "VIEW_DASHBOARD",
+        "TAKE_CERTIFICATIONS"
+        // Ajustar conforme roles (Admin, RH, Mentor)
     ];
 
     return of(mockPermissions).pipe(
@@ -211,7 +212,7 @@ export class AuthService {
        return {
            id: decoded.sub,
            email: decoded.email,
-           nome: decoded.name,
+           name: decoded.name,
            role: decoded.role
        };
    }
