@@ -1,0 +1,55 @@
+<!-- Caminho: src/app/pages/available-certifications-page/available-certifications.component.html -->
+<div class="available-certs-container">
+  <h1>Certificações Disponíveis</h1>
+  <p class="subtitle">Escolha uma certificação para ver os detalhes ou realizar a prova.</p>
+
+  <!-- Estado de Carregamento -->
+  @if (isLoading) {
+    <div class="loading-spinner">
+      <mat-spinner diameter="50"></mat-spinner>
+      <p>Carregando certificações...</p>
+    </div>
+  }
+
+  <!-- Estado de Erro -->
+  @if (!isLoading && errorLoading) {
+    <div class="error-message">
+      <mat-icon color="warn">error_outline</mat-icon>
+      <p>Não foi possível carregar as certificações. Tente novamente mais tarde.</p>
+      <button mat-stroked-button color="primary" (click)="loadCertifications()">Tentar Novamente</button>
+    </div>
+  }
+
+  <!-- Conteúdo Carregado (Lista de Cards) -->
+  @if (!isLoading && !errorLoading) {
+    @if (certifications.length > 0) {
+      <div class="certs-grid">
+        @for (cert of certifications; track cert.id) {
+          <mat-card class="cert-card" [matTooltip]="cert.description || cert.shortDescription">
+            <mat-card-header>
+               <mat-icon mat-card-avatar>{{ getModalityIcon(cert.modality) }}</mat-icon> <!-- Ícone exemplo -->
+              <mat-card-title>{{ cert.name }}</mat-card-title>
+              <mat-card-subtitle>{{ cert.shortDescription }}</mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content class="cert-details">
+              <span>
+                <mat-icon>schedule</mat-icon> {{ cert.durationHours }}h
+              </span>
+              <span>
+                <mat-icon>{{ getModalityIcon(cert.modality) }}</mat-icon> {{ cert.modality === 'online' ? 'Online' : 'Presencial' }}
+              </span>
+            </mat-card-content>
+            <mat-card-actions align="end">
+              <button mat-button color="primary" (click)="viewCertificationDetails(cert.id)">
+                Ver Detalhes
+              </button>
+              <!-- O botão "Realizar Prova" estará na próxima tela -->
+            </mat-card-actions>
+          </mat-card>
+        }
+      </div>
+    } @else {
+      <p class="no-certs">Nenhuma certificação disponível no momento.</p>
+    }
+  }
+</div>

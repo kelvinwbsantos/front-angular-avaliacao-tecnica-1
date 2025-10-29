@@ -68,6 +68,24 @@ export const routes: Routes = [
                 loadChildren: () => import('./pages/profile-page/profile.routes').then(m => m.PROFILE_ROUTES),
                 // Geralmente não precisa de guarda específico aqui, só o authGuard do pai
             },
+            {
+                path: 'available-certifications', // Ou 'my-certifications'
+                loadComponent: () => import('./pages/available-certifications-page/available-certifications.component').then(m => m.AvailableCertificationsComponent),
+                // canActivate: [PermissionGuard], // Proteger com permissão de candidato
+                // data: { permissions: ['TAKE_CERTIFICATIONS'] } // Exemplo
+                },
+                // { // Rota para detalhes da certificação (visão candidato)
+                // path: 'available-certifications/:id',
+                // loadComponent: () => import('./pages/certification-take-page/certification-take.component').then(m => m.CertificationTakeComponent),
+                // // canActivate: [PermissionGuard],
+                // // data: { permissions: ['TAKE_CERTIFICATIONS'] }
+                // },
+                // { // Rota para a REALIZAÇÃO da prova em si
+                // path: 'exam/:certificationId',
+                // loadComponent: () => import('./pages/exam-page/exam.component').then(m => m.ExamComponent),
+                // // canActivate: [PermissionGuard],
+                // // data: { permissions: ['TAKE_CERTIFICATIONS', 'SIMULATE_EXAM'] } // Permitir ambos
+                // },
             //outras rotas filhas aqui
         ]
     },

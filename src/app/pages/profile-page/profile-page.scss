@@ -1,0 +1,159 @@
+/* src/app/pages/profile/profile.component.scss */
+
+.profile-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(
+    100vh - 64px - 64px
+  ); /* Ajusta para considerar header e footer, se houver */
+  padding: 20px;
+  background-color: #f7f9fc; /* Um fundo mais suave */
+  box-sizing: border-box; /* Garante que padding não adicione largura extra */
+}
+
+.profile-card {
+  width: 100%;
+  max-width: 600px; /* Largura máxima para a centralização */
+  padding: 24px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra mais suave */
+  border-radius: 8px; /* Cantos arredondados */
+}
+
+.profile-card-header {
+  padding-bottom: 20px;
+  text-align: center; /* Centraliza título e subtítulo */
+  justify-content: center;
+
+  .mat-card-title {
+    font-size: 2.2em;
+    color: #3f51b5; /* Cor primária do Material Design */
+    margin-bottom: 8px;
+    justify-content: center;
+  }
+  .mat-card-subtitle {
+    color: #616161;
+    font-size: 1.1em;
+  }
+}
+
+.profile-avatar-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 30px; /* Espaço abaixo da foto */
+
+  .profile-image {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover; /* Garante que a imagem preencha o círculo */
+    border: 3px solid #3f51b5; /* Borda primária */
+    margin-bottom: 15px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: block; // Garante comportamento de bloco
+  object-fit: cover; // Ou 'contain', dependendo do efeito desejado
+  background-color: #eee; // Um fundo cinza claro para o espaço da imagem
+  }
+
+  .profile-image {
+  // ... (seus estilos existentes para .profile-image: width, height, border-radius, etc.)
+  display: block; // Garante comportamento de bloco
+  object-fit: cover; // Ou 'contain', dependendo do efeito desejado
+  background-color: #eee; // Um fundo cinza claro para o espaço da imagem
+
+  // --- Truque para esconder o alt text visualmente ---
+  color: transparent; // Esconde a cor do texto
+  text-indent: 10000px; // Joga o texto para muito longe
+  font-size: 0; // Garante que o espaço ocupado pelo texto seja mínimo
+  line-height: 0; // Garante que o espaço ocupado pelo texto seja mínimo
+  overflow: hidden; // Garante que o texto jogado para longe não cause scroll
+  // --------------------------------------------------
+}
+
+// Estilo opcional para quando a imagem está quebrada (mostra um ícone genérico)
+.profile-image:error { // Pseudo-seletor (pode não funcionar em todos navegadores para :error em <img>)
+  // Como alternativa, você pode ter uma div container e mostrar um ícone dentro dela se a imagem falhar
+}
+
+// Classe para indicar clicabilidade no modo edição
+.profile-image.editable {
+  cursor: pointer;
+  border-color: #3f51b5;
+  &:hover {
+    opacity: 0.8;
+  }
+}
+
+  button {
+    .mat-icon {
+      margin-right: 8px; /* Espaçamento entre o ícone e o texto do botão */
+    }
+  }
+}
+
+.profile-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px; /* Espaçamento entre os campos do formulário */
+
+  mat-form-field {
+    width: 100%; /* Ocupa a largura total */
+  }
+
+  .profile-actions {
+    display: flex;
+    flex-wrap: wrap; /* Quebra linha em telas menores */
+    justify-content: center; /* Centraliza os botões */
+    gap: 10px; /* Espaçamento entre os botões */
+    margin-top: 25px; /* Espaço acima dos botões */
+
+    button {
+      padding: 10px 20px; /* Padding ajustado para botões do Material */
+      font-size: 1em;
+      .mat-icon {
+        margin-right: 8px;
+      }
+      mat-spinner {
+        margin-right: 8px;
+      }
+    }
+  }
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .profile-card {
+    padding: 16px; /* Reduz padding em telas menores */
+  }
+
+  .profile-card-header {
+    .mat-card-title {
+      font-size: 1.8em;
+    }
+    .mat-card-subtitle {
+      font-size: 1em;
+    }
+  }
+
+  .profile-avatar-section {
+    .profile-image {
+      width: 100px;
+      height: 100px;
+    }
+  }
+
+  .profile-form {
+    gap: 10px; /* Reduz espaçamento entre campos */
+  }
+
+  .profile-actions {
+    flex-direction: column; /* Botões empilhados em telas menores */
+    align-items: stretch; /* Esticam para preencher a largura */
+
+    button {
+      width: 100%; /* Botões ocupam largura total */
+    }
+  }
+}

@@ -1,10 +1,10 @@
 import { Routes } from '@angular/router';
-import { Profile } from './profile';
+import { ProfileComponent } from './profile-page';
 
 export const PROFILE_ROUTES: Routes = [
   {
     path: '',
-    component: Profile,
+    component: ProfileComponent,
     title: 'Meu Perfil'
   },
 ];

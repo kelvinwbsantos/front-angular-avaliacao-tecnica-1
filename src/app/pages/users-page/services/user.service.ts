@@ -101,7 +101,7 @@ export class UserService {
    * @param roleName O nome da nova role a ser atribuída.
    * @returns Observable com os dados básicos do usuário atualizado.
    */
-  updateUserRole(userId: number, roleName: string): Observable<User> {
+  updateUserRole(userId: string, roleName: string): Observable<User> {
     const url = `${this.baseUrl}/user/${userId}/role`; // Rota PATCH /admin/user/:id/role
     const payload = { roleName }; // Corpo da requisição conforme AdminController
     console.log(`[UserService] updateUserRole Chamando: ${url} com payload:`, payload);

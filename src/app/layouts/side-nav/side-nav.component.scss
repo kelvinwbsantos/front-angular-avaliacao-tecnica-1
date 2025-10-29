@@ -15,7 +15,28 @@ mat-nav-list {
 
 // Ajustes visuais opcionais
 a[mat-list-item] {
-  margin: 4px 8px; // Adiciona margem
-  border-radius: 4px; // Arredonda cantos
-  height: 44px; // Altura padrão
+  margin: 4px 8px;
+  border-radius: 4px;
+  // CORREÇÃO: Troca height por min-height para permitir expansão
+  min-height: 44px; // Altura MÍNIMA padrão
+  height: auto;     // Altura se ajusta ao conteúdo
+
+  // Garante que o conteúdo interno use flex e permita quebra
+  // (::ng-deep pode ser necessário dependendo da versão do Angular/Material)
+  ::ng-deep .mat-list-item-content {
+    display: flex;       // Garante flexbox
+    align-items: center; // Alinha ícone e texto verticalmente
+    height: auto;        // Altura do conteúdo se ajusta
+    padding: 8px 0;      // Adiciona padding vertical interno
+  }
+}
+
+// Estilo para o texto (span) - Mantém a quebra
+// Talvez precise aumentar a especificidade se não pegar
+// Ex: a[mat-list-item] ::ng-deep .mat-list-item-content span[matListItemTitle] { ... }
+.mat-list-item-content span[matListItemTitle] { // Ou use a classe específica do span se houver
+  white-space: normal; // Permite quebrar linha
+  line-height: 1.3;    // Leve ajuste no espaçamento entre linhas
+  // Se o texto parecer "colado" no ícone quando quebrar, adicione:
+  // margin-left: 8px; // Pequena margem à esquerda do texto
 }
