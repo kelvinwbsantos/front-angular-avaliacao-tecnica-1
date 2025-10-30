@@ -24,7 +24,7 @@ import { AuthService } from '../../core/services/auth.service';
 // !!! VOCÊ PRECISA CRIAR E PROVER ESTES SERVIÇOS !!!
 import { EnrollmentService } from '../../core/services/enrollment.service'; // Ex: /core/services/
 import { Enrollment } from '../../core/models/enrollment.model'; // Ex: /core/models/
-//import { ExamService } from '../../core/services/exam.service';       // Ex: /core/services/
+import { ExamService } from '../exam-page/services/exam.service';       // Ex: /core/services/
 
 
 @Component({
@@ -53,9 +53,7 @@ export class CertificationTakeComponent implements OnInit, OnDestroy {
   
   // !!! INJEÇÕES NOVAS !!!
   private enrollmentService = inject(EnrollmentService);
- 
- 
- 
+  private examService = inject(ExamService); 
  // private examService = inject(ExamService); // Ainda não usado, mas pronto para o startExam
   private snackBar = inject(MatSnackBar);
 
@@ -227,12 +225,12 @@ export class CertificationTakeComponent implements OnInit, OnDestroy {
     }
     console.log(`[CertTake] Clicou em Realizar Prova. Matrícula ID: ${this.userEnrollmentId}`);
     
-    // TODO: Chamar this.examService.startExam(this.userEnrollmentId)
-    // e navegar para a tela da prova com o ID do EXAME, não da certificação.
-    // Ex: this.router.navigate(['/app/exam', exam.id]);
+    // Opcional (se você quisesse iniciar e *depois* navegar):
+    // this.examService.startExam(this.userEnrollmentId).subscribe(exam => {
+    //   this.router.navigate(['/app/exam', exam.id]); // Navega com o ID do *exame*
+    // });
     
-    // Por enquanto, mantemos a navegação antiga, mas isso deve mudar
-    this.router.navigate(['/app/exam', this.certificationId]);
+    this.router.navigate(['/app/exam', this.userEnrollmentId]);
   }
 
   getModalityIcon(modality: string | undefined): string {

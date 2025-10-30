@@ -21,7 +21,9 @@
   @if (!isLoading && !errorLoading && certification) {
     <mat-card class="cert-details-card">
       <mat-card-header>
-        <mat-icon mat-card-avatar>{{ getModalityIcon(certification.modality) }}</mat-icon>
+        <div mat-card-avatar class="cert-header-icon">
+          <mat-icon>{{ getModalityIcon(certification.modality) }}</mat-icon>
+        </div>
         <mat-card-title>{{ certification.name }}</mat-card-title>
         <mat-card-subtitle>{{ certification.shortDescription }}</mat-card-subtitle>
       </mat-card-header>

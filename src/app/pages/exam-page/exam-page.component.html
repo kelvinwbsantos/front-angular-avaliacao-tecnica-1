@@ -1,0 +1,80 @@
+<div class="exam-container">
+  
+  @if (isLoading) {
+    <div class="loading-spinner">
+      <mat-spinner diameter="50"></mat-spinner>
+      <p>Carregando seu exame... Boa sorte!</p>
+    </div>
+  }
+
+  @if (!isLoading && error) {
+    <div class="error-message">
+      <mat-icon color="warn">error_outline</mat-icon>
+      <p>{{ error }}</p>
+      <button mat-stroked-button color="primary" routerLink="/app/available-certifications">
+        Voltar
+      </button>
+    </div>
+  }
+
+  @if (!isLoading && !error && exam && questions.length > 0) {
+    
+    <div class="timer-bar mat-elevation-z4">
+      <div class="timer-content">
+        <span>Prova em Andamento</span>
+        @if (timeRemaining$ | async; as timeLeft) {
+          <span class="timer-clock">
+            <mat-icon>timer</mat-icon>
+            {{ timeLeft | date:'mm:ss':'UTC' }}
+          </span>
+        }
+      </div>
+      @if (timePercentage$ | async; as perc) {
+        <mat-progress-bar mode="determinate" [value]="perc"></mat-progress-bar>
+      }
+    </div>
+
+    <div class="exam-content">
+      <h1 class="exam-title">Certificação: {{ exam.certificationId }}</h1>
+      <p class="exam-subtitle">
+        Responda todas as questões. A prova será enviada automaticamente
+        quando o tempo acabar.
+      </p>
+
+      <form [formGroup]="answersForm" (ngSubmit)="submitExam()">
+        
+        @for (question of questions; track question.id; let i = $index) {
+          <mat-card class="question-card">
+            <mat-card-header>
+              <mat-card-title>Questão {{ i + 1 }}</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+              <p class="question-text">{{ question.question }}</p>
+              
+              <mat-radio-group class="answer-options" [formControlName]="question.id">
+                <mat-radio-button [value]="true">Verdadeiro</mat-radio-button>
+                <mat-radio-button [value]="false">Falso</mat-radio-button>
+              </mat-radio-group>
+            </mat-card-content>
+          </mat-card>
+        }
+
+        <div class="submit-container">
+          <button mat-raised-button
+                  color="primary"
+                  type="submit"
+                  [disabled]="isSubmitting || !answersForm.valid">
+            @if (isSubmitting) {
+              <mat-spinner [diameter]="20" class="inline-spinner"></mat-spinner>
+              Enviando...
+            } @else {
+              <span><mat-icon>check_circle</mat-icon></span>
+              Enviar Prova
+            }
+          </button>
+        </div>
+        
+      </form>
+    </div>
+  }
+</div>
