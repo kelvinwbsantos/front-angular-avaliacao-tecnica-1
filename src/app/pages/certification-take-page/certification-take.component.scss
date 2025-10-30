@@ -1,0 +1,122 @@
+// Caminho: src/app/pages/certification-take-page/certification-take.component.scss
+.cert-take-container {
+  padding: 24px; // Mais padding geral
+  max-width: 900px;
+  margin: 20px auto; // Margem superior/inferior e centraliza
+  box-sizing: border-box;
+}
+
+.back-button {
+  margin-bottom: 24px; // Mais espaço abaixo do botão voltar
+}
+
+// Estilos de Loading e Erro (Reutilizados)
+.loading-spinner,
+.error-message {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 50px; // Mais margem superior
+  color: #777; // Cor um pouco mais escura
+  text-align: center;
+  padding: 20px;
+
+  mat-spinner {
+    margin-bottom: 20px;
+  }
+  mat-icon {
+    font-size: 52px;
+    width: 52px;
+    height: 52px;
+    margin-bottom: 20px;
+  }
+  p {
+    max-width: 400px; // Limita largura da mensagem
+    line-height: 1.5;
+  }
+  button {
+    margin-top: 24px;
+  }
+}
+
+.cert-details-card {
+  overflow: hidden; // Evita que divisores vazem
+}
+
+.cert-content {
+  padding: 24px; // Padding interno
+
+  .section-title { // h2
+    font-size: 1.15rem; // Pouco maior
+    font-weight: 500;
+    color: #3f51b5; // Cor primária (exemplo)
+    margin-bottom: 16px;
+    border-bottom: 1px solid rgba(63, 81, 181, 0.2); // Linha na cor primária clara
+    padding-bottom: 8px;
+  }
+
+  .description-text { // p da descrição
+    line-height: 1.7; // Mais espaçamento entre linhas
+    color: #444; // Texto principal um pouco mais escuro
+    white-space: pre-wrap; // Preserva quebras de linha e espaços da descrição
+  }
+}
+
+.details-grid {
+  display: grid;
+  // Colunas responsivas: Mínimo 200px, máximo 1 fração do espaço
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px; // Aumenta o espaço
+  margin-top: 20px;
+
+  .detail-item { // div dentro do grid
+    display: flex;
+    align-items: flex-start; // Alinha ícone e bloco de texto no topo
+    gap: 12px; // Mais espaço
+    color: #555;
+    padding: 8px 0; // Padding vertical leve
+
+    mat-icon {
+      color: #3f51b5; // Ícones na cor primária
+      margin-top: 2px; // Ajuste fino vertical do ícone
+    }
+
+    div { // Container do texto (strong e p)
+        p {
+            margin: 2px 0 0 0; // Remove margem padrão do <p> e adiciona espaço do strong
+            font-size: 0.95em;
+            color: #333;
+        }
+        strong {
+            display: block; // Coloca o título em linha separada
+            font-size: 0.8em;
+            color: #777;
+            text-transform: uppercase; // Opcional
+        }
+    }
+  }
+}
+
+.inactive-note {
+    font-size: 0.85em;
+    color: #e57373; // Vermelho mais suave
+    margin-left: 8px;
+    font-style: italic;
+}
+
+.cert-actions { // mat-card-actions
+    padding: 16px 24px !important;
+    gap: 12px; // Espaço entre os botões
+    background-color: #f9f9f9; // Fundo levemente diferente (opcional)
+    border-top: 1px solid rgba(0,0,0,0.1); // Linha separadora
+}
+
+.my-4 { // Classe utilitária
+    margin-top: 1.5rem; // Aumenta margem
+    margin-bottom: 1.5rem;
+}
+
+.no-certs { // Reutilizado
+    // ...
+}
