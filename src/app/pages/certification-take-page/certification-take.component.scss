@@ -1,24 +1,26 @@
 // Caminho: src/app/pages/certification-take-page/certification-take.component.scss
+// Versão Completa (Grid 2x2 + Alinhamento de Botão)
+
 .cert-take-container {
-  padding: 24px; // Mais padding geral
+  padding: 24px;
   max-width: 900px;
-  margin: 20px auto; // Margem superior/inferior e centraliza
+  margin: 20px auto;
   box-sizing: border-box;
 }
 
 .back-button {
-  margin-bottom: 24px; // Mais espaço abaixo do botão voltar
+  margin-bottom: 24px;
 }
 
-// Estilos de Loading e Erro (Reutilizados)
+// Estilos de Loading e Erro
 .loading-spinner,
 .error-message {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin-top: 50px; // Mais margem superior
-  color: #777; // Cor um pouco mais escura
+  margin-top: 50px;
+  color: #777;
   text-align: center;
   padding: 20px;
 
@@ -32,7 +34,7 @@
     margin-bottom: 20px;
   }
   p {
-    max-width: 400px; // Limita largura da mensagem
+    max-width: 400px;
     line-height: 1.5;
   }
   button {
@@ -41,82 +43,112 @@
 }
 
 .cert-details-card {
-  overflow: hidden; // Evita que divisores vazem
+  overflow: hidden;
 }
 
 .cert-content {
-  padding: 24px; // Padding interno
+  padding: 24px;
 
-  .section-title { // h2
-    font-size: 1.15rem; // Pouco maior
+  .section-title {
+    font-size: 1.15rem;
     font-weight: 500;
-    color: #3f51b5; // Cor primária (exemplo)
+    color: #3f51b5;
     margin-bottom: 16px;
-    border-bottom: 1px solid rgba(63, 81, 181, 0.2); // Linha na cor primária clara
+    border-bottom: 1px solid rgba(63, 81, 181, 0.2);
     padding-bottom: 8px;
   }
 
-  .description-text { // p da descrição
-    line-height: 1.7; // Mais espaçamento entre linhas
-    color: #444; // Texto principal um pouco mais escuro
-    white-space: pre-wrap; // Preserva quebras de linha e espaços da descrição
+  .description-text {
+    line-height: 1.7;
+    color: #444;
+    white-space: pre-wrap;
   }
 }
 
+// ----- CORREÇÃO DO GRID (A MESMA DE ANTES) -----
 .details-grid {
   display: grid;
-  // Colunas responsivas: Mínimo 200px, máximo 1 fração do espaço
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 20px; // Aumenta o espaço
+  // Isso FORÇA 2 colunas. Se não funcionar, é cache.
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
   margin-top: 20px;
 
-  .detail-item { // div dentro do grid
+  .detail-item {
     display: flex;
-    align-items: flex-start; // Alinha ícone e bloco de texto no topo
-    gap: 12px; // Mais espaço
+    align-items: center; // Alinha ícone e texto
+    gap: 16px;
     color: #555;
-    padding: 8px 0; // Padding vertical leve
+    padding: 8px 0;
 
     mat-icon {
-      color: #3f51b5; // Ícones na cor primária
-      margin-top: 2px; // Ajuste fino vertical do ícone
+      color: #3f51b5;
+      flex-shrink: 0; // Impede o ícone de ser "esmagado"
     }
 
-    div { // Container do texto (strong e p)
-        p {
-            margin: 2px 0 0 0; // Remove margem padrão do <p> e adiciona espaço do strong
-            font-size: 0.95em;
-            color: #333;
-        }
-        strong {
-            display: block; // Coloca o título em linha separada
-            font-size: 0.8em;
-            color: #777;
-            text-transform: uppercase; // Opcional
-        }
+    div {
+      p {
+        margin: 2px 0 0 0;
+        font-size: 0.95em;
+        color: #333;
+      }
+      strong {
+        display: block;
+        font-size: 0.8em;
+        color: #777;
+        text-transform: uppercase;
+      }
     }
   }
 }
+// ----- FIM DA CORREÇÃO DO GRID -----
+
 
 .inactive-note {
-    font-size: 0.85em;
-    color: #e57373; // Vermelho mais suave
-    margin-left: 8px;
-    font-style: italic;
+  font-size: 0.85em;
+  color: #e57373;
+  margin-left: 8px;
+  font-style: italic;
 }
 
-.cert-actions { // mat-card-actions
-    padding: 16px 24px !important;
-    gap: 12px; // Espaço entre os botões
-    background-color: #f9f9f9; // Fundo levemente diferente (opcional)
-    border-top: 1px solid rgba(0,0,0,0.1); // Linha separadora
+.cert-actions {
+  padding: 16px 24px !important;
+  gap: 12px;
+  background-color: #f9f9f9;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  display: flex;
 }
 
-.my-4 { // Classe utilitária
-    margin-top: 1.5rem; // Aumenta margem
-    margin-bottom: 1.5rem;
+
+.my-4 {
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
 }
 
-.no-certs { // Reutilizado
-    // ...
+// ----- CORREÇÃO DOS BOTÕES (A MESMA DE ANTES) -----
+// Esta classe foi adicionada às <span> dentro dos botões
+.button-content-wrapper {
+  display: flex;
+  align-items: center;      // Alinha verticalmente
+  justify-content: center;  // Alinha horizontalmente
+  width: 100%; // Garante que o flex ocupe o botão
+}
+
+// Adiciona margem ao ícone (quando não for spinner)
+.button-content-wrapper mat-icon {
+  margin-right: 8px;
+}
+
+// A classe do spinner (que já existia)
+.inline-spinner {
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 8px;
+}
+// ----- FIM DA CORREÇÃO DOS BOTÕES -----
+
+
+.no-certs {
+  text-align: center;
+  padding: 20px;
+  color: #777;
 }

@@ -1,6 +1,6 @@
 <div class="cert-take-container">
-
-  <button mat-stroked-button routerLink="/app/available-certifications" class="back-button mb-4"> <mat-icon>arrow_back</mat-icon> Voltar para Lista
+  <button mat-stroked-button routerLink="/app/available-certifications" class="back-button mb-4">
+    <mat-icon>arrow_back</mat-icon> Voltar para Lista
   </button>
 
   @if (isLoading) {
@@ -61,42 +61,68 @@
             <mat-icon>info_outline</mat-icon>
             <div>
               <strong>Status:</strong>
-              <p>{{ certification.isActive ? 'Ativa' : 'Inativa' }}
-                @if (!certification.isActive) {
+              <p>{{ certification?.isActive ? 'Ativa' : 'Inativa' }}
+                @if (!certification?.isActive) {
                   <span class="inactive-note">(Indisponível no momento)</span>
                 }
               </p>
             </div>
           </div>
-          </div>
+        </div>
       </mat-card-content>
 
       <mat-divider></mat-divider>
 
       <mat-card-actions align="end" class="cert-actions">
-        <button mat-stroked-button
-                color="primary"
-                (click)="scheduleExam()"
-                disabled
-                matTooltip="Agendar data e horário para realizar a prova (Funcionalidade em desenvolvimento)">
-          <mat-icon>calendar_today</mat-icon> Agendar Prova
-        </button>
+        @if (userEnrollmentId) {
+          <button mat-stroked-button color="warn" (click)="unenroll()" [disabled]="isEnrolling">
+            @if (isEnrolling) {
+              <span class="button-content-wrapper">
+                <mat-spinner [diameter]="20" color="warn" class="inline-spinner"></mat-spinner>
+                Cancelando...
+              </span>
+            } @else {
+              <span class="button-content-wrapper">
+                <mat-icon>cancel</mat-icon> Cancelar Inscrição
+              </span>
+            }
+          </button>
 
-        <button mat-raised-button
-                color="accent"
-                (click)="startExam()"
-                [disabled]="!certification.isActive"
-                matTooltip="Iniciar a prova imediatamente">
-          <mat-icon>play_circle_filled</mat-icon> Realizar Prova Agora
-        </button>
+          <button mat-stroked-button color="primary" (click)="scheduleExam()" [disabled]="isEnrolling" matTooltip="Agendar data e horário (Em desenvolvimento)">
+            <span class="button-content-wrapper">
+              <mat-icon>calendar_today</mat-icon> Agendar Prova
+            </span>
+          </button>
+
+          <button mat-raised-button color="accent" (click)="startExam()"
+            [disabled]="!certification?.isActive || isEnrolling"
+            matTooltip="Iniciar a prova imediatamente">
+            <span class="button-content-wrapper">
+              <mat-icon>play_circle_filled</mat-icon> Realizar Prova Agora
+            </span>
+          </button>
+        } @else {
+          <button mat-raised-button color="primary" (click)="enroll()"
+            [disabled]="!certification?.isActive || isEnrolling">
+            @if (isEnrolling) {
+              <span class="button-content-wrapper">
+                <mat-spinner [diameter]="20" color="primary" class="inline-spinner"></mat-spinner>
+                Inscrevendo...
+              </span>
+            } @else {
+              <span class="button-content-wrapper">
+                <mat-icon>check_circle_outline</mat-icon> Inscrever-se
+              </span>
+            }
+          </button>
+        }
       </mat-card-actions>
     </mat-card>
   } @else if (!isLoading && !errorLoading && !certification) {
-      <div class="error-message">
-         <mat-icon color="warn">warning_amber</mat-icon>
-         <p>A certificação solicitada não foi encontrada.</p>
-         <button mat-button routerLink="/app/available-certifications">Voltar</button>
-      </div>
+    <div class="error-message">
+      <mat-icon color="warn">warning_amber</mat-icon>
+      <p>A certificação solicitada não foi encontrada.</p>
+      <button mat-button routerLink="/app/available-certifications">Voltar</button>
+    </div>
   }
-
 </div>
