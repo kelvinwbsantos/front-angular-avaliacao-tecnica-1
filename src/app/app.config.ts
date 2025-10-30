@@ -1,5 +1,9 @@
+// Caminho: src/app/app.config.ts
+// (Adicionado withDebugTracing)
+
 import { ApplicationConfig, provideBrowserGlobalErrorListeners, provideZoneChangeDetection } from '@angular/core';
-import { provideRouter } from '@angular/router';
+// Habilita rastreamento de rotas 'withDebugTracing'
+import { provideRouter, withDebugTracing } from '@angular/router';
 
 import { routes } from './app.routes';
 import { provideEnvironmentNgxMask } from 'ngx-mask';
@@ -10,7 +14,8 @@ export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideZoneChangeDetection({ eventCoalescing: true }),
-    provideRouter(routes),
+    // Habilita o rastreamento de rotas
+    provideRouter(routes, withDebugTracing()),
     provideEnvironmentNgxMask(),
     provideHttpClient(
       withInterceptors([authInterceptor]),
