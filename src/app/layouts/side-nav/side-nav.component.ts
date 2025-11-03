@@ -1,5 +1,5 @@
 // Caminho: src/app/layouts/side-nav/side-nav.component.ts
-// v1.1 - Atualiza navItems com base no menu antigo e usa hasPermission
+// v1.2 - Adiciona o link "Minhas Conquistas"
 
 import { Component, inject } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
@@ -12,8 +12,7 @@ interface NavItem {
   link: string;
   label: string;
   icon: string;
-  requiredPermission?: string; // Permissões (mockadas por enquanto)
-  // requiredRoles?: string[]; // Alternativa se ainda não migrou para permissões
+  requiredPermission?: string;
 }
 
 @Component({
@@ -32,35 +31,43 @@ interface NavItem {
 export class SideNavComponent {
   public authService = inject(AuthService);
 
-  // Define os itens de navegação com base no menu antigo e permissões
   navItems: NavItem[] = [
-    // Início (Dashboard de Métricas) - Assumindo permissão VIEW_DASHBOARD
+    // Início (Dashboard de Métricas)
     { link: '/app/dashboard', label: 'Início', icon: 'home', requiredPermission: 'VIEW_DASHBOARD' },
 
-    // Usuários (Gerencial) - Usando permissão READ_USERS
-    { link: '/app/users', label: 'Usuários', icon: 'group', requiredPermission: 'READ_USERS' }, // Ícone atualizado
+    // Usuários (Gerencial)
+    { link: '/app/users', label: 'Usuários', icon: 'group', requiredPermission: 'READ_USERS' }, 
 
-    // Certificações - Usando permissão READ_CERTIFICATIONS
-    { link: '/app/certifications', label: 'Certificações', icon: 'workspace_premium', requiredPermission: 'READ_CERTIFICATIONS' },
+    // Certificações (Gerencial)
+    { link: '/app/certifications', label: 'Certificações', icon: 'assignment_turned_in', requiredPermission: 'READ_CERTIFICATIONS' }, // Mudei o ícone para diferenciar
 
-    // --- Certificações Disponíveis ---
+    // --- Certificações Disponíveis (Candidato) ---
     {
-        link: '/app/available-certifications', // Rota do candidato
-        label: 'Certificações Disponíveis',    // Nome do link no menu
-        icon: 'school',                       // Ícone (pode escolher outro)
-        requiredPermission: 'TAKE_CERTIFICATIONS' // Permissão que você mockou!
+      link: '/app/available-certifications', 
+      label: 'Certificações Disponíveis',   
+      icon: 'school',                     
+      requiredPermission: 'TAKE_CERTIFICATIONS' 
     },
 
-    // Convidar Colaboradores - Usando permissão INVITE_USER
-    { link: '/app/invite', label: 'Convidar', icon: 'person_add', requiredPermission: 'INVITE_USER' }, // Ícone atualizado
+    // ***************************************
+    // ****** COLOQUE O NOVO ITEM AQUI ******
+    // ***************************************
+    {
+      link: '/app/achievements', // A rota que criamos
+      label: 'Minhas Conquistas',  // O texto do link
+      icon: 'workspace_premium', // O ícone que você escolheu
+      requiredPermission: 'TAKE_CERTIFICATIONS' // A mesma permissão do candidato
+    },
+    // ***************************************
 
-    // Perfil e Logout foram movidos para o HeaderComponent
+    // Convidar Colaboradores
+    { link: '/app/invite', label: 'Convidar', icon: 'person_add', requiredPermission: 'INVITE_USER' }, 
   ];
 
-  // Função auxiliar para verificar permissão (opcional, mas limpa o HTML)
+  // Função auxiliar para verificar permissão (sem alteração)
   canView(item: NavItem): boolean {
     if (!item.requiredPermission) {
-      return true; // Item público (se houver)
+      return true;
     }
     return this.authService.hasPermission(item.requiredPermission);
   }

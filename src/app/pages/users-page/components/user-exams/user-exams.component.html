@@ -1,0 +1,85 @@
+<mat-card class="exam-card">
+  <mat-card-header>
+    <mat-card-title>Minhas Certificações</mat-card-title>
+    <mat-card-subtitle>Suas certificações aprovadas</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    @if (passedCerts$ | async; as passedExams) {
+      @if (passedExams.length > 0) {
+        <mat-list role="list">
+          @for (exam of passedExams; track exam.id) {
+            <mat-list-item role="listitem" class="cert-list-item">
+              <mat-icon matListItemIcon color="accent">workspace_premium</mat-icon>
+              <div matListItemTitle>{{ exam.certificationId || 'Nome Indisponível' }}</div>
+              <div matListItemLine>
+                Aprovado em: {{ exam.completedAt | date:'dd/MM/yyyy' }} | Pontuação: {{ exam.score }}%
+              </div>
+            </mat-list-item>
+            <mat-divider></mat-divider>
+          }
+        </mat-list>
+      } @else {
+        <p class="empty-state">Você ainda não possui certificações aprovadas.</p>
+      }
+    } @else {
+      <div class="loading-state">
+        <mat-progress-spinner mode="indeterminate" [diameter]="40"></mat-progress-spinner>
+      </div>
+    }
+  </mat-card-content>
+</mat-card>
+
+<mat-card class="exam-card">
+  <mat-card-header>
+    <mat-card-title>Histórico de Exames</mat-card-title>
+    <mat-card-subtitle>Todas as suas tentativas finalizadas</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content class="table-container">
+    
+    @if (allCompletedExams$ | async; as completedExams) {
+      @if (completedExams.length > 0) {
+        
+        <table mat-table [dataSource]="completedExams" class="results-table">
+
+          <ng-container matColumnDef="certificationName">
+            <th mat-header-cell *matHeaderCellDef> Certificação </th>
+            <td mat-cell *matCellDef="let exam"> {{ exam.certificationName || exam.certificationId }} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="completedAt">
+            <th mat-header-cell *matHeaderCellDef> Data </th>
+            <td mat-cell *matCellDef="let exam"> {{ exam.completedAt | date:'dd/MM/yyyy HH:mm' }} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="score">
+            <th mat-header-cell *matHeaderCellDef> Pontuação </th>
+            <td mat-cell *matCellDef="let exam" [ngClass]="exam.passed ? 'text-success' : 'text-danger'"> 
+              {{ exam.score }}% 
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="status">
+            <th mat-header-cell *matHeaderCellDef> Resultado </th>
+            <td mat-cell *matCellDef="let exam">
+              <span class="status-badge" [ngClass]="exam.passed ? 'status-passed' : 'status-failed'">
+                <mat-icon>{{ exam.passed ? 'check_circle' : 'cancel' }}</mat-icon>
+                {{ exam.passed ? 'Aprovado' : 'Reprovado' }}
+              </span>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+        
+      } @else {
+        <p class="empty-state">Você ainda não completou nenhum exame.</p>
+      }
+    } @else {
+      <div class="loading-state">
+        <mat-progress-spinner mode="indeterminate" [diameter]="40"></mat-progress-spinner>
+      </div>
+    }
+
+  </mat-card-content>
+</mat-card>

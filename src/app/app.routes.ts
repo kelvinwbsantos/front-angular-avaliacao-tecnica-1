@@ -78,12 +78,18 @@ export const routes: Routes = [
                 canActivate: [PermissionGuard],
                 data: { permissions: ['TAKE_CERTIFICATIONS'] }
             },
-            // { // Rota para a REALIZAÇÃO da prova em si
-            // path: 'exam/:certificationId',
-            // loadComponent: () => import('./pages/exam-page/exam.component').then(m => m.ExamComponent),
-            // // canActivate: [PermissionGuard],
-            // // data: { permissions: ['TAKE_CERTIFICATIONS', 'SIMULATE_EXAM'] } // Permitir ambos
-            // },
+            { // Rota para a REALIZAÇÃO da prova em si
+                path: 'exam/:enrollmentId', 
+                loadComponent: () => import('./pages/exam-page/exam-page.component').then(m => m.ExamPageComponent),
+                canActivate: [PermissionGuard],
+                data: { permissions: ['TAKE_CERTIFICATIONS', 'SIMULATE_EXAM'] } // Permitir ambos
+            },
+            {
+                path: 'achievements', // <-- SUA NOVA ROTA
+                loadComponent: () => import('./pages/achievements-page/achievements-page.component').then(m => m.AchievementsPageComponent),
+                canActivate: [PermissionGuard],
+                data: { permissions: ['TAKE_CERTIFICATIONS'] } // Ou qualquer permissão de "candidato"
+},
             //outras rotas filhas aqui
         ]
     },
