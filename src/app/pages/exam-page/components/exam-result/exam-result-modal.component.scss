@@ -1,0 +1,86 @@
+/* src/app/components/exam-result-modal/exam-result-modal.component.scss */
+.modal-title {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  padding-bottom: 16px;
+}
+
+.modal-content {
+  min-width: 400px;
+  max-width: 500px;
+  padding-top: 20px !important;
+}
+
+.modal-state-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 40px 20px;
+  color: #777;
+
+  &.error {
+    color: #f44336;
+    font-weight: 500;
+    mat-icon {
+      font-size: 48px;
+      width: 48px;
+      height: 48px;
+    }
+  }
+}
+
+.result-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.verdict {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 16px;
+  font-size: 1.5rem;
+  font-weight: 500;
+
+  mat-icon {
+    font-size: 32px;
+    width: 32px;
+    height: 32px;
+  }
+
+  &.passed {
+    background-color: rgba(40, 167, 69, 0.1);
+    color: #217a35;
+  }
+  &.failed {
+    background-color: rgba(220, 53, 69, 0.1);
+    color: #c42939;
+  }
+}
+
+.certification-name {
+  font-size: 1.2rem;
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+.completed-date {
+  font-size: 0.9rem;
+  color: #555;
+  margin-bottom: 16px;
+}
+
+.stats-list {
+  padding-top: 16px;
+
+  .score {
+    font-size: 1.1rem;
+    font-weight: 500;
+    &.passed {
+      color: #217a35;
+    }
+  }
+}

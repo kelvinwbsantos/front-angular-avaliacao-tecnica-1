@@ -1,0 +1,66 @@
+<h2 mat-dialog-title class="modal-title">
+  Resultado do Exame
+</h2>
+
+<mat-dialog-content class="modal-content">
+
+  @if (isLoading) {
+    <div class="modal-state-container">
+      <mat-progress-spinner mode="indeterminate" [diameter]="50"></mat-progress-spinner>
+      <p>Buscando seu resultado...</p>
+    </div>
+  }
+
+  @if (error) {
+    <div class="modal-state-container error">
+      <mat-icon color="warn">error_outline</mat-icon>
+      <p>{{ error }}</p>
+    </div>
+  }
+
+  @if (!isLoading && result) {
+    <div class="result-container">
+      
+      <div class="verdict" [class.passed]="result.passed" [class.failed]="!result.passed">
+        @if (result.passed) {
+          <mat-icon>check_circle</mat-icon>
+          <span>APROVADO</span>
+        } @else {
+          <mat-icon>cancel</mat-icon>
+          <span>REPROVADO</span>
+        }
+      </div>
+
+      <h3 class="certification-name">{{ result.certificationName }}</h3>
+      <p class="completed-date">Finalizado em: {{ result.completedAt | date:'dd/MM/yyyy, HH:mm' }}</p>
+      
+      <mat-divider></mat-divider>
+
+      <mat-list role="list" class="stats-list">
+        <mat-list-item role="listitem">
+          <mat-icon matListItemIcon>functions</mat-icon>
+          <div matListItemTitle>Sua Pontuação</div>
+          <div matListItemLine class="score" [class.passed]="result.passed">{{ result.score }}%</div>
+        </mat-list-item>
+        <mat-list-item role="listitem">
+          <mat-icon matListItemIcon>flaky</mat-icon>
+          <div matListItemTitle>Mínimo para Aprovação</div>
+          <div matListItemLine>{{ result.passingScore }}%</div>
+        </mat-list-item>
+        <mat-list-item role="listitem">
+          <mat-icon matListItemIcon>grading</mat-icon>
+          <div matListItemTitle>Acertos</div>
+          <div matListItemLine>{{ result.correctAnswers }} / {{ result.totalQuestions }}</div>
+        </mat-list-item>
+      </mat-list>
+
+    </div>
+  }
+
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-flat-button color="primary" (click)="close()">
+    Fechar
+  </button>
+</mat-dialog-actions>
