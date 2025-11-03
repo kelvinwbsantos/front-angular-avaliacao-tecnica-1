@@ -42,12 +42,18 @@
   }
 }
 
+// Estilos do Cartão de Detalhes do Certificado
 .cert-details-card {
   overflow: hidden;
+  box-shadow: 12px 12px 20px rgba(0, 0, 0, 0.3);
+  
 }
 
 .cert-content {
   padding: 24px;
+  
+
+  
 
   .section-title {
     font-size: 1.15rem;
@@ -65,7 +71,7 @@
   }
 }
 
-// ----- CORREÇÃO DO GRID (A MESMA DE ANTES) -----
+// ----- GRID -----
 .details-grid {
   display: grid;
   // Isso FORÇA 2 colunas. Se não funcionar, é cache.
@@ -79,6 +85,7 @@
     gap: 16px;
     color: #555;
     padding: 8px 0;
+
 
     mat-icon {
       color: #3f51b5;
@@ -100,7 +107,7 @@
     }
   }
 }
-// ----- FIM DA CORREÇÃO DO GRID -----
+// ----- FIM DO GRID -----
 
 
 .inactive-note {
@@ -124,7 +131,7 @@
   margin-bottom: 1.5rem;
 }
 
-// ----- CORREÇÃO DOS BOTÕES (A MESMA DE ANTES) -----
+// ----- BOTÕES -----
 // Esta classe foi adicionada às <span> dentro dos botões
 .button-content-wrapper {
   display: flex;
@@ -144,7 +151,7 @@
   vertical-align: middle;
   margin-right: 8px;
 }
-// ----- FIM DA CORREÇÃO DOS BOTÕES -----
+// ----- FIM DOS BOTÕES -----
 
 
 .no-certs {
