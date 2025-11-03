@@ -1,7 +1,7 @@
 // Caminho: src/app/pages/available-certifications-page/available-certifications.component.ts
 import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common'; // Para @if, @for, pipes
-import { Router, RouterLink } from '@angular/router'; // Para navegação
+import { Router } from '@angular/router'; // Para navegação
 import { Observable, EMPTY, catchError, finalize } from 'rxjs'; // RxJS
 
 // Imports do Angular Material
@@ -21,7 +21,6 @@ import { AuthService } from '../../core/services/auth.service'; // Para futuras 
   standalone: true,
   imports: [
     CommonModule,
-    RouterLink, // Para os links dos cards
     MatCardModule,
     MatButtonModule,
     MatIconModule,

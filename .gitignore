@@ -38,6 +38,7 @@ dist/
 /libpeerconnection.log
 testem.log
 /typings
+*:Zone.Identifier
 
 # System files
 .DS_Store

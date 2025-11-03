@@ -1,64 +1,149 @@
-
 // Caminho: certifications/components/ai-question-generator/ai-question-generator.scss
 
-// Estilos para o componente de Geração de Questões com I.A. (Revisão)
-
-// Estilo da Área de Upload
+// Estilo da Área de Upload (Sem mudança)
 .upload-area {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-height: 70px;
-    border: 3px dashed var(--mat-sys-primary);
-    border-radius: 12px;
-    padding: 20px;
-    text-align: center;
-    background-color: var(--mat-sys-primary-container);
-    color: var(--mat-sys-on-primary-container);
-    cursor: pointer;
-    transition: background-color 0.2s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 70px;
+  border: 3px dashed var(--mat-sys-primary);
+  border-radius: 12px;
+  padding: 20px;
+  text-align: center;
+  background-color: var(--mat-sys-primary-container);
+  color: var(--mat-sys-on-primary-container);
+  cursor: pointer;
+  transition: background-color 0.2s;
+
+  &:hover {
+    background-color: rgba(var(--mat-sys-primary-rgb), 0.1);
+  }
+}
+
+/* =========================================================
+   TABELA
+========================================================= */
+.table-container {
+  overflow-x: auto;
+  border-radius: 4px;
+  flex-grow: 1;
+  max-height: 400px;
+
+  .mat-table {
+    width: 100%;
+
+    th.mat-header-cell,
+    td.mat-cell {
+      vertical-align: middle; 
+      padding-top: 8px;
+      padding-bottom: 8px;
+      padding-left: 16px;
+      padding-right: 16px;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+    }
+
+    // Coluna Questão (Sem mudança)
+    .mat-column-question {
+      width: 60%;
+      white-space: normal;
+      word-wrap: break-word; 
+      span {
+        display: block;
+        line-height: 1.5;
+      }
+    }
+
+    // Coluna Resposta (Sem mudança)
+    .mat-column-answer {
+      width: 120px;
+      text-align: center;
+    }
+
+    // Coluna Ações (Sem mudança)
+    .mat-column-actions {
+      width: 130px; 
+      th.mat-header-cell {
+        text-align: right;
+      }
+    }
+  }
+}
+
+/* * ****** (NOVO) BADGES DE STATUS (V/F) ******
+ * Vamos usar um estilo de "pílula" chamativo
+ */
+.text-green-600,
+.text-red-600 {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 0.8em;
+  font-weight: 500;
+  text-transform: uppercase;
+
+  &.text-green-600 { // Verdadeiro
+    background-color: rgba(40, 167, 69, 0.15);
+    color: #217a35;
+  }
+  &.text-red-600 { // Falso
+    background-color: rgba(220, 53, 69, 0.15);
+    color: #c42939;
+  }
+}
+/* * ****** FIM DO NOVO BLOCO ****** */
+
+
+/* * O wrapper (<div>) que segura os botões
+ */
+.action-buttons-wrapper {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 6px;
+  
+  // Cores (que já funcionam)
+  button[matTooltip="Editar Questão"] {
+    mat-icon { color: #3f51b5; }
+  }
+  button[matTooltip="Descartar Questão"] {
+    mat-icon { color: #f44336; }
+  }
+
+  /* * ****** (NOVO) EFEITO HOVER NOS BOTÕES ******
+   * Vamos fazer eles "saltarem"
+   */
+  button[mat-icon-button] {
+    transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
 
     &:hover {
-        background-color: rgba(var(--mat-sys-primary-rgb), 0.1); // Cor mais clara no hover
+      transform: scale(1.15) translateY(-1px); // Aumenta e levanta
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); // Sombra suave
     }
-}
-
-/* Estilização da tabela de revisão */
-.table-container {
-    overflow-x: auto;
-    border-radius: 4px;
-    flex-grow: 1;
-    max-height: 400px; /* Limita a altura para scroll */
-}
-
-/* Garante que os botões de ação na célula da tabela fiquem em linha */
-.action-buttons-cell {
-    display: flex;
-    justify-content: flex-end; /* Alinha os botões à direita */
-    gap: 2px; /* Espaçamento entre os botões */
     
-    // Alinhamento do conteúdo da célula de cabeçalho
-    &.mat-column-actions {
-        text-align: right;
+    &:active {
+      transform: scale(1.05); // Efeito de clique
     }
+  }
+  /* * ****** FIM DO NOVO BLOCO ****** */
 }
 
-/* Estilos para as colunas da tabela */
-.mat-column-questionText {
-    width: 60%;
-}
 
-.mat-column-correctAnswer {
-    width: 25%;
-}
-
-.mat-column-actions {
-    width: 20%;
-    min-width: 130px;
-}
-
-// Ocultar a linha de rodapé padrão se não houver paginator
+// Oculta rodapé padrão (Sem mudança)
 .mat-table-footer-row {
-    display: none;
+  display: none;
+}
+
+/* Botões de rodapé (Sem mudança) */
+mat-dialog-actions {
+  .button-wrapper {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    mat-icon,
+    .mat-progress-spinner {
+      margin-right: 8px;
+    }
+  }
 }
