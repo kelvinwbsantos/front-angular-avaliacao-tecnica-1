@@ -17,7 +17,7 @@ import {
 })
 export class UserService {
   // URL base correta conforme seu AdminController
-  private baseUrl = 'http://localhost:3000/admin';
+  private baseUrl = 'http://localhost:3000';
   private http = inject(HttpClient);
 
   /**

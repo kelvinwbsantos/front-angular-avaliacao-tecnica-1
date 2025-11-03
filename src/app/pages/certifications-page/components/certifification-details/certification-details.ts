@@ -205,6 +205,7 @@ export class CertificationDetails implements OnInit { // Removido AfterViewInit
                 modality: formValue.modality!,
                 durationHours: Number(formValue.durationHours!),
                 isActive: formValue.isActive!
+                
             };
 
             // 1. Salva os dados de texto primeiro

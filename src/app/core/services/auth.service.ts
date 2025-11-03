@@ -162,8 +162,8 @@ export class AuthService {
   hasPermission(permission: string): boolean {
     const currentPermissions = this.#userPermissions(); // Pega o valor atual do signal (Set)
     const hasPerm = currentPermissions.has(permission);
-    // Log super detalhado para depuração
-    console.log(`[AuthService hasPermission] Verificando permissão "${permission}". O Set contém? ${hasPerm}. Signal atual (#userPermissions):`, Array.from(currentPermissions));
+    // Log detalhado para depuração
+    //console.log(`[AuthService hasPermission] Verificando permissão "${permission}". O Set contém? ${hasPerm}. Signal atual (#userPermissions):`, Array.from(currentPermissions));
     return hasPerm;
   }
 

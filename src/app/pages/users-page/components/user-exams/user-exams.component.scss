@@ -1,0 +1,72 @@
+/* src/app/pages/profile-page/components/user-exams/user-exams.component.scss */
+:host {
+  display: block;
+  width: 100%;
+}
+
+.exam-card {
+  margin-top: 24px; // Espaço entre os cards
+}
+
+.empty-state,
+.loading-state {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 32px;
+  color: #777;
+  font-style: italic;
+}
+
+.cert-list-item {
+  height: auto !important; // Permite que o item tenha duas linhas
+  padding-top: 12px;
+  padding-bottom: 12px;
+
+  mat-icon[matListItemIcon] {
+    color: #ffd700; // Cor de "prêmio" (dourado)
+  }
+}
+
+.table-container {
+  overflow-x: auto; // Responsividade para a tabela
+}
+
+.results-table {
+  width: 100%;
+}
+
+/* Cores para Aprovado/Reprovado */
+.text-success {
+  color: #28a745; // Verde
+  font-weight: 500;
+}
+.text-danger {
+  color: #dc3545; // Vermelho
+  font-weight: 500;
+}
+
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 0.85em;
+  font-weight: 500;
+
+  mat-icon {
+    font-size: 16px;
+    height: 16px;
+    width: 16px;
+  }
+
+  &.status-passed {
+    background-color: rgba(40, 167, 69, 0.1);
+    color: #28a745;
+  }
+  &.status-failed {
+    background-color: rgba(220, 53, 69, 0.1);
+    color: #dc3545;
+  }
+}

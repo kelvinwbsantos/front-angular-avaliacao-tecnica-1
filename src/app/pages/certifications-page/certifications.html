@@ -1,124 +1,104 @@
 <mat-card class="cert-card">
-    <mat-card-header>
-        <mat-card-title>Gerenciamento de Certificações</mat-card-title>
-        <mat-card-subtitle>Crie, visualize e gerencie as certificações disponíveis</mat-card-subtitle>
-    </mat-card-header>
+  <mat-card-header>
+    <mat-card-title>Gerenciamento de Certificações</mat-card-title>
+    <mat-card-subtitle>Crie, visualize e gerencie as certificações disponíveis</mat-card-subtitle>
+  </mat-card-header>
 
-    <mat-card-content>
-        <!-- Seção de Filtros -->
-        <form [formGroup]="filterForm" class="filter-form">
-            <mat-form-field appearance="outline">
-                <mat-label>Título da Certificação</mat-label>
-                <input matInput formControlName="title" placeholder="Filtrar por título">
-            </mat-form-field>
+  <mat-card-content>
 
-            <mat-form-field appearance="outline">
-                <mat-label>Status</mat-label>
-                <mat-select formControlName="status">
-                    <mat-option [value]="null">Todos os Status</mat-option>
-                    @for (status of availableStatuses; track status) {
-                        <mat-option [value]="status">{{ status }}</mat-option>
-                    }
-                </mat-select>
-            </mat-form-field>
+    <form [formGroup]="filterForm" class="action-bar">
 
-            <button mat-stroked-button color="warn" (click)="resetFilters()" type="button">
-                <mat-icon>delete_forever</mat-icon>
-                Limpar Filtros
-            </button>
-        </form>
+      <div class="filter-group">
+        <mat-form-field appearance="outline">
+          <mat-label>Título da Certificação</mat-label>
+          <input matInput formControlName="title" placeholder="Filtrar por título">
+        </mat-form-field>
 
-        <!-- Seção da Tabela -->
-        <div class="table-container">
-
-            @if (isLoading || isDeleting) {
-            <div class="spinner-overlay">
-                <mat-progress-spinner color="primary" mode="indeterminate"></mat-progress-spinner>
-            </div>
+        <mat-form-field appearance="outline">
+          <mat-label>Status</mat-label>
+          <mat-select formControlName="status">
+            <mat-option [value]="null">Todos os Status</mat-option>
+            @for (status of availableStatuses; track status) {
+            <mat-option [value]="status">{{ status }}</mat-option>
             }
+          </mat-select>
+        </mat-form-field>
+      </div>
 
-            <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-
-                <!-- Coluna Título -->
-                <ng-container matColumnDef="title">
-                    <th mat-header-cell *matHeaderCellDef> Título </th>
-                    <td mat-cell *matCellDef="let cert"> {{cert.name}} </td>
-                </ng-container>
-
-                <!-- Coluna Status -->
-                <ng-container matColumnDef="status">
-                    <th mat-header-cell *matHeaderCellDef> Status </th>
-                    <td mat-cell *matCellDef="let cert">
-                        <span [ngClass]="cert.isActive ? 'status-active' : 'status-inactive'">
-                            {{ cert.isActive ? 'Ativa' : 'Inativa' }}
-                        </span>
-                    </td>
-                </ng-container>
-
-                <!-- Coluna Questões -->
-                <ng-container matColumnDef="questionsCount">
-                    <th mat-header-cell *matHeaderCellDef> Questões </th>
-                    <td mat-cell *matCellDef="let cert"> 
-                        {{ cert.questionsCount || 0 }} 
-                    </td>
-                </ng-container>
-                
-                <!-- Coluna Data Validade -->
-                <ng-container matColumnDef="validUntil"> 
-                    <th mat-header-cell *matHeaderCellDef> Data Validade </th>
-                    <td mat-cell *matCellDef="let cert"> 
-                        {{ cert.createdAt | date:'dd/MM/yyyy' }} 
-                    </td>
-                </ng-container>
-                
-                <!-- Coluna PDF -->
-                <ng-container matColumnDef="pdfFile">
-                    <th mat-header-cell *matHeaderCellDef> Arquivo PDF </th>
-                    <td mat-cell *matCellDef="let cert" class="pdf-cell">
-                        @if (cert.pdfPath) {
-                            <mat-icon matTooltip="{{ cert.pdfFileName }}">picture_as_pdf</mat-icon>
-                        } @else {
-                            <span class="text-gray-400">N/A</span>
-                        }
-                    </td>
-                </ng-container>
-
-                <!-- Coluna Actions (Sem botão Excluir) -->
-                <ng-container matColumnDef="actions">
-                    <th mat-header-cell *matHeaderCellDef> Ações </th>
-                    <td mat-cell *matCellDef="let cert" class="actions-cell">
-                        <button mat-icon-button (click)="openCertificationDetails(cert)" 
-                                matTooltip="Ver detalhes/Editar"
-                                color="primary">
-                            <mat-icon>edit</mat-icon>
-                        </button>
-                    </td>
-                </ng-container>
-
-                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-
-                <!-- Linha para quando não há dados -->
-                <tr class="mat-row" *matNoDataRow>
-                    <td class="mat-cell" [attr.colspan]="displayedColumns.length">
-                        Nenhuma certificação encontrada com os filtros aplicados.
-                    </td>
-                </tr>
-            </table>
-        </div>
-    </mat-card-content>
-    <mat-card-actions>
-        <!-- Paginador -->
-        <mat-paginator [length]="totalCertifications" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]"
-            aria-label="Selecione a página de certificações">
-        </mat-paginator>
-
-        <!-- Botão para Adicionar Nova Certificação -->
-        <button mat-raised-button color="primary" (click)="addCertification()">
-            <mat-icon>add_box</mat-icon>
-            Adicionar Certificação
+      <div class="action-group">
+        <button mat-stroked-button color="warn" (click)="resetFilters()" type="button">
+          <mat-icon>delete_forever</mat-icon>
+          Limpar Filtros
         </button>
 
-    </mat-card-actions>
-</mat-card>
+        <button mat-raised-button color="primary" (click)="addCertification()">
+          <mat-icon>add_box</mat-icon>
+          Adicionar Certificação
+        </button>
+      </div>
+    </form>
+    <div class="table-container">
 
+      @if (isLoading || isDeleting) {
+      <div class="spinner-overlay">
+        <mat-progress-spinner color="primary" mode="indeterminate"></mat-progress-spinner>
+      </div>
+      }
+
+      <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+        <ng-container matColumnDef="title">
+          <th mat-header-cell *matHeaderCellDef> Título </th>
+          <td mat-cell *matCellDef="let cert"> {{cert.name}} </td>
+        </ng-container>
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef> Status </th>
+          <td mat-cell *matCellDef="let cert">
+            <span [ngClass]="cert.isActive ? 'status-active' : 'status-inactive'">
+              {{ cert.isActive ? 'Ativa' : 'Inativa' }}
+            </span>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="questionsCount">
+          <th mat-header-cell *matHeaderCellDef> Questões </th>
+          <td mat-cell *matCellDef="let cert"> {{ cert.questionsCount || 0 }} </td>
+        </ng-container>
+        <ng-container matColumnDef="validUntil">
+          <th mat-header-cell *matHeaderCellDef> Data Validade </th>
+          <td mat-cell *matCellDef="let cert"> {{ cert.createdAt | date:'dd/MM/yyyy' }} </td>
+        </ng-container>
+        <ng-container matColumnDef="pdfFile">
+          <th mat-header-cell *matHeaderCellDef> Arquivo PDF </th>
+          <td mat-cell *matCellDef="let cert" class="pdf-cell">
+            @if (cert.pdfPath) {
+              <mat-icon matTooltip="{{ cert.pdfFileName }}">picture_as_pdf</mat-icon>
+            } @else {
+              <span class="text-gray-400">N/A</span>
+            }
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef> Ações </th>
+          <td mat-cell *matCellDef="let cert" class="actions-cell">
+            <button mat-icon-button (click)="openCertificationDetails(cert)"
+              matTooltip="Ver detalhes/Editar" color="primary">
+              <mat-icon>edit</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        <tr class="mat-row" *matNoDataRow>
+          <td class="mat-cell" [attr.colspan]="displayedColumns.length">
+            Nenhuma certificação encontrada com os filtros aplicados.
+          </td>
+        </tr>
+      </table>
+    </div>
+  </mat-card-content>
+
+  <mat-card-actions>
+    <mat-paginator [length]="totalCertifications" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]"
+      aria-label="Selecione a página de certificações">
+    </mat-paginator>
+  </mat-card-actions>
+</mat-card>
