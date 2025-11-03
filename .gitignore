@@ -10,6 +10,8 @@
 /node_modules
 npm-debug.log
 yarn-error.log
+dist/
+.env
 
 # IDEs and editors
 .idea/
@@ -41,3 +43,8 @@ testem.log
 # System files
 .DS_Store
 Thumbs.db
+Desktop.ini
+
+# Streams de segurança do Windows
+*:Zone.Identifier
+
