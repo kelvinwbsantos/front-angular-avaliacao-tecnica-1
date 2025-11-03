@@ -5,7 +5,13 @@
 }
 
 .dashboard-card {
-  // Estilos opcionais para os cards
+    box-shadow: 12px 12px 20px rgba(0, 0, 0, 0.3);
+  // Adiciona um efeito "levantar" no hover
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    &:hover {
+    transform: translateY(-10px); // Levanta o card
+    box-shadow: 14px 14px 28px rgba(0, 0, 0, 0.7); // Sombra um pouco mais forte
+  }
 }
 
 .metric {

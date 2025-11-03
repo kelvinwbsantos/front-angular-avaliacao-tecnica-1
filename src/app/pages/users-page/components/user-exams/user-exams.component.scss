@@ -1,5 +1,7 @@
 /* src/app/components/user-exams/user-exams.component.scss */
-
+.exam-card {
+  box-shadow: 12px 12px 20px rgba(0, 0, 0, 0.3);
+}
 /* Descola os cards */
 .exam-card + .exam-card {
   margin-top: 24px;
@@ -46,29 +48,34 @@
     color: #ffd700;
   }
   
-  // ************ O MERGE ACONTECEU AQUI ************
-  // Agora este bloco tem o 'display: flex' E o estilo do botão.
   .cert-actions {
-    // Propriedades de layout (do Bloco B)
     display: flex;
     align-items: center;
     gap: 8px;
 
-    // Alvo: O botão de "share" (do Bloco A)
+    // Alvo: O botão "Gerar PDF" (só para garantir o ícone)
+    .mat-flat-button {
+      mat-icon {
+        margin-right: 6px;
+      }
+    }
+
+    // Alvo: O botão de "share"
     .mat-icon-button {
-      color: #757575; // Um cinza-médio
-      transition: color 0.2s ease-in-out;
+      
+      mat-icon {
+        color: #757575; // O cinza-médio
+      }
 
       &:hover {
-        color: #3f51b5; // Fica azul (cor primária) no hover
-        background-color: rgba(63, 81, 181, 0.08); // Adiciona o 'ripple' azul
+        mat-icon {
+          color: #3f51b5; // O azul
+        }
       }
     }
   }
   // ************ FIM DO MERGE ************
 }
-
-/* O '.cert-actions' que estava solto aqui foi REMOVIDO */
 
 /* (Estilos da Tabela) */
 .table-container {
