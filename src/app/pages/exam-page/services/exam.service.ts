@@ -5,7 +5,8 @@ import { Observable, of } from 'rxjs';
 import { 
   Exam, 
   AnswerPayload, 
-  ExamQuestionsResponse 
+  ExamQuestionsResponse,
+  ExamResult 
 } from '../models/exam.model';
 
 // Configuração da API
@@ -53,7 +54,13 @@ export class ExamService {
   submitExam(examId: string, payload: AnswerPayload): Observable<any> { 
     return this.http.post<any>(`${BASE_PATH}/${examId}/submit`, payload);
   }
+  /**
+   * (GET /exams/{id}/result)
+   * Obtém o resultado de um exame finalizado.
+   */
+  getExamResult(examId: string): Observable<ExamResult> {
+    return this.http.get<ExamResult>(`${BASE_PATH}/${examId}/result`);
+  }
 
-  // NOTE: O 'findInProgressExam' foi REMOVIDO
-  // A lógica dele agora vai para o componente.
+  // A lógica 'findInProgressExam' está no componente.
 }

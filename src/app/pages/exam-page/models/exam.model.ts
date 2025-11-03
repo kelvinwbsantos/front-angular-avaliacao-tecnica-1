@@ -6,7 +6,7 @@
  * Note: 'questions' aqui pode ser nulo ou uma lista vazia.
  */
 export interface Exam {
-  id: string;
+  id: string; // ID do exame
   enrollmentId: string;
   certificationId: string;
   certificationName?: string;
@@ -18,6 +18,24 @@ export interface Exam {
   // A API de lista NÃO retorna as questões
   questions?: ExamQuestion[]; // Torna opcional
 }
+
+// ... (interfaces Exam, ExamQuestion, AnswerPayload que já existem) ...
+
+/**
+ * O que a API retorna em GET /exams/{id}/result
+ */
+export interface ExamResult {
+  id: string; // ID do exame
+  score: number;
+  passed: boolean;
+  correctAnswers: number;
+  totalQuestions: number;
+  passingScore: number; // A nota de corte
+  completedAt: string;
+  certificationName: string;
+}
+
+
 
 /**
  * A estrutura da questão (usada em ambos os payloads)

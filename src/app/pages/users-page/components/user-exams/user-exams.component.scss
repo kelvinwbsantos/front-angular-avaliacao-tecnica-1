@@ -1,11 +1,29 @@
-/* src/app/pages/profile-page/components/user-exams/user-exams.component.scss */
-:host {
-  display: block;
-  width: 100%;
+/* src/app/components/user-exams/user-exams.component.scss */
+
+/* Descola os cards */
+.exam-card + .exam-card {
+  margin-top: 24px;
 }
 
-.exam-card {
-  margin-top: 24px; // Espaço entre os cards
+/* Estiliza os ícones do header */
+.card-header-icon-trophy,
+.card-header-icon-history {
+  mat-icon[mat-card-avatar] {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px; 
+    width: 40px;     
+    height: 40px;    
+    border-radius: 50%;
+    color: white;
+  }
+}
+.card-header-icon-trophy mat-icon[mat-card-avatar] {
+  background-color: #ffd700; // Dourado
+}
+.card-header-icon-history mat-icon[mat-card-avatar] {
+  background-color: #673ab7; // Roxo
 }
 
 .empty-state,
@@ -18,55 +36,138 @@
   font-style: italic;
 }
 
+/* (Estilos da Lista de Certificados) */
 .cert-list-item {
-  height: auto !important; // Permite que o item tenha duas linhas
-  padding-top: 12px;
-  padding-bottom: 12px;
-
+  height: auto !important;
+  padding-top: 16px;
+  padding-bottom: 16px;
+  
   mat-icon[matListItemIcon] {
-    color: #ffd700; // Cor de "prêmio" (dourado)
+    color: #ffd700;
   }
+  
+  // ************ O MERGE ACONTECEU AQUI ************
+  // Agora este bloco tem o 'display: flex' E o estilo do botão.
+  .cert-actions {
+    // Propriedades de layout (do Bloco B)
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    // Alvo: O botão de "share" (do Bloco A)
+    .mat-icon-button {
+      color: #757575; // Um cinza-médio
+      transition: color 0.2s ease-in-out;
+
+      &:hover {
+        color: #3f51b5; // Fica azul (cor primária) no hover
+        background-color: rgba(63, 81, 181, 0.08); // Adiciona o 'ripple' azul
+      }
+    }
+  }
+  // ************ FIM DO MERGE ************
 }
 
+/* O '.cert-actions' que estava solto aqui foi REMOVIDO */
+
+/* (Estilos da Tabela) */
 .table-container {
-  overflow-x: auto; // Responsividade para a tabela
+  overflow-x: auto;
 }
 
 .results-table {
   width: 100%;
-}
 
-/* Cores para Aprovado/Reprovado */
-.text-success {
-  color: #28a745; // Verde
-  font-weight: 500;
-}
-.text-danger {
-  color: #dc3545; // Vermelho
-  font-weight: 500;
-}
+  // Bloco dos Badges de Status (que funciona)
+  .status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 10px;
+    border-radius: 16px;
+    font-size: 0.8em;
+    font-weight: 500;
+    text-transform: uppercase;
 
-.status-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 4px 8px;
-  border-radius: 12px;
-  font-size: 0.85em;
-  font-weight: 500;
+    mat-icon {
+      font-size: 16px;
+      height: 16px;
+      width: 16px;
+    }
 
-  mat-icon {
-    font-size: 16px;
-    height: 16px;
-    width: 16px;
+    &.status-passed {
+      background-color: rgba(40, 167, 69, 0.15);
+      color: #217a35;
+    }
+    &.status-failed {
+      background-color: rgba(220, 53, 69, 0.15);
+      color: #c42939;
+    }
+    &.status-in-progress {
+      background-color: rgba(255, 152, 0, 0.15);
+      color: #e68a00;
+    }
   }
 
-  &.status-passed {
-    background-color: rgba(40, 167, 69, 0.1);
+  // Cores do Score (que funciona)
+  .text-success {
     color: #28a745;
+    font-weight: 500;
   }
-  &.status-failed {
-    background-color: rgba(220, 53, 69, 0.1);
+  .text-danger {
     color: #dc3545;
+    font-weight: 500;
+  }
+
+  // O bloco do "olhinho" (que ainda não funcionou)
+  .mat-column-actions {
+    
+    .mat-icon-button { 
+      
+      // Target no ícone
+      mat-icon {
+        color: #3f51b5; // A cor primária (azul)
+      }
+
+      // Bônus: Efeito hover
+      &:hover {
+        mat-icon {
+          color: #303f9f; // Cor primária mais escura
+        }
+      }
+    }
+    
+    // Bônus: Estilo para o botão "Continuar"
+    .mat-flat-button {
+      mat-icon {
+        margin-right: 6px;
+      }
+    }
+  }
+
+} // <-- Fim do .results-table
+
+
+/* (Estilos do Overlay) */
+.mat-card-content.has-overlay {
+  position: relative;
+}
+.download-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.85);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+  border-radius: 8px;
+  p {
+    margin-top: 16px;
+    font-weight: 500;
+    color: #3f51b5;
   }
 }
