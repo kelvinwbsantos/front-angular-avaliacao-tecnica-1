@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import {
     
     Certification,
@@ -26,6 +26,9 @@ export class CertificationsService {
     /**
      * Busca de certificações com filtros e paginação (GET /certifications)
      */
+   /**
+     * Busca de certificações com filtros e paginação (GET /certifications)
+     */
     findAllCertifications(filters: CertificationFilterDTO): Observable<PaginatedCertificationsResponse> {
         let params = new HttpParams()
             .set('page', filters.page.toString())
@@ -38,7 +41,20 @@ export class CertificationsService {
             params = params.set('isActive', filters.isActive.toString());
         }
         
-        return this.http.get<PaginatedCertificationsResponse>(BASE_PATH, { params });
+        return this.http.get<PaginatedCertificationsResponse>(BASE_PATH, { params }).pipe(
+            // --- 2. ADICIONE O "LIMPADOR" DE DADOS AQUI ---
+          map((response: PaginatedCertificationsResponse) => {
+                response.data.forEach(cert => {
+                    if (cert.pdfPath) {
+                        // ... (lógica do split)
+                        const fileNameOnDisk = cert.pdfPath.split('/').pop() || '';
+                        const parts = fileNameOnDisk.split('-');
+                        cert.pdfFileName = parts.slice(2).join('-');
+                    }
+                });
+                return response; 
+            })
+        );
     }
 
     /**

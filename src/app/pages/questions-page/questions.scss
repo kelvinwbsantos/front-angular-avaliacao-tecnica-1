@@ -1,6 +1,6 @@
 // Caminho: src/app/pages/questions/questions.component.scss
 
-// Estilo geral do card (Sem mudança)
+// Estilo geral do card
 .question-bank-card {
   margin: -16px; 
   display: flex;
@@ -8,7 +8,7 @@
   box-shadow: none;
 }
 
-// Cabeçalho do card (Sem mudança)
+// Cabeçalho do card
 .custom-card-header {
   display: flex;
   flex-wrap: wrap;
@@ -31,7 +31,7 @@
   margin: 0 !important;
 }
 
-// Formulário de Filtros (Sem mudança)
+// Formulário de Filtros
 .filter-form {
   display: flex;
   gap: 16px;
@@ -53,7 +53,7 @@
   }
 }
 
-// Container da Tabela (Sem mudança)
+// Container da Tabela
 .table-container {
   position: relative;
   overflow-x: auto;
@@ -119,9 +119,9 @@
   }
 }
 
-/* * ****** CORREÇÃO DO BADGE "SUMIDO" ******
+/* * ****** BADGE ******
  * Movido para o nível raiz (fora do .mat-table)
- * para bater com o seu HTML.
+ * para bater com o HTML.
  */
 .status-active,
 .status-inactive {
