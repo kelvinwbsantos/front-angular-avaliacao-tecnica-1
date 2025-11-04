@@ -1,18 +1,22 @@
-import { Component, inject, ViewChild, AfterViewInit } from '@angular/core';
+// Caminho: src/app/pages/certifications-page/certifications-list.component.ts
+
+// --- 1. ADIÇÕES NOS IMPORTS ---
+import { Component, inject, ViewChild, AfterViewInit, OnInit, ElementRef } from '@angular/core'; // Adicionado OnInit, ElementRef
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
-import { MatTableModule } from '@angular/material/table';
+import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/paginator'; // Adicionado PageEvent
+import { MatTableModule, MatTableDataSource } from '@angular/material/table'; // Adicionado MatTableDataSource
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatSelectModule } from '@angular/material/select';
-import { catchError, debounceTime, map, merge, of, startWith, switchMap, tap, Observable, filter } from 'rxjs'; 
-import { DatePipe, NgClass } from '@angular/common';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar'; // <-- ADICIONADO
+import { catchError, debounceTime, map, merge, of, startWith, switchMap, tap, Observable, filter, distinctUntilChanged, finalize } from 'rxjs'; // Adicionado imports RxJS
+import { DatePipe, NgClass, CommonModule } from '@angular/common'; // Adicionado CommonModule
 import { CertificationsService } from './services/certifications.service'; 
 import { CertificationDetails, CertificationModalData } from './components/certifification-details/certification-details'; 
 import { 
@@ -22,88 +26,81 @@ import {
 } from './models/certification-models';
 
 @Component({
-  selector: 'app-certifications-page',
-  standalone: true,
-  imports: [
-    MatIconModule, MatButtonModule, MatTableModule, MatPaginatorModule, 
-    MatCardModule, MatFormFieldModule, MatProgressSpinnerModule, 
-    ReactiveFormsModule, MatInputModule, MatDialogModule, MatTooltipModule, 
-    MatSelectModule,NgClass, DatePipe
-  ],
+  selector: 'app-certifications-page',
+  standalone: true,
+  imports: [
+    CommonModule, // <-- ADICIONADO (Necessário para @if/@for no HTML)
+    MatIconModule, MatButtonModule, MatTableModule, MatPaginatorModule, 
+    MatCardModule, MatFormFieldModule, MatProgressSpinnerModule, 
+    ReactiveFormsModule, MatInputModule, MatDialogModule, MatTooltipModule, 
+    MatSelectModule, NgClass, DatePipe,
+    MatSnackBarModule // <-- ADICIONADO
+  ],
     providers: [
     DatePipe 
   ],
-  templateUrl: './certifications.html',
-  styleUrl: './certifications.scss',
+  templateUrl: './certifications.html',
+  styleUrl: './certifications.scss',
 })
-export class CertificationsPage implements AfterViewInit {
-    // Tipo do serviço explicitamente definido. O inject() já resolve o tipo,
-    // mas adicionamos aqui para evitar o erro 'unknown' caso o ambiente falhe na inferência.
-  private certificationsService: CertificationsService = inject(CertificationsService);
-  private readonly dialog = inject(MatDialog);
+export class CertificationsPage implements AfterViewInit, OnInit { // Adicionado OnInit
+  
+  // --- 2. ADIÇÕES NAS PROPRIEDADES ---
+  private certificationsService: CertificationsService = inject(CertificationsService);
+  private readonly dialog = inject(MatDialog);
+  private snackBar = inject(MatSnackBar); // <-- ADICIONADO
 
-  // Colunas da tabela de Certificações
-  displayedColumns: string[] = ['title', 'status', 'questionsCount', 'validUntil', 'pdfFile','actions'];
-  dataSource: Certification[] = [];
-  totalCertifications = 0;
-  isLoading = true;
-  isDeleting = false; // Estado para gerenciar o carregamento de exclusão
+  displayedColumns: string[] = ['title', 'status', 'questionsCount', 'validUntil', 'pdfFile','actions'];
+  dataSource = new MatTableDataSource<Certification>([]); // <-- dataSource agora é MatTableDataSource
+  totalCertifications = 0;
+  isLoading = true;
+  isDeleting = false; 
+  isUploadingPdf = false; 
 
-  // Estados disponíveis para filtro
-  availableStatuses = ['Ativa', 'Inativa'];
+  availableStatuses = ['Ativa', 'Inativa'];
 
-  // Tipagem explícita nos FormControls (string | null)
-  filterForm = new FormGroup({
-    title: new FormControl<string | null>(''),
-    status: new FormControl<string | null>(null),
-  });
+  filterForm = new FormGroup({
+    title: new FormControl<string | null>(''),
+    status: new FormControl<string | null>(null),
+  });
 
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  
+  // <-- ADICIONADO (para o input de arquivo invisível)
+  @ViewChild('pdfUploadInput') pdfUploadInput!: ElementRef<HTMLInputElement>;
+  private uploadTargetCertificationId: string | null = null;
+  
+  
 
-  ngAfterViewInit() {
-    
-    // --- CORREÇÃO DA LÓGICA DE CARREGAMENTO ---
 
-    // 1. Subscrição de Filtros: Apenas para reiniciar o paginador
-    // Esta subscrição "escuta" as mudanças no formulário de filtro.
-    this.filterForm.valueChanges.pipe(
-        debounceTime(300), // Espera o utilizador parar de digitar
-        tap(() => {
-            // Se o utilizador mudou o filtro e NÃO está na página 1...
-            if (this.paginator.pageIndex !== 0) {
-                // ...reinicia o paginador.
-                this.paginator.pageIndex = 0;
-                
-                // IMPORTANTE: Ao reiniciar o paginador (acima),
-                // o evento (this.paginator.page) será disparado.
-                // Isso ativa a Subscrição 2 (abaixo) e carrega os dados.
-                // Esta subscrição (Sub 1) não deve fazer mais nada.
-            }
-        })
-    ).subscribe();
+  // Adicionado ngOnInit para segurança
+  ngOnInit(): void {
+    // (A lógica de 'merge' foi movida para ngAfterViewInit, que é o correto)
+  }
 
-    // 2. Subscrição Principal: Carrega os dados
-    // Esta subscrição é a ÚNICA fonte da verdade para carregar dados.
-    // Ela dispara em duas situações:
-    //    a) Quando o paginador muda (this.paginator.page)
-    //    b) Quando o filtro muda, MAS o utilizador JÁ ESTAVA na página 0
-    //       (o 'filter' abaixo garante isso)
+
+  ngAfterViewInit() {
+    // A lógica de atualização de colunas (se você tiver) deve vir aqui
+    // this.updateDisplayedColumns();
+
+    // --- CORREÇÃO: LÓGICA DE CARREGAMENTO PRINCIPAL ---
+    // O 'merge' agora escuta a paginação E os filtros
     merge(
-        this.paginator.page, // Dispara na mudança de página
-        this.filterForm.valueChanges.pipe(
-            debounceTime(300),
-            // Só deixa este evento passar se o paginador JÁ ESTIVER em 0
-            // (Se não estivesse, a Sub 1 acima o reiniciaria)
-            filter(() => this.paginator.pageIndex === 0) 
-        )
+      this.paginator.page,
+      this.filterForm.valueChanges.pipe(
+        debounceTime(400),
+        distinctUntilChanged(),
+        tap(() => {
+          // Se o filtro mudou, SEMPRE volte para a primeira página
+          if (this.paginator.pageIndex !== 0) {
+            this.paginator.pageIndex = 0;
+          }
+        })
+      )
     ).pipe(
-        startWith({} as any), // Dispara a carga inicial
-        // Define isLoading = true ANTES da chamada de API
+        startWith({}), // Carga inicial
         tap(() => this.isLoading = true), 
-        // switchMap cancela cargas anteriores e faz a nova
-        switchMap(() => this.loadCertifications()), 
+        switchMap(() => this.loadCertifications()), // Chama a função de carga
         map((response: PaginatedCertificationsResponse) => { 
-          // Define isLoading = false DEPOIS que os dados chegam
           this.isLoading = false; 
           this.totalCertifications = response.total;
           return response.data;
@@ -111,23 +108,21 @@ export class CertificationsPage implements AfterViewInit {
         catchError(error => {
           console.error('Erro ao carregar certificações:', error);
           this.isLoading = false;
+          // (Opcional) Mostrar snackbar de erro aqui
           return of([]); 
         })
     ).subscribe(data => {
-        // Atualiza a fonte de dados da tabela
-        this.dataSource = data;
+        this.dataSource.data = data; // Atualiza o MatTableDataSource
     });
   }
-  
-  /**
-    * Função auxiliar para carregar as certificações com os filtros atuais.
-   * Agora retorna explicitamente um Observable de PaginatedCertificationsResponse
-    */
-  loadCertifications(): Observable<PaginatedCertificationsResponse> {
-    //this.isLoading = true;
-    
-    const filters = this.filterForm.value as { title: string | null, status: string | null };
-    let isActiveFilter: boolean | null = null;
+  
+  /**
+   * Função auxiliar para carregar as certificações.
+   * (Seu código original, está perfeito)
+   */
+  loadCertifications(): Observable<PaginatedCertificationsResponse> {
+    const filters = this.filterForm.value as { title: string | null, status: string | null };
+    let isActiveFilter: boolean | null = null;
     if (filters.status === 'Ativa') {
         isActiveFilter = true;
     } else if (filters.status === 'Inativa') {
@@ -135,57 +130,73 @@ export class CertificationsPage implements AfterViewInit {
     }
     
     const filterDTO: CertificationFilterDTO = {
-        page: this.paginator.pageIndex + 1,
-        limit: this.paginator.pageSize,
-        title: filters.title,
+        page: this.paginator ? this.paginator.pageIndex + 1 : 1, // Garante que paginator exista
+        limit: this.paginator ? this.paginator.pageSize : 10, // Garante que paginator exista
+        title: filters.title || undefined, // Envia undefined se for nulo ou ''
         isActive: isActiveFilter 
     };
 
     return this.certificationsService.findAllCertifications(filterDTO);
   }
-  /**
-    * Abre o modal para ver os detalhes ou editar uma certificação.
-    */
-  openCertificationDetails(cert: Certification): void {
-    const data: CertificationModalData = { 
-      certificationId: cert.id, 
-      isCreation: false, 
-      certification: cert 
-    };
 
-    this.dialog.open(CertificationDetails, {
-      width: '900px',
+  /**
+   * Recarrega os dados da tabela forçando o 'merge' a disparar.
+   */
+  private reloadData(): void {
+    // Disparar o evento de página força o 'merge' a rodar de novo
+    this.paginator.page.emit({
+      pageIndex: this.paginator.pageIndex,
+      pageSize: this.paginator.pageSize,
+      length: this.paginator.length
+    });
+  }
+
+  /**
+   * Abre o modal para ver os detalhes ou editar.
+   * (Seu código original, está perfeito)
+   */
+  openCertificationDetails(cert: Certification): void {
+    const data: CertificationModalData = { 
+      certificationId: cert.id, 
+      isCreation: false, 
+      certification: cert 
+    };
+
+    this.dialog.open(CertificationDetails, {
+      width: '900px',
       maxWidth: '95vw',
-      data: data,
-    }).afterClosed().subscribe(result => {
+      data: data,
+    }).afterClosed().subscribe(result => {
         if (result) {
-            this.paginator.page.emit(); // Recarrega após edição/detalhes
+            this.reloadData(); // Recarrega após edição
         }
     });
-  }
+  }
 
-  /**
-    * Abre o modal para adicionar uma nova certificação.
-    */
-  addCertification(): void {
-    const data: CertificationModalData = { 
-      certificationId: null, // ID é null na criação
-      isCreation: true 
-    };
-    
-    this.dialog.open(CertificationDetails, {
-      width: '900px',
+  /**
+   * Abre o modal para adicionar uma nova certificação.
+   * (Seu código original, está perfeito)
+   */
+  addCertification(): void {
+    const data: CertificationModalData = { 
+      certificationId: null,
+      isCreation: true 
+    };
+    
+    this.dialog.open(CertificationDetails, {
+      width: '900px',
       maxWidth: '95vw',
-      data: data,
-    }).afterClosed().subscribe(result => {
-        if (result) {
-            this.paginator.page.emit(); // Força o reload da lista
-        }
-    });
-  }
+      data: data,
+    }).afterClosed().subscribe(result => {
+        if (result) {
+            this.reloadData(); // Recarrega após adição
+        }
+    });
+  }
   
   /**
-   * Exclui uma certificação e recarrega a lista.
+   * Exclui uma certificação.
+   * (Seu código original, mas usando reloadData())
    */
   deleteCertification(id: string): void {
     if (confirm('Tem certeza que deseja excluir esta certificação?')) {
@@ -194,56 +205,78 @@ export class CertificationsPage implements AfterViewInit {
         this.certificationsService.deleteCertification(id).pipe(
             tap(() => console.log(`Certificação ${id} excluída com sucesso.`)),
             catchError(error => {
-                console.error('Erro ao excluir certificação:', error);
-                alert('Erro ao excluir. Verifique o console.'); 
-                this.isDeleting = false;
-                return of(null);
-            })
+              console.error('Erro ao excluir certificação:', error);
+              this.snackBar.open('Erro ao excluir. Tente novamente.', 'Fechar', { duration: 3000 });
+              this.isDeleting = false;
+              return of(null);
+            }),
+            finalize(() => this.isDeleting = false) // Garante que isDeleting finalize
         ).subscribe(result => {
-            this.isDeleting = false;
             if (result !== null) {
-                // Se for chamado de dentro do modal, o modal deve fechar e
-                // o 'afterClosed()' da página principal vai recarregar.
-                // Se for chamado da página principal (como estava antes),
-                // esta linha recarrega.
-                this.paginator.page.emit(); // Força o reload da lista
+              this.reloadData(); // Recarrega a lista
             }
         });
     }
   }
 
-  resetFilters() {
-
- // 1. Reseta o formulário
+  /**
+   * Reseta os filtros e recarrega a tabela.
+   * (Seu código original, mas simplificado)
+   */
+  resetFilters() {
     this.filterForm.reset({ title: '', status: null });
+    // O 'merge' vai pegar essa mudança (via valueChanges)
+    // e recarregar a tabela, resetando o paginador.
+  }
 
-    // 2. Verifica se o paginador já está na página 0
-    if (this.paginator.pageIndex === 0) {
-        // 3a. Se já estiver na página 0, o 'pageIndex = 0' (da Sub 1) não vai
-        // disparar um evento. Precisamos forçar a carga manualmente.
-        // A forma mais fácil é pedir ao 'merge' (Sub 2) para recarregar.
-        // O startWith({}) não funciona aqui, então disparamos uma carga direta.
-        this.isLoading = true;
-        this.loadCertifications().pipe(
-             map((response: PaginatedCertificationsResponse) => { 
-                console.log('RESPOSTA BRUTA DA API (findAll):', response);
-                this.isLoading = false; 
-                this.totalCertifications = response.total;
-                return response.data;
-             }),
-             catchError(error => {
-                console.error('Erro ao carregar certificações:', error);
-                this.isLoading = false;
-                return of([]); 
-             })
-        ).subscribe(data => {
-            this.dataSource = data;
-        });
-    } else {
-        // 3b. Se NÃO estiver na página 0, a Sub 1 (valueChanges) 
-        // vai detetar a mudança, vai definir pageIndex = 0, 
-        // e isso VAI disparar a Sub 2 (paginator.page) para carregar.
-        // Não precisamos fazer mais nada aqui.
+  // --- 3. MÉTODOS NOVOS PARA UPLOAD DE PDF ---
+
+  /**
+   * Aciona o clique no input de arquivo invisível.
+   */
+  triggerPdfUpload(certificationId: string): void {
+    if (this.isUploadingPdf) return;
+    
+    this.uploadTargetCertificationId = certificationId;
+    
+    if (this.pdfUploadInput.nativeElement) {
+      this.pdfUploadInput.nativeElement.value = '';
     }
+    
+    this.pdfUploadInput.nativeElement.click();
+  }
+
+  /**
+   * Chamado quando o usuário seleciona um arquivo no input invisível.
+   */
+  onPdfFileSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (!input.files?.length || !this.uploadTargetCertificationId) {
+      return;
+    }
+
+    const file = input.files[0];
+    const certId = this.uploadTargetCertificationId; 
+    
+    this.isUploadingPdf = true;
+    this.snackBar.open(`Enviando ${file.name}...`, 'Fechar');
+
+    this.certificationsService.uploadCertificationPdf(certId, file).subscribe({
+      next: (updatedCertification) => {
+        this.isUploadingPdf = false;
+        this.snackBar.open('PDF atualizado com sucesso!', 'OK', { duration: 3000 });
+        
+        // Atualiza a lista
+        this.reloadData();
+      },
+      error: (err) => {
+        console.error("Erro ao enviar PDF:", err);
+        this.isUploadingPdf = false;
+        this.snackBar.open('Falha ao enviar o PDF. Tente novamente.', 'Fechar', { duration: 4000 });
+      },
+      complete: () => {
+        this.uploadTargetCertificationId = null;
+      }
+    });
   }
 }

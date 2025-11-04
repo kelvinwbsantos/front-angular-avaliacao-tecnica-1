@@ -76,7 +76,7 @@
   <mat-card-header class="card-header-icon-history">
     <mat-icon mat-card-avatar>history</mat-icon>
     <mat-card-title>Histórico de Exames</mat-card-title>
-    <mat-card-subtitle>Suas tentativas de certificação (em andamento e finalizadas)</mat-card-subtitle>
+    <mat-card-subtitle>Suas tentativas de certificação (iniciadas e finalizadas)</mat-card-subtitle>
   </mat-card-header>
 
   <mat-card-content class="table-container">
@@ -100,7 +100,7 @@
               @if (exam.status === 'in_progress') {
                 <span class="status-badge status-in-progress">
                   <mat-icon>hourglass_empty</mat-icon>
-                  Em Andamento
+                  Iniciada
                 </span>
               } @else {
                 <span class="status-badge" [ngClass]="exam.passed ? 'status-passed' : 'status-failed'">
@@ -129,7 +129,7 @@
             <th mat-header-cell *matHeaderCellDef> Ações </th>
             <td mat-cell *matCellDef="let exam">
               @if (exam.status === 'in_progress') {
-                <button mat-flat-button color="accent" (click)="resumeExam(exam)">
+                <button mat-flat-button (click)="resumeExam(exam)">
                   <mat-icon>play_circle_filled</mat-icon>
                   Continuar Prova
                 </button>
