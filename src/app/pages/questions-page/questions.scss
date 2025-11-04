@@ -1,101 +1,196 @@
 // Caminho: src/app/pages/questions/questions.component.scss
-// v1.1 - Adiciona estilos SCSS para o cabeçalho
 
-// Estilo geral do card dentro do dialog
+// Estilo geral do card (Sem mudança)
 .question-bank-card {
-    margin: -16px; // Compensa o padding do dialog-content
-    display: flex;
-    flex-direction: column;
-    box-shadow: none;
+  margin: -16px; 
+  display: flex;
+  flex-direction: column;
+  box-shadow: none;
 }
 
-// Estilo para o cabeçalho do card
+// Cabeçalho do card (Sem mudança)
 .custom-card-header {
-    display: flex;                 // Usa Flexbox
-    flex-wrap: wrap;               // Permite quebra de linha em telas pequenas
-    justify-content: space-between; // Título à esquerda, botões à direita
-    align-items: center;           // Alinha verticalmente
-    align-content: flex-start;   // Alinha o conteúdo ao topo se quebrar linha
-    gap: 1rem;                     // Espaço entre título e botões (se quebrar linha)
-    padding: 1rem 1.5rem;          // Padding interno (ajuste conforme necessário)
-    border-bottom: 1px solid rgba(0,0,0,0.12); // Linha separadora opcional
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  align-content: flex-start;
+  gap: 1rem;
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid rgba(0,0,0,0.12);
 }
-
-// Estilo para o container dos botões no cabeçalho
 .header-actions {
-    display: flex;     // Botões em linha
-    flex-wrap: wrap;   // Permite quebra de linha dos botões
-    gap: 0.5rem;       // Espaço ENTRE os botões
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  .mat-button-base mat-icon {
+    margin-right: 8px;
+  }
 }
-
-// Remove margem padrão do texto do cabeçalho que pode atrapalhar o flex
 :host ::ng-deep .mat-mdc-card-header-text {
-    margin: 0 !important;
+  margin: 0 !important;
 }
 
-// Formulário de Filtros
+// Formulário de Filtros (Sem mudança)
 .filter-form {
-    display: flex;
-    gap: 16px;
-    align-items: center;
-    padding: 16px 1.5rem; // Adiciona padding horizontal
-    flex-wrap: wrap;
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  padding: 16px 1.5rem;
+  flex-wrap: wrap;
 
-    mat-form-field {
-        flex: 1 1 200px; // Cresce e permite quebra de linha
-        min-width: 200px; // Largura mínima
+  mat-form-field {
+    flex: 1 1 200px;
+    min-width: 200px;
+  }
+  
+  .clear-filters-btn {
+    height: 52px;
+    box-shadow: var(--mat-mdc-button-persistent-elevation-shadow, 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12));
+    mat-icon {
+      margin-right: 4px;
     }
-
-    button {
-       height: 52px; // Alinha altura com os form-fields outline
-    }
+  }
 }
 
-// Container da Tabela
+// Container da Tabela (Sem mudança)
 .table-container {
-    position: relative;
-    overflow-x: auto; // Permite scroll horizontal se necessário
-    margin: 0 1.5rem 1rem; // Adiciona margens laterais e inferior
+  position: relative;
+  overflow-x: auto;
+  margin: 0 1.5rem 1rem;
 }
-
-// Overlay de Carregamento
 .spinner-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(255, 255, 255, 0.7);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 10;
-    border-radius: 4px; // Arredonda junto com a tabela
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+  border-radius: 4px;
 }
 
-// Estilos de Status (Ativa/Inativa)
-.status-active {
-    color: #28a745;
-    font-weight: 500;
+/* =========================================================
+   ESTILOS DA TABELA (ALINHAMENTO E BADGES)
+========================================================= */
+.mat-table {
+  width: 100%;
+
+  th.mat-header-cell,
+  td.mat-cell {
+    vertical-align: middle; 
+    padding: 8px 16px; 
+    border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+  }
+  
+  // Coluna Questão (permite quebra de linha)
+  .mat-column-question {
+    width: 60%;
+    white-space: normal;
+    word-wrap: break-word;
+    
+    span {
+      display: block;
+      line-height: 1.5;
+    }
+  }
+
+  // Coluna Status (Sem estilo de badge aqui)
+  .mat-column-isActive {
+    width: 120px;
+    text-align: center;
+  }
+  
+  // Coluna Data
+  .mat-column-createdAt {
+    width: 130px;
+  }
+
+  // Coluna Ações
+  .mat-column-actions {
+    width: 130px; 
+    
+    th.mat-header-cell {
+      text-align: right;
+    }
+  }
 }
+
+/* * ****** CORREÇÃO DO BADGE "SUMIDO" ******
+ * Movido para o nível raiz (fora do .mat-table)
+ * para bater com o seu HTML.
+ */
+.status-active,
 .status-inactive {
-    color: #dc3545;
-    font-weight: 500;
+  display: inline-block;
+  padding: 6px 10px;
+  border-radius: 16px;
+  font-size: 0.8em;
+  font-weight: 500;
+  text-transform: uppercase;
+  
+  &.status-active {
+    background-color: rgba(40, 167, 69, 0.15);
+    color: #217a35;
+  }
+  &.status-inactive {
+    background-color: rgba(220, 53, 69, 0.15);
+    color: #c42939;
+  }
+}
+/* * ****** FIM DA CORREÇÃO ****** */
+
+
+// O wrapper (<div>) que segura os botões (Sem mudança)
+.action-buttons-wrapper {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 6px;
+  
+  .mat-icon-button {
+    transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
+
+    &:hover {
+      transform: scale(1.15) translateY(-1px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+    &:active {
+      transform: scale(1.05);
+    }
+  }
+
+  .action-button-edit mat-icon {
+    color: #3f51b5; // Azul
+  }
+  .action-button-delete mat-icon {
+    color: #f44336; // Vermelho
+  }
 }
 
-// Célula de Ações
-.actions-cell {
-    text-align: right;
-    // Adiciona espaço mínimo para os botões não quebrarem feio
-    min-width: 100px;
-}
-
-// Ajuste fino do padding do conteúdo do card
+// Ajuste fino do padding (Sem mudança)
 mat-card-content {
-    padding: 0 !important; // Remove padding padrão para controlar com .filter-form e .table-container
+  padding: 0 !important;
 }
 
-// Ajuste do paginador
+// Ajuste do paginador (Sem mudança)
 mat-card-actions {
-    padding: 0 1.5rem 1rem; // Adiciona padding
+  padding: 0 1.5rem 1rem;
+}
+
+// Destaque no Botão "Fechar" (Sem mudança)
+mat-dialog-actions {
+  button[mat-button] { 
+    min-width: 100px;
+    padding: 0 16px;
+    border: 1px solid currentColor;
+    color: #f44336;
+    
+    &:hover {
+      background-color: rgba(244, 67, 54, 0.05);
+    }
+  }
 }
