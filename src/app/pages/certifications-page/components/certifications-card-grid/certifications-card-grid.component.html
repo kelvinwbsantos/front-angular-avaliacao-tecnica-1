@@ -17,10 +17,12 @@
         
         <mat-card class="cert-card" (click)="viewCertificationDetails(cert.id)">
           
-          <div class="card-image-header">
-            </div>
+          <div class="modality-badge">
+            <mat-icon>{{ getModalityIcon(cert.modality) }}</mat-icon>
+            <span>{{ cert.modality === 'online' ? 'Online' : 'Presencial' }}</span>
+          </div>
 
-          <div class="card-info-content">
+          <div class="card-info-wrapper">
               
               <div class="card-header-custom">
                 <h3 class_ ="card-title">{{ cert.name }}</h3>
@@ -29,14 +31,6 @@
 
               <div class="cert-stats-grid">
                 
-                <div class="stat-item modality-highlight">
-                  <mat-icon>{{ getModalityIcon(cert.modality) }}</mat-icon>
-                  <div>
-                    <strong>Modalidade</strong>
-                    <p>{{ cert.modality === 'online' ? 'Online' : 'Presencial' }}</p>
-                  </div>
-                </div>
-
                 <div class="stat-item">
                   <mat-icon>schedule</mat-icon>
                   <div>
@@ -46,10 +40,18 @@
                 </div>
 
                 <div class="stat-item">
+                  <mat-icon>format_list_numbered</mat-icon>
+                  <div>
+                    <strong>Questões</strong>
+                    <p>{{ cert.questionsCount || 'N/D' }}</p>
+                  </div>
+                </div>
+
+                <div class="stat-item">
                   <mat-icon>verified_user</mat-icon>
                   <div>
                     <strong>Aprovação</strong>
-                    <p>{{ cert.passingScore }}% (mín)</p>
+                    <p>{{ cert.passingScore }}%</p>
                   </div>
                 </div>
               </div>
