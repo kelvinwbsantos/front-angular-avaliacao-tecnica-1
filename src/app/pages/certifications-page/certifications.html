@@ -5,86 +5,104 @@
   </mat-card-header>
 
   <mat-card-content>
+    
+    <input 
+      type="file" 
+      hidden 
+      #pdfUploadInput 
+      (change)="onPdfFileSelected($event)" 
+      accept="application/pdf"
+    />
 
     <form [formGroup]="filterForm" class="action-bar">
-
-      <div class="filter-group">
-        <mat-form-field appearance="outline">
-          <mat-label>Título da Certificação</mat-label>
-          <input matInput formControlName="title" placeholder="Filtrar por título">
-        </mat-form-field>
-
-        <mat-form-field appearance="outline">
-          <mat-label>Status</mat-label>
-          <mat-select formControlName="status">
-            <mat-option [value]="null">Todos os Status</mat-option>
-            @for (status of availableStatuses; track status) {
-            <mat-option [value]="status">{{ status }}</mat-option>
-            }
-          </mat-select>
-        </mat-form-field>
-      </div>
-
-      <div class="action-group">
-        <button mat-stroked-button color="warn" (click)="resetFilters()" type="button">
-          <mat-icon>delete_forever</mat-icon>
-          Limpar Filtros
-        </button>
-
-        <button mat-raised-button color="primary" (click)="addCertification()">
-          <mat-icon>add_box</mat-icon>
-          Adicionar Certificação
-        </button>
-      </div>
-    </form>
+      </form>
+    
     <div class="table-container">
 
-      @if (isLoading || isDeleting) {
-      <div class="spinner-overlay">
-        <mat-progress-spinner color="primary" mode="indeterminate"></mat-progress-spinner>
-      </div>
+      @if (isLoading || isDeleting || isUploadingPdf) {
+        <div class="spinner-overlay">
+          <mat-progress-spinner color="primary" mode="indeterminate"></mat-progress-spinner>
+           @if (isUploadingPdf) {
+            <p class="spinner-text">Enviando PDF...</p>
+          }
+        </div>
       }
 
       <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+        
         <ng-container matColumnDef="title">
           <th mat-header-cell *matHeaderCellDef> Título </th>
-          <td mat-cell *matCellDef="let cert"> {{cert.name}} </td>
+          <td mat-cell *matCellDef="let cert"> 
+            <span>{{cert.name}}</span> </td>
         </ng-container>
+
         <ng-container matColumnDef="status">
           <th mat-header-cell *matHeaderCellDef> Status </th>
-          <td mat-cell *matCellDef="let cert">
+          <td mat-cell *matCellDef="let cert" class="text-center">
             <span [ngClass]="cert.isActive ? 'status-active' : 'status-inactive'">
               {{ cert.isActive ? 'Ativa' : 'Inativa' }}
             </span>
           </td>
         </ng-container>
+
         <ng-container matColumnDef="questionsCount">
           <th mat-header-cell *matHeaderCellDef> Questões </th>
-          <td mat-cell *matCellDef="let cert"> {{ cert.questionsCount || 0 }} </td>
+          <td mat-cell *matCellDef="let cert" class="text-center"> {{ cert.questionsCount || 0 }} </td>
         </ng-container>
+
         <ng-container matColumnDef="validUntil">
           <th mat-header-cell *matHeaderCellDef> Data Validade </th>
           <td mat-cell *matCellDef="let cert"> {{ cert.createdAt | date:'dd/MM/yyyy' }} </td>
         </ng-container>
+        
         <ng-container matColumnDef="pdfFile">
           <th mat-header-cell *matHeaderCellDef> Arquivo PDF </th>
-          <td mat-cell *matCellDef="let cert" class="pdf-cell">
-            @if (cert.pdfPath) {
-              <mat-icon matTooltip="{{ cert.pdfFileName }}">picture_as_pdf</mat-icon>
-            } @else {
-              <span class="text-gray-400">N/A</span>
-            }
+          <td mat-cell *matCellDef="let cert" class="text-center">
+            
+            <div class="action-buttons-wrapper pdf-wrapper"> 
+              
+              @if (cert.pdfPath) {
+
+                <span matTooltip="{{ cert.pdfFileName || 'PDF disponível' }}">
+                  <button mat-icon-button 
+                          disabled 
+                          class="pdf-icon-button">
+                    <mat-icon>picture_as_pdf</mat-icon>
+                  </button>
+                </span>
+                <button mat-icon-button 
+                        class="pdf-upload-button" 
+                        (click)="triggerPdfUpload(cert.id)"
+                        matTooltip="Substituir PDF">
+                  <mat-icon>upload</mat-icon>
+                </button>
+                
+              } @else {
+                <button mat-icon-button 
+                        class="pdf-upload-button" 
+                        (click)="triggerPdfUpload(cert.id)"
+                        matTooltip="Adicionar PDF">
+                  <mat-icon>upload_file</mat-icon>
+                </button>
+              }
+            </div>
           </td>
         </ng-container>
+
         <ng-container matColumnDef="actions">
           <th mat-header-cell *matHeaderCellDef> Ações </th>
-          <td mat-cell *matCellDef="let cert" class="actions-cell">
-            <button mat-icon-button (click)="openCertificationDetails(cert)"
-              matTooltip="Ver detalhes/Editar" color="primary">
-              <mat-icon>edit</mat-icon>
-            </button>
+          <td mat-cell *matCellDef="let cert">
+            <div class="action-buttons-wrapper">
+                <button mat-icon-button 
+                        (click)="openCertificationDetails(cert)"
+                        matTooltip="Ver detalhes/Editar" 
+                        class="action-button-edit"> 
+                  <mat-icon>edit_note</mat-icon>
+                </button>
+            </div>
           </td>
         </ng-container>
+        
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         <tr class="mat-row" *matNoDataRow>

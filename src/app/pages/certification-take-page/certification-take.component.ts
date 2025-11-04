@@ -1,5 +1,5 @@
 // Caminho: src/app/pages/certification-take-page/certification-take.component.ts
-// v2.0 - Adiciona lógica de Matrícula (Enrollment)
+// v2.1 - Adiciona lógica de Download de Material
 
 import { Component, OnInit, inject, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -39,7 +39,7 @@ import { ExamService } from '../exam-page/services/exam.service';       // Ex: /
     MatProgressSpinnerModule,
     MatDividerModule,
     MatTooltipModule,
-    MatSnackBarModule, // Adiciona o módulo do SnackBar
+    MatSnackBarModule,
   ],
   templateUrl: './certification-take.component.html',
   styleUrls: ['./certification-take.component.scss'],
@@ -51,10 +51,8 @@ export class CertificationTakeComponent implements OnInit, OnDestroy {
   private certificationsService = inject(CertificationsService);
   public authService = inject(AuthService);
   
-  // !!! INJEÇÕES NOVAS !!!
   private enrollmentService = inject(EnrollmentService);
   private examService = inject(ExamService); 
- // private examService = inject(ExamService); // Ainda não usado, mas pronto para o startExam
   private snackBar = inject(MatSnackBar);
 
   // --- Estado do Componente ---
@@ -64,8 +62,9 @@ export class CertificationTakeComponent implements OnInit, OnDestroy {
   certificationId: string | null = null;
   
   // --- ESTADO NOVO ---
-  userEnrollmentId: string | null = null; // Guarda o ID da matrícula se o usuário estiver matriculado
-  isEnrolling = false; // Spinner dos BOTÕES de ação (inscrever/cancelar)
+  userEnrollmentId: string | null = null;
+  isEnrolling = false; // Spinner dos BOTÕES de inscrição
+  isDownloading = false; // <-- ADICIONADO: Spinner do botão de download
 
   private loadSubscription: Subscription | null = null;
 
@@ -82,7 +81,7 @@ export class CertificationTakeComponent implements OnInit, OnDestroy {
     this.isLoading = true;
     this.errorLoading = false;
     this.certification = null;
-    this.userEnrollmentId = null; // Reseta o status da matrícula
+    this.userEnrollmentId = null; 
     console.log('[CertTake] Iniciando carregamento (Certificação e Matrículas)...');
     
     this.loadSubscription?.unsubscribe();
@@ -105,16 +104,15 @@ export class CertificationTakeComponent implements OnInit, OnDestroy {
           certification: this.certificationsService.findCertificationById(this.certificationId!).pipe(
             catchError(err => {
               console.error('[CertTake] Erro ao buscar certificação:', err);
-              this.errorLoading = true; // Sinaliza erro, mas não para o forkJoin
-              return of(null); // Retorna nulo para o forkJoin completar
+              this.errorLoading = true;
+              return of(null);
             })
           ),
           // Busca 2: Matrículas do Usuário
           enrollments: this.enrollmentService.getUserEnrollments().pipe(
-             // Assumindo que você tem um método no serviço que faz "GET /enrollments"
             catchError(err => {
               console.warn('[CertTake] Erro ao buscar matrículas:', err);
-              return of([]); // Retorna array vazio em caso de erro
+              return of([]); 
             })
           )
         });
@@ -125,13 +123,14 @@ export class CertificationTakeComponent implements OnInit, OnDestroy {
           if (!certification) {
             console.error('[CertTake] Falha crítica: Certificação não carregada.');
             this.errorLoading = true;
-            return; // Não podemos continuar sem a certificação
+            return; 
           }
           
           this.certification = certification;
           console.log('[CertTake] Certificação atribuída.');
+          // Log para verificar se o pdfFileName (criado no service) chegou
+          console.log('[CertTake] PDF FileName (do service):', this.certification.pdfFileName);
 
-          // Agora, verifica se há uma matrícula para ESTA certificação
           const foundEnrollment = enrollments.find(
             (e: Enrollment) => e.certificationId === this.certificationId
           );
@@ -162,16 +161,16 @@ export class CertificationTakeComponent implements OnInit, OnDestroy {
   enroll(): void {
     if (!this.certificationId) return;
 
-    this.isEnrolling = true; // Liga o spinner do BOTÃO
+    this.isEnrolling = true; 
     this.enrollmentService.createEnrollment({ certificationId: this.certificationId })
-      .pipe(finalize(() => this.isEnrolling = false)) // Desliga o spinner do BOTÃO
+      .pipe(finalize(() => this.isEnrolling = false))
       .subscribe({
         next: (newEnrollment) => {
           this.userEnrollmentId = newEnrollment.id;
           console.log(`[CertTake] Inscrição realizada. Novo ID: ${newEnrollment.id}`);
           this.snackBar.open('Inscrição realizada com sucesso!', 'Fechar', {
             duration: 3000,
-            panelClass: 'success-snackbar' // (Opcional, para CSS)
+            panelClass: 'success-snackbar'
           });
         },
         error: (err) => {
@@ -188,9 +187,9 @@ export class CertificationTakeComponent implements OnInit, OnDestroy {
   unenroll(): void {
     if (!this.userEnrollmentId) return;
 
-    this.isEnrolling = true; // Liga o spinner do BOTÃO
+    this.isEnrolling = true;
     this.enrollmentService.deleteEnrollment(this.userEnrollmentId)
-      .pipe(finalize(() => this.isEnrolling = false)) // Desliga o spinner do BOTÃO
+      .pipe(finalize(() => this.isEnrolling = false))
       .subscribe({
         next: () => {
           console.log(`[CertTake] Inscrição ${this.userEnrollmentId} cancelada.`);
@@ -210,28 +209,64 @@ export class CertificationTakeComponent implements OnInit, OnDestroy {
   }
 
 
-  // ... (scheduleExam, startExam, getModalityIcon - sem alterações por enquanto)
+  // --- AÇÕES DO EXAME ---
+
   scheduleExam(): void {
-    // A lógica de agendamento viria aqui
     alert('Funcionalidade de agendamento ainda não implementada.');
   }
 
   startExam(): void {
-    // A lógica de iniciar o exame (POST /exams) deve vir aqui
-    // Por enquanto, apenas navegamos
     if (!this.userEnrollmentId) {
       this.snackBar.open('Você precisa estar matriculado para iniciar a prova.', 'Fechar', { duration: 3000 });
       return;
     }
     console.log(`[CertTake] Clicou em Realizar Prova. Matrícula ID: ${this.userEnrollmentId}`);
     
-    // Opcional (se você quisesse iniciar e *depois* navegar):
-    // this.examService.startExam(this.userEnrollmentId).subscribe(exam => {
-    //   this.router.navigate(['/app/exam', exam.id]); // Navega com o ID do *exame*
-    // });
-    
     this.router.navigate(['/app/exam', this.userEnrollmentId]);
   }
+
+  // --- AÇÃO DE DOWNLOAD (NOVO MÉTODO) ---
+
+  /**
+   * Baixa o material de estudo (PDF) associado à certificação.
+   */
+  downloadMaterial(): void {
+    // 1. Verifica se os dados necessários existem
+    if (!this.certification?.pdfPath || !this.certification.id) {
+      this.snackBar.open('Material de estudo não disponível.', 'Fechar', { duration: 3000 });
+      return;
+    }
+
+    // 2. Define estados
+    this.isDownloading = true;
+    const certId = this.certification.id;
+    // O 'pdfFileName' foi criado no service, na chamada findCertificationById
+    const fileName = this.certification.pdfFileName || 'material_de_estudo.pdf';
+
+    // 3. Chama o serviço (reutilizando a rota de gerar certificado)
+    this.certificationsService.generateCertificate(certId).pipe(
+      finalize(() => this.isDownloading = false) // Garante que o spinner pare
+    ).subscribe({
+      next: (blob) => {
+        // 4. Lógica de "forçar" o download no navegador
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        document.body.appendChild(a);
+        a.style.display = 'none';
+        a.href = url;
+        a.download = fileName; // Usa o nome bonito que tratamos no service
+        a.click();
+        window.URL.revokeObjectURL(url);
+        document.body.removeChild(a);
+      },
+      error: (err) => {
+        console.error("Erro ao baixar material:", err);
+        this.snackBar.open('Não foi possível baixar o material.', 'Fechar', { duration: 3000 });
+      }
+    });
+  }
+  // --- FIM DO NOVO MÉTODO ---
+
 
   getModalityIcon(modality: string | undefined): string {
     return modality === 'online' ? 'computer' : 'groups';
