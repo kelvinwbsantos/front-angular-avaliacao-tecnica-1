@@ -1,6 +1,6 @@
-// Caminho: src/app/pages/available-certifications-page/component/certifications-grid.component.scss
+/* src/app/pages/available-certifications-page/component/certifications-grid.component.scss */
 
-/* O container da página (H1, Subtítulo) */
+/* Container da página (H1, Subtítulo) */
 .available-certs-container {
   padding: 20px;
   h1 { margin-bottom: 8px; }
@@ -19,115 +19,143 @@
   justify-content: center;
   margin-top: 40px;
   color: #888;
+  /* ... (etc) */
 }
 .loading-spinner mat-spinner { margin-bottom: 16px; }
 .error-message mat-icon { font-size: 48px; width: 48px; height: 48px; margin-bottom: 16px; }
 .error-message button { margin-top: 20px; }
 
+
 /* O Grid de Cards (Sem mudança) */
 .certs-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 20px;
+  gap: 24px; // Aumentei o 'gap'
 }
 
 /* =========================================================
- * O NOVO ESTILO DO CARD
+ * O CARD "REVOLUÇÃO" (V3)
  * =========================================================
  */
 .cert-card {
+  // 1. O Container Geral
+  padding: 0 !important; // Remove o padding do mat-card
+  border-radius: 12px !important; // Arredonda o container
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+  transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
   display: flex;
   flex-direction: column;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); 
-  border-radius: 8px;
-  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  cursor: pointer; // O card todo é clicável
 
   &:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    transform: translateY(-6px);
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.18);
   }
+  
+  // 2. A Imagem de Fundo (1/3 de cima)
+  .card-image-header {
+    height: 160px;
+    border-radius: 12px 12px 0 0; // Arredonda só o topo
 
-  /* 1. O Avatar (Sem mudança) */
-  .card-avatar-icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background-color: #3f51b5;
-    color: white;
-  }
-  
-  mat-card-title {
-    font-size: 1.25rem;
-    font-weight: 500;
-  }
-  
-  /* * ****** 2. A IMAGEM DE CAPA (A MUDANÇA ESTÁ AQUI) ******
-   * Removemos o SVG e colocamos o seu JPG.
-   */
-  .card-image-placeholder {
-    height: 140px;
-    margin: 0 16px 16px;
-    border-radius: 4px;
-    
-    // 1. O CAMINHO (presume que está em 'src/assets/'):
-    // (Se você criou 'src/assets/images/', use 'assets/images/minha-imagem-top.jpg')
+    // A IMAGEM (use a sua URL)
     background-image: url('/fundo-card-2.jpg'); 
-    
-    // 2. A "Mágica" do CSS (para a imagem não esmagar):
-    background-size: cover;           // Cobre a área, cortando o excesso
-    background-position: center center; // Foca no centro da imagem
-    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
   }
 
-  /* 3. O Grid de Atributos (Sem mudança) */
+  // 3. O "ADESIVO" Branco (2/3 de baixo)
+  .card-info-content {
+    background: white;
+    border-radius: 24px 24px 0 0; // Cantos bem arredondados
+    margin-top: -30px; // <-- A MÁGICA: "Puxa" o card para cima da imagem
+    position: relative; // Garante que fique "em cima"
+    padding: 24px;
+    
+    // Organização interna
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1; // Ocupa o resto do espaço
+  }
+  
+  // 4. O Cabeçalho (Título/Subtítulo)
+  .card-header-custom {
+    text-align: center; // Centralizado, como pedido
+    margin-bottom: 24px;
+    
+    .card-title {
+      font-size: 1.3rem;
+      font-weight: 500;
+      line-height: 1.3;
+      margin-bottom: 4px;
+    }
+    .card-subtitle {
+      font-size: 0.9rem;
+      color: #666;
+    }
+  }
+
+  // 5. O Grid de Stats (3 Colunas)
   .cert-stats-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr; // 2x2
-    gap: 16px;
-    padding: 0 16px 16px;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
     
     .stat-item {
       display: flex;
+      flex-direction: column;
       align-items: center;
-      gap: 10px;
-
+      text-align: center;
+      padding: 8px;
+      
       mat-icon {
-        color: #3f51b5;
         font-size: 24px;
         height: 24px;
         width: 24px;
+        color: #3f51b5; // Azul
       }
       
       div {
         strong {
           display: block;
-          font-size: 0.8rem;
-          color: #777;
+          font-size: 0.75rem;
+          color: #888;
           text-transform: uppercase;
+          margin-top: 6px;
         }
         p {
-          font-size: 0.95rem;
+          font-size: 0.9rem;
           font-weight: 500;
           color: #333;
           margin: 0;
         }
       }
+      
+      // O "DESTAQUE" na modalidade
+      &.modality-highlight {
+        background-color: rgba(63, 81, 181, 0.05); // Fundo azul bem clarinho
+        border-radius: 8px;
+        transform: scale(1.05); // Um pouco maior
+        
+        mat-icon { color: #303f9f; } // Azul mais escuro
+        p { color: #303f9f; }
+      }
     }
   }
 
-  /* 4. O Botão de Ação (Forte) (Sem mudança) */
-  mat-card-actions {
-    margin-top: auto;
-    padding: 0 16px 16px !important; 
+  // 6. O Botão (Empurrado para o fundo)
+  .card-actions-custom {
+    margin-top: auto; // Empurra para o fundo do "adesivo"
+    padding-top: 24px; 
     
     button {
-      width: 100%;
+      width: 100%; // Botão grande
     }
   }
 }
+/* =========================================================
+ * FIM DO CARD "REVOLUÇÃO"
+ * =========================================================
+ */
 
 .no-certs {
   text-align: center;
