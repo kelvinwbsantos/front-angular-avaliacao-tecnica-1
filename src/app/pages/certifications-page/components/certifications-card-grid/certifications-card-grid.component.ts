@@ -12,12 +12,12 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTooltipModule } from '@angular/material/tooltip';
 
 // Serviços e Models (Ajuste os caminhos!)
-import { CertificationsService } from '../certifications-page/services/certifications.service'; // Reutiliza o serviço
-import { Certification } from '../certifications-page/models/certification-models'; // Reutiliza o model
-import { AuthService } from '../../core/services/auth.service'; // Para futuras verificações de permissão
+import { CertificationsService } from '../../services/certifications.service'; // Reutiliza o serviço
+import { Certification } from '../../models/certification-models'; // Reutiliza o model
+import { AuthService } from '../../../../core/services/auth.service'; // Para futuras verificações de permissão
 
 @Component({
-  selector: 'app-available-certifications', // Nome do seletor
+  selector: 'app-certifications-card-grid', // Nome do seletor
   standalone: true,
   imports: [
     CommonModule,
@@ -27,10 +27,10 @@ import { AuthService } from '../../core/services/auth.service'; // Para futuras 
     MatProgressSpinnerModule,
     MatTooltipModule,
   ],
-  templateUrl: './available-certifications.component.html',
-  styleUrls: ['./available-certifications.component.scss'],
+  templateUrl: './certifications-card-grid.component.html',
+  styleUrls: ['./certifications-card-grid.component.scss'],
 })
-export class AvailableCertificationsComponent implements OnInit {
+export class CertificationsCardGridComponent implements OnInit {
   // Injeções
   private certificationsService = inject(CertificationsService);
   private router = inject(Router);
