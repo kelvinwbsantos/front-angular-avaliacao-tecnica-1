@@ -1,0 +1,86 @@
+<div class="available-certs-container">
+  <h1>Certificações Disponíveis</h1>
+  <p class="subtitle">Escolha uma certificação para ver os detalhes ou realizar a prova.</p>
+</div>
+
+@if (isLoading) {
+  <div class="loading-spinner">
+    <mat-spinner diameter="50"></mat-spinner>
+    <p>Carregando certificações...</p>
+  </div>
+}
+
+@if (!isLoading && errorLoading) {
+  <div class="error-message">
+    <mat-icon color="warn">error_outline</mat-icon>
+    <p>Não foi possível carregar as certificações. Tente novamente mais tarde.</p>
+    <button mat-stroked-button color="primary" (click)="retryLoad.emit()">Tentar Novamente</button>
+  </div>
+}
+
+@if (!isLoading && !errorLoading) {
+  @if (certifications.length > 0) {
+    <div class="certs-grid">
+      @for (cert of certifications; track cert.id) {
+        
+        <mat-card class="cert-card">
+          
+          <mat-card-header>
+            <div mat-card-avatar class="card-avatar-icon">
+              <mat-icon>{{ getModalityIcon(cert.modality) }}</mat-icon>
+            </div>
+            <mat-card-title>{{ cert.name }}</mat-card-title>
+            <mat-card-subtitle>{{ cert.shortDescription }}</mat-card-subtitle>
+          </mat-card-header>
+
+          <div class="card-image-placeholder"></div>
+
+          <mat-card-content class="cert-stats-grid">
+            
+            <div class="stat-item">
+              <mat-icon color="primary">schedule</mat-icon>
+              <div>
+                <strong>Duração</strong>
+                <p>{{ cert.durationHours }}h</p>
+              </div>
+            </div>
+
+            <div class="stat-item">
+              <mat-icon color="primary">{{ getModalityIcon(cert.modality) }}</mat-icon>
+              <div>
+                <strong>Modalidade</strong>
+                <p>{{ cert.modality === 'online' ? 'Online' : 'Presencial' }}</p>
+              </div>
+            </div>
+
+            <div class="stat-item">
+              <mat-icon color="primary">verified_user</mat-icon>
+              <div>
+                <strong>Aprovação</strong>
+                <p>{{ cert.passingScore }}% (mín)</p>
+              </div>
+            </div>
+
+            <div class="stat-item">
+              <mat-icon color="primary">format_list_numbered</mat-icon>
+              <div>
+                <strong>Questões</strong>
+                <p>{{ cert.questionsCount || 'N/D' }}</p> 
+              </div>
+            </div>
+
+          </mat-card-content>
+
+          <mat-card-actions align="end">
+            <button mat-raised-button color="primary" (click)="viewCertificationDetails(cert.id)">
+              Ver Detalhes
+            </button>
+          </mat-card-actions>
+          
+        </mat-card>
+      }
+    </div>
+  } @else {
+    <p class="no-certs">Nenhuma certificação disponível no momento.</p>
+  }
+}

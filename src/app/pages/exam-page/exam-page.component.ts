@@ -16,13 +16,13 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 
 // Serviços e Modelos
-import { ExamService } from './services/exam.service';
+import { ExamService } from '../../shared/services/exam.service';
 import { 
   Answer, 
   Exam, 
   ExamQuestion, 
   ExamQuestionsResponse 
-} from './models/exam.model';
+} from '../../shared/models/exam.model';
 
 @Component({
   selector: 'app-exam-page',

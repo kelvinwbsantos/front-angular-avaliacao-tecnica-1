@@ -1,0 +1,142 @@
+/* src/app/pages/certifications-page/certifications-list.component.scss */
+
+.cert-card {
+  margin: 20px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 12px 12px 20px rgba(0, 0, 0, 0.3);
+}
+
+.action-bar {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  padding: 16px 0;
+  flex-wrap: wrap;
+}
+.action-bar .filter-group {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  flex-grow: 1;
+}
+.action-bar mat-form-field {
+  flex: 1 1 200px;
+}
+.action-bar .action-group {
+  display: flex;
+  gap: 16px;
+  margin-left: auto;
+  flex-shrink: 0;
+  .mat-button-base mat-icon {
+    margin-right: 8px;
+  }
+}
+
+.table-container {
+  position: relative;
+  display: flex;
+  overflow-x: auto;
+  border-radius: 4px;
+}
+
+.spinner-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.7);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+  border-radius: 12px;
+  
+  .spinner-text {
+    margin-top: 16px;
+    font-weight: 500;
+    color: #3f51b5;
+  }
+}
+
+/* 1. Estilos de Status (Badge) - (Funcionando) */
+.status-active,
+.status-inactive {
+  //display: inline-flex;//-block;
+  padding: 6px 10px;
+  border-radius: 16px;
+  font-size: 0.8em;
+  font-weight: 500;
+  text-transform: uppercase;
+  
+  &.status-active {
+    background-color: rgba(40, 167, 69, 0.15);
+    color: #217a35;
+  }
+  &.status-inactive {
+    background-color: rgba(220, 53, 69, 0.15);
+    color: #c42939;
+  }
+}
+
+
+/* 3. Estilo para o wrapper dos botões de ação (Funcionando) */
+.action-buttons-wrapper {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 6px;
+  
+  .mat-icon-button {
+    transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
+    &:hover {
+      transform: scale(1.15) translateY(-1px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+    &:active {
+      transform: scale(1.05);
+    }
+  }
+
+  .action-button-edit mat-icon {
+    color: #3f51b5; // Azul
+  }
+  .pdf-icon-button {
+      cursor: help; 
+      
+      mat-icon {
+        color: #c9302c !important; // Vermelho PDF
+        font-size: 28px;
+        height: 28px;
+        width: 28px;
+      }
+      
+      &:hover {
+        transform: scale(1.1); 
+        box-shadow: none;
+        mat-icon {
+          color: #a91c1a !important; // Vermelho mais escuro
+        }
+      }
+    }
+    .pdf-upload-button {
+      color: #757575; // Cinza padrão
+
+      &:hover {
+        color: #3f51b5; // Azul no hover
+      }
+    }
+}
+
+mat-card-actions {
+  display: flex;
+  justify-content: center;
+  padding-top: 16px !important;
+}
+
+@media (max-width: 600px) {
+  // Regras de mobile (sem mudança)
+}

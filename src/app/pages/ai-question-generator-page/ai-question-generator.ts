@@ -12,8 +12,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { catchError, finalize, of } from 'rxjs';
-import { BackendQuestion, ApiResponse} from '../questions-page/models/question-models'; // Caminho corrigido na última iteração
-import { CertificationsService } from '../certifications-page/services/certifications.service';
+import { BackendQuestion, ApiResponse} from '../../shared/models/question-models'; // Caminho corrigido na última iteração
+import { CertificationsService } from '../../shared/services/certifications.service';
 
 export interface AiGeneratorModalData {
     certificationId: string;

@@ -66,15 +66,15 @@ export const routes: Routes = [
                 // Geralmente não precisa de guarda específico aqui, só o authGuard do pai
             },
             {
-                path: 'available-certifications', // Ou 'my-certifications'
-                loadComponent: () => import('./pages/available-certifications-page/available-certifications.component').then(m => m.AvailableCertificationsComponent),
+                path: 'available-certifications', // 
+                loadComponent: () => import('./pages/available-certifications-page/available-certifications-page.component').then(m => m.AvailableCertificationsPageComponent),
                  canActivate: [PermissionGuard], // Proteger com permissão de candidato
                  data: { permissions: ['TAKE_CERTIFICATIONS'] } // Exemplo
             },
 
             { // Rota para detalhes da certificação (visão candidato)
                 path: 'available-certifications/:id',
-                loadComponent: () => import('./pages/certification-take-page/certification-take.component').then(m => m.CertificationTakeComponent),
+                loadComponent: () => import('./pages/certification-take-page/certification-take-page.component').then(m => m.CertificationTakeComponent),
                 canActivate: [PermissionGuard],
                 data: { permissions: ['TAKE_CERTIFICATIONS'] }
             },

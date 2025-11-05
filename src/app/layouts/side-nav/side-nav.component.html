@@ -1,4 +1,5 @@
 <mat-nav-list>
+  <!-- O loop original (sem a chave extra) -->
   @for (item of navItems; track item.link) {
     @if (canView(item)) {
       <a mat-list-item
@@ -9,5 +10,24 @@
         <span matListItemTitle>{{ item.label }}</span>
       </a>
     }
+  }
+  <!-- Fim do loop. Nenhuma chave '}' perdida aqui. -->
+
+  <!-- A "Engrenagem" (O Seletor de Layout) -->
+  <mat-divider></mat-divider>
+  
+  <!-- (Ajuste a permissão se 'READ_USERS' não for a correta para o Admin) -->
+  @if (authService.hasPermission('READ_USERS')) {
+    
+    <a mat-list-item (click)="layoutService.toggleLayout()" class="layout-toggle-button">
+      
+      @if (layoutService.layout() === 'moderno') {
+        <mat-icon matListItemIcon>view_list</mat-icon>
+        <span matListItemTitle>Mudar p/ Layout Clássico</span>
+      } @else {
+        <mat-icon matListItemIcon>grid_view</mat-icon>
+        <span matListItemTitle>Mudar p/ Layout Moderno</span>
+      }
+    </a>
   }
 </mat-nav-list>

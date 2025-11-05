@@ -1,0 +1,20 @@
+<div class="available-certs-container">
+  
+  @if (layoutService.layout() === 'moderno') {
+    <app-certifications-card-grid-modern
+      [isLoading]="isLoading"
+      [errorLoading]="errorLoading"
+      [certifications]="certifications"
+      (retryLoad)="loadCertifications()">
+    </app-certifications-card-grid-modern>
+    
+  } @else {
+    <app-certifications-card-grid-classic
+      [isLoading]="isLoading"
+      [errorLoading]="errorLoading"
+      [certifications]="certifications"
+      (retryLoad)="loadCertifications()">
+    </app-certifications-card-grid-classic>
+  }
+
+</div>
