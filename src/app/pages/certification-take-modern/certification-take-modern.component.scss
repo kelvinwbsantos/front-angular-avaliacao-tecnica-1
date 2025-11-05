@@ -1,0 +1,167 @@
+/* src/app/pages/certification-take-page/certification-take.component.scss */
+
+.cert-take-container {
+  padding: 24px;
+  max-width: 900px;
+  margin: 20px auto;
+  position: relative;
+}
+
+.back-button {
+  position: absolute;
+  top: 0;
+  left: 24px;
+  z-index: 20;
+}
+
+.loading-spinner,
+.error-message {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 50px;
+  color: #777;
+}
+
+/* =========================================================
+ * O CARD "REVOLUÇÃO" (V4 - Página de Detalhes)
+ * =========================================================
+ */
+.cert-details-card {
+  position: relative;
+  padding: 12px;
+  border-radius: 12px !important;
+  overflow: hidden;
+  margin-top: 40px;
+
+  background-image: url('/fundo-card-2.jpg'); 
+  background-size: cover;
+  background-position: center;
+}
+
+/* 1. O ADESIVO DE MODALIDADE (FORA DO ADESIVO BRANCO, MAIOR) */
+.modality-badge {
+  position: absolute;
+  top: 24px; // 12px do padding do card + 12px de margem
+  left: 24px; // 12px do padding do card + 12px de margem
+  padding: 8px 15px; // Um pouco maior
+  background: rgba(255, 255, 255, 0.95); // Mais opaco
+  backdrop-filter: blur(6px); // Blur um pouco mais forte
+  border-radius: 20px; // Mais arredondado
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); // Sombra mais pronunciada
+  display: inline-flex;
+  align-items: center;
+  gap: 8px; // Mais espaço
+  font-size: 0.9rem; // Fonte maior
+  font-weight: 600; // Mais forte
+  color: #3f51b5;
+  z-index: 10;
+
+  mat-icon {
+    font-size: 20px; // Ícone maior
+    width: 20px;
+    height: 20px;
+  }
+}
+
+/* 2. O "ADESIVO" BRANCO (Com a Margem de Cima e Bordas de Baixo Arredondadas) */
+.cert-info-wrapper {
+  background: white;
+  border-radius: 8px; // Bordas superiores e...
+  border-bottom-left-radius: 12px; // ...inferiores (agora arredondadas)
+  border-bottom-right-radius: 12px; // ...inferiores (agora arredondadas)
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  position: relative;
+  z-index: 5;
+  
+  margin-top: 140px; // <-- A NOVA MARGEM SUPERIOR (Espaço antes de começar)
+}
+
+/* * 3. SEÇÕES DE CONTEÚDO
+ * (As classes internas do adesivo branco)
+ */
+
+mat-card-header {
+  padding: 24px 24px 16px;
+}
+mat-card-title {
+  font-size: 1.8rem;
+  font-weight: 500;
+}
+
+.cert-utilities {
+  padding: 16px 24px 24px;
+  display: flex;
+  flex-wrap: wrap; 
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  
+  button {
+    mat-icon,
+    mat-progress-spinner {
+      margin-right: 8px;
+    }
+  }
+
+  .discreet-stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    font-size: 0.9em;
+    color: #555;
+    
+    span {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      
+      mat-icon {
+        font-size: 18px;
+        width: 18px;
+        height: 18px;
+        color: #777;
+      }
+    }
+  }
+}
+
+.description-content {
+  padding: 24px;
+  
+  .section-title {
+    font-size: 1.25rem;
+    font-weight: 500;
+    margin-bottom: 16px;
+  }
+  
+  .description-text {
+    line-height: 1.7;
+    color: #333;
+    white-space: pre-wrap;
+  }
+}
+
+.cert-actions {
+  padding: 16px 24px !important;
+  gap: 12px;
+  background-color: #f9f9ff;
+  border-top: 1px solid rgba(0,0,0,0.1);
+
+  button { 
+    span,
+    mat-icon,
+    mat-progress-spinner {
+      display: inline-flex;
+      align-items: center;
+      vertical-align: middle;
+      margin-right: 8px;
+    }
+    span:last-child, 
+    mat-icon:last-child {
+      margin-right: 0;
+    }
+  }
+}

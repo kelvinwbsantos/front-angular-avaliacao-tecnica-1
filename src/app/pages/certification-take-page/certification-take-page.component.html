@@ -1,0 +1,41 @@
+@if (certificationId) {
+  
+  @if (layoutService.layout() === 'moderno') {
+    <app-certification-take-modern
+      [isLoading]="isLoading"
+      [errorLoading]="errorLoading"
+      [certification]="certification"
+      [userEnrollmentId]="userEnrollmentId"
+      [isEnrolling]="isEnrolling"
+      [isDownloading]="isDownloading"
+      (enroll)="enroll()"
+      (unenroll)="unenroll()"
+      (startExam)="startExam()"
+      (scheduleExam)="scheduleExam()"
+      (downloadMaterial)="downloadMaterial()"
+      (retryLoad)="loadCertificationDetails()"> 
+    </app-certification-take-modern>
+
+  } @else {
+    <app-certification-take-classic
+      [isLoading]="isLoading"
+      [errorLoading]="errorLoading"
+      [certification]="certification"
+      [userEnrollmentId]="userEnrollmentId"
+      [isEnrolling]="isEnrolling"
+      [isDownloading]="isDownloading"
+      (enroll)="enroll()"
+      (unenroll)="unenroll()"
+      (startExam)="startExam()"
+      (scheduleExam)="scheduleExam()"
+      (downloadMaterial)="downloadMaterial()"
+      (retryLoad)="loadCertificationDetails()">
+    </app-certification-take-classic>
+  }
+  
+} @else {
+  <div class="error-message">
+    <mat-icon color="warn">error_outline</mat-icon>
+    <p>ID da certificação não encontrado na URL.</p>
+  </div>
+}

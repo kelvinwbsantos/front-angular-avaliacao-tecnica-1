@@ -31,7 +31,7 @@
         
         <button mat-stroked-button 
                 color="primary"
-                (click)="downloadMaterial()"
+                (click)="downloadMaterial.emit()"
                 [disabled]="!certification.pdfPath || isDownloading">
           @if (isDownloading) {
             <mat-spinner [diameter]="20" class="inline-spinner"></mat-spinner>
@@ -70,7 +70,7 @@
         @if (userEnrollmentId) {
           <button mat-stroked-button
                   color="warn"
-                  (click)="unenroll()"
+                  (click)="unenroll.emit()"
                   [disabled]="isEnrolling">
             @if (isEnrolling) {
               <span class="button-content-wrapper">
@@ -86,7 +86,7 @@
           
           <button mat-stroked-button 
                   color="primary" 
-                  (click)="scheduleExam()" 
+                  (click)="scheduleExam.emit()" 
                   [disabled]="isEnrolling || !certification.isActive"
                   matTooltip="Agendar data e horário (Em desenvolvimento)">
             <span class="button-content-wrapper">
@@ -97,7 +97,7 @@
           @if (certification.modality === 'online') {
             <button mat-raised-button
                     color="accent"
-                    (click)="startExam()"
+                    (click)="startExam.emit()"
                     [disabled]="!certification.isActive || isEnrolling"
                     matTooltip="Iniciar a prova imediatamente (Online)">
               <span class="button-content-wrapper">
@@ -109,7 +109,7 @@
         } @else {
           <button mat-raised-button
                   color="primary"
-                  (click)="enroll()"
+                  (click)="enroll.emit()"
                   [disabled]="!certification.isActive || isEnrolling">
             @if (isEnrolling) {
               <span class="button-content-wrapper">

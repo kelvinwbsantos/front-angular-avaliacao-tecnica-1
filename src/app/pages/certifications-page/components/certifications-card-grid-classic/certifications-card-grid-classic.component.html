@@ -14,7 +14,7 @@
   <div class="error-message">
     <mat-icon color="warn">error_outline</mat-icon>
     <p>Não foi possível carregar as certificações. Tente novamente mais tarde.</p>
-    <button mat-stroked-button color="primary" (click)="loadCertifications()">Tentar Novamente</button>
+    <button mat-stroked-button color="primary" (click)="retryLoad.emit()">Tentar Novamente</button>
   </div>
 }
 
