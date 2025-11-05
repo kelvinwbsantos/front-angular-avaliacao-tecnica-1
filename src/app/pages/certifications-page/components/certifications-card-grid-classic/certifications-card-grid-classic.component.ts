@@ -1,5 +1,4 @@
-// Caminho: src/app/pages/available-certifications-page/available-certifications.component.ts
-import { Component, Input, Output, EventEmitter,  inject } from '@angular/core';
+import { Component, Input, Output, EventEmitter, inject } from '@angular/core';
 import { CommonModule } from '@angular/common'; // Para @if, @for, pipes
 import { Router } from '@angular/router'; // Para navegação
 
@@ -14,7 +13,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { Certification } from '../../models/certification-models'; // Reutiliza o model
 
 @Component({
-  selector: 'app-certifications-card-grid-modern', // Nome do seletor
+  selector: 'app-certifications-card-grid-classic', 
   standalone: true,
   imports: [
     CommonModule,
@@ -24,20 +23,20 @@ import { Certification } from '../../models/certification-models'; // Reutiliza 
     MatProgressSpinnerModule,
     MatTooltipModule,
   ],
-  templateUrl: './certifications-card-grid-modern.component.html',
-  styleUrls: ['./certifications-card-grid-modern.component.scss'],
+  templateUrl: './certifications-card-grid-classic.component.html',
+  styleUrls: ['./certifications-card-grid-classic.component.scss'],
 })
-export class CertificationsCardGridModernComponent {
+export class CertificationsCardGridClassicComponent  {
   // Injeções
   private router = inject(Router);
-
   // Estado do componente
   @Input() certifications: Certification[] = [];
-  @Input() isLoading = true;
-  @Input() errorLoading = false;
+  @Input() isLoading: boolean = true;
+  @Input() errorLoading: boolean = false;
   @Output() retryLoad = new EventEmitter<void>();
 
   
+
   // Função para navegar para a página de detalhes/realização
   viewCertificationDetails(certificationId: string): void {
      // Navega para a rota de detalhes específica do candidato
@@ -49,3 +48,4 @@ export class CertificationsCardGridModernComponent {
     return modality === 'online' ? 'computer' : 'groups';
   }
 }
+

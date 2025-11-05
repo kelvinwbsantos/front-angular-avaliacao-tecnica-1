@@ -4,10 +4,19 @@
 </div>
 
 @if (isLoading) {
-  <div class="loading-spinner">...</div>
+  <div class="loading-spinner">
+    <mat-spinner diameter="50"></mat-spinner>
+    <p>Carregando certificações...</p>
+  </div>
 }
+
 @if (!isLoading && errorLoading) {
-  <div class="error-message">...</div>
+  <div class="error-message">
+    <mat-icon color="warn">error_outline</mat-icon>
+    <p>Não foi possível carregar as certificações. Tente novamente mais tarde.</p>
+    <!-- O botão agora "toca o sininho" (retryLoad.emit) -->
+    <button mat-stroked-button color="primary" (click)="retryLoad.emit()">Tentar Novamente</button>
+  </div>
 }
 
 @if (!isLoading && !errorLoading) {

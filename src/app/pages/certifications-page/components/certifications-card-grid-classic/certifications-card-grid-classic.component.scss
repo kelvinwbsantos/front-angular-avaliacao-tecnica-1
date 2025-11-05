@@ -1,0 +1,136 @@
+/* O container da página (H1, Subtítulo) */
+.available-certs-container {
+  padding: 20px;
+  h1 { margin-bottom: 8px; }
+  .subtitle {
+    color: #666;
+    margin-bottom: 24px;
+  }
+}
+
+/* Loading e Erro (Sem mudança) */
+.loading-spinner,
+.error-message {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 40px;
+  color: #888;
+}
+.loading-spinner mat-spinner { margin-bottom: 16px; }
+.error-message mat-icon { font-size: 48px; width: 48px; height: 48px; margin-bottom: 16px; }
+.error-message button { margin-top: 20px; }
+
+/* O Grid de Cards (Sem mudança) */
+.certs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+/* =========================================================
+ * O NOVO ESTILO DO CARD
+ * =========================================================
+ */
+.cert-card {
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); 
+  border-radius: 8px;
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  }
+
+  /* 1. O Avatar (Sem mudança) */
+  .card-avatar-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #3f51b5;
+    color: white;
+  }
+  
+  mat-card-title {
+    font-size: 1.25rem;
+    font-weight: 500;
+  }
+  
+  /* * ****** 2. A IMAGEM DE CAPA (A MUDANÇA ESTÁ AQUI) ******
+   * Removemos o SVG e colocamos o seu JPG.
+   */
+  .card-image-placeholder {
+    height: 140px;
+    margin: 0 16px 16px;
+    border-radius: 4px;
+    
+    // 1. O CAMINHO (presume que está em 'src/assets/'):
+    // (Se você criou 'src/assets/images/', use 'assets/images/minha-imagem-top.jpg')
+    background-image: url('/fundo-card-2.jpg'); 
+    
+    // 2. A "Mágica" do CSS (para a imagem não esmagar):
+    background-size: cover;           // Cobre a área, cortando o excesso
+    background-position: center center; // Foca no centro da imagem
+    background-repeat: no-repeat;
+  }
+
+  /* 3. O Grid de Atributos (Sem mudança) */
+  .cert-stats-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr; // 2x2
+    gap: 16px;
+    padding: 0 16px 16px;
+    
+    .stat-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+
+      mat-icon {
+        color: #3f51b5;
+        font-size: 24px;
+        height: 24px;
+        width: 24px;
+      }
+      
+      div {
+        strong {
+          display: block;
+          font-size: 0.8rem;
+          color: #777;
+          text-transform: uppercase;
+        }
+        p {
+          font-size: 0.95rem;
+          font-weight: 500;
+          color: #333;
+          margin: 0;
+        }
+      }
+    }
+  }
+
+  /* 4. O Botão de Ação (Forte) (Sem mudança) */
+  mat-card-actions {
+    margin-top: auto;
+    padding: 0 16px 16px !important; 
+    
+    button {
+      width: 100%;
+    }
+  }
+}
+
+.no-certs {
+  text-align: center;
+  margin-top: 40px;
+  color: #888;
+}
+
+

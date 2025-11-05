@@ -6,7 +6,8 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
-import { AuthService } from '../../core/services/auth.service'; 
+import { AuthService } from '../../core/services/auth.service';
+import { LayoutService } from '../services/layout.service';
 
 interface NavItem {
   link: string;
@@ -30,6 +31,7 @@ interface NavItem {
 })
 export class SideNavComponent {
   public authService = inject(AuthService);
+  public layoutService = inject(LayoutService);
 
   navItems: NavItem[] = [
     // Início (Dashboard de Métricas)
