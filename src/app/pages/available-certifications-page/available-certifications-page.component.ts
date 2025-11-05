@@ -1,11 +1,13 @@
 
+// src/app/pages/available-certifications-page/available-certifications-page.component.ts
+
 import { CertificationsCardGridModernComponent } from '../certifications-page/components/certifications-card-grid-modern/certifications-card-grid-modern.component'; // Garçom A
 import { CertificationsCardGridClassicComponent } from '../certifications-page/components/certifications-card-grid-classic/certifications-card-grid-classic.component'; // Garçom B
-// src/app/pages/available-certifications-page/available-certifications-page.component.ts
+import { LayoutService } from '../../layouts/services/layout.service';
+
 import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { EMPTY, catchError, finalize } from 'rxjs'; 
-import { LayoutService } from '../../layouts/services/layout.service';
 import { CertificationsService } from '../certifications-page/services/certifications.service';
 import { Certification } from '../certifications-page/models/certification-models';
 
@@ -48,7 +50,7 @@ export class AvailableCertificationsPageComponent implements OnInit {
           
           // ************ O TESTE ESTÁ AQUI ************
           // Trocamos 'true' (que trava) por 'null' (que funciona no Admin)
-          isActive: null 
+          isActive: true 
           // ******************************************
       }) 
       .pipe(
@@ -69,4 +71,5 @@ export class AvailableCertificationsPageComponent implements OnInit {
         this.certifications = response.data.filter(cert => cert.isActive);
       });
   }
+
 }

@@ -74,7 +74,7 @@ export const routes: Routes = [
 
             { // Rota para detalhes da certificação (visão candidato)
                 path: 'available-certifications/:id',
-                loadComponent: () => import('./pages/certification-take-page/certification-take.component').then(m => m.CertificationTakeComponent),
+                loadComponent: () => import('./pages/certification-take-page/certification-take-page.component').then(m => m.CertificationTakeComponent),
                 canActivate: [PermissionGuard],
                 data: { permissions: ['TAKE_CERTIFICATIONS'] }
             },
