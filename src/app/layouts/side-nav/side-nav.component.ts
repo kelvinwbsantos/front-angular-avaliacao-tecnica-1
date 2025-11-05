@@ -7,7 +7,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../core/services/auth.service';
-import { LayoutService } from '../services/layout.service';
+import { LayoutService } from '../../core/services/layout.service';
 
 interface NavItem {
   link: string;

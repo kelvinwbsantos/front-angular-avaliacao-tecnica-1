@@ -1,0 +1,63 @@
+<mat-card class="cert-card">
+  <mat-card-header>
+    <mat-card-title>Gerenciamento de Certificações</mat-card-title>
+    <mat-card-subtitle>Crie, visualize e gerencie as certificações disponíveis</mat-card-subtitle>
+  </mat-card-header>
+
+  <mat-card-content>
+    
+    <input 
+      type="file" 
+      hidden 
+      #pdfUploadInput 
+      (change)="onPdfFileSelected($event)" 
+      accept="application/pdf"
+    />
+
+    <form [formGroup]="filterForm" class="action-bar">
+      <div class="filter-group">
+        <mat-form-field appearance="outline">
+          <mat-label>Título da Certificação</mat-label>
+          <input matInput formControlName="title" placeholder="Filtrar por título">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Status</mat-label>
+          <mat-select formControlName="status">
+            <mat-option [value]="null">Todos os Status</mat-option>
+            @for (status of availableStatuses; track status) {
+              <mat-option [value]="status">{{ status }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div class="action-group">
+        <button mat-stroked-button color="warn" (click)="resetFilters()" type="button">
+          <mat-icon>delete_forever</mat-icon>
+          Limpar Filtros
+        </button>
+        <button mat-raised-button color="primary" (click)="addCertification()">
+          <mat-icon>add_box</mat-icon>
+          Adicionar Certificação
+        </button>
+      </div>
+    </form>
+    <app-certifications-list
+      [dataSource]="dataSource"
+      [isLoading]="isLoading"
+      [isDeleting]="isDeleting"
+      [isUploadingPdf]="isUploadingPdf"
+      [displayedColumns]="displayedColumns"
+      (pdfUpload)="triggerPdfUpload($event)"
+      (openDetails)="openCertificationDetails($event)">
+    </app-certifications-list>
+
+  </mat-card-content>
+
+  <mat-card-actions>
+    <mat-paginator [length]="totalCertifications" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]"
+      aria-label="Selecione a página de certificações">
+    </mat-paginator>
+  </mat-card-actions>
+</mat-card>

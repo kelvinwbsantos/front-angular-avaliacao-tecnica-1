@@ -19,8 +19,8 @@ import { MatSpinner } from '@angular/material/progress-spinner';
 
 // Models e Serviços (Ajuste os caminhos)
 // GARANTA QUE ESTAS INTERFACES USEM 'id: string'
-import { UserData, FullUserResponse } from '../users-page/models/users.models';
-import { UserService } from '../users-page/services/user.service';
+import { UserData, FullUserResponse } from '../../shared/models/users.models';
+import { UserService } from '../../shared/services/user.service';
 import { AuthService } from '../../core/services/auth.service';
 import { CepService, ViaCepResponse } from '../../core/utils/cep.service';
 

@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { CertificationsPage } from './certifications' // Importa o componente principal da página
+import { CertificationsPage } from './certifications-page.component' // Importa o componente principal da página
 
 export const CERTIFICATIONS_ROUTES: Routes = [
   {

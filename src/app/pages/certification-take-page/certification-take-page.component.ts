@@ -8,19 +8,19 @@ import { EMPTY, Subscription, forkJoin, of } from 'rxjs';
 import { switchMap, catchError, finalize, tap, take } from 'rxjs/operators';
 
 // Serviços
-import { LayoutService } from '../../layouts/services/layout.service';
-import { CertificationsService } from '../certifications-page/services/certifications.service';
-import { EnrollmentService } from '../../core/services/enrollment.service';
-import { ExamService } from '../exam-page/services/exam.service';
+import { LayoutService } from '../../core/services/layout.service';
+import { CertificationsService } from '../../shared/services/certifications.service';
+import { EnrollmentService } from '../../shared/services/enrollment.service';
+import { ExamService } from '../../shared/services/exam.service';
 import { AuthService } from '../../core/services/auth.service';
 
 // Modelos
-import { Certification } from '../certifications-page/models/certification-models';
-import { Enrollment } from '../../core/models/enrollment.model';
+import { Certification } from '../../shared/models/certification.models';
+import { Enrollment } from '../../shared/models/enrollment.model';
 
 // Os dois "Garçons" (as duas Comidas)
-import { CertificationTakeModernComponent } from '../certification-take-modern/certification-take-modern.component';
-import { CertificationTakeClassicComponent } from '../certification-take-classic/certification-take-classic.component';
+import { CertificationTakeModernComponent } from '../../shared/components/certification-take-modern/certification-take-modern.component';
+import { CertificationTakeClassicComponent } from '../../shared/components/certification-take-classic/certification-take-classic.component';
 
 @Component({
   selector: 'app-certification-take-page',
