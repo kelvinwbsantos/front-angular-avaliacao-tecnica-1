@@ -13,7 +13,7 @@ import {
     RegistrationData,
     JwtPayload,
     UserData
-} from '../../pages/users-page/models/users.models';
+} from '../../shared/models/users.models';
 
 
 // Interface para a resposta do Login

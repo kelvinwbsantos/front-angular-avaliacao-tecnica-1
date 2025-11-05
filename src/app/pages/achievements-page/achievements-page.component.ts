@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 
 // 1. Importe o "recheio"
 // (Assumindo que você moveu o user-exams para a pasta que sugeri)
-import { UserExamsComponent } from '../users-page/components/user-exams/user-exams.component';
+import { UserExamsComponent } from '../../shared/components/user-exams/user-exams.component';
 
 @Component({
   selector: 'app-achievements-page',

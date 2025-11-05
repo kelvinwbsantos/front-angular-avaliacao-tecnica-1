@@ -19,11 +19,11 @@ import { MatOptionModule } from '@angular/material/core';
 import { catchError, debounceTime, distinctUntilChanged, finalize, of, tap } from 'rxjs';
 
 // Imports locais
-import { QuestionsService } from './services/question.service';
-import { QuestionDetails } from './components/question-details/question-details';
+import { QuestionsService } from '../../shared/services/question.service';
+import { QuestionDetails } from '../../shared/components/question-details/question-details';
 import { AiQuestionGenerator, AiGeneratorModalData } from '../ai-question-generator-page/ai-question-generator';
-import { BackendQuestion } from './models/question-models';
-import { QuestionFilterDTO } from './models/question-models';  
+import { BackendQuestion } from '../../shared/models/question-models';
+import { QuestionFilterDTO } from '../../shared/models/question-models';  
 
 export interface QuestionBankModalData {
     certificationId: string | null; // ID da certificação para pré-filtrar

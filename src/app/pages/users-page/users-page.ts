@@ -5,10 +5,10 @@ import { Component, inject, ViewChild, AfterViewInit, OnInit } from '@angular/co
 // ... (outros imports de Angular, Material, RxJS)
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 // ... (imports de Serviços, Componentes, Models)
-import { UserService } from './services/user.service';
+import { UserService } from '../../shared/services/user.service';
 import { AuthService } from '../../core/services/auth.service';
 //import { User } from './users-page';
-import { UserDetails } from './components/user-details/user-details';
+import { UserDetails } from '../../shared/components/user-details/user-details';
 import { CommonModule } from '@angular/common'; // Necessário para ngIf
 // ... outros imports de módulos standalone ...
 import { MatCardModule } from '@angular/material/card';
@@ -22,7 +22,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { catchError, debounceTime, distinctUntilChanged, map, merge, of, startWith, switchMap, tap } from 'rxjs';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { User } from './models/users.models';
+import { User } from '../../shared/models/users.models';
 @Component({
   selector: 'app-users-page',
   standalone: true,

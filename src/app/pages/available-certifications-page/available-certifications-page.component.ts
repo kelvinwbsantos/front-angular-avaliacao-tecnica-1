@@ -1,15 +1,15 @@
 
 // src/app/pages/available-certifications-page/available-certifications-page.component.ts
 
-import { CertificationsCardGridModernComponent } from '../certifications-page/components/certifications-card-grid-modern/certifications-card-grid-modern.component'; // Garçom A
-import { CertificationsCardGridClassicComponent } from '../certifications-page/components/certifications-card-grid-classic/certifications-card-grid-classic.component'; // Garçom B
-import { LayoutService } from '../../layouts/services/layout.service';
+import { CertificationsCardGridModernComponent } from '../../shared/components/certifications-card-grid-modern/certifications-card-grid-modern.component'; // Garçom A
+import { CertificationsCardGridClassicComponent } from '../../shared/components/certifications-card-grid-classic/certifications-card-grid-classic.component'; // Garçom B
+import { LayoutService } from '../../core/services/layout.service';
 
 import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { EMPTY, catchError, finalize } from 'rxjs'; 
-import { CertificationsService } from '../certifications-page/services/certifications.service';
-import { Certification } from '../certifications-page/models/certification-models';
+import { CertificationsService } from '../../shared/services/certifications.service';
+import { Certification } from '../../shared/models/certification.models';
 
 // Importa os dois "Garçons" (layouts)
 
