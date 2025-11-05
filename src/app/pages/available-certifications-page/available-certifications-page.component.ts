@@ -1,7 +1,7 @@
 // src/app/pages/achievements-page/achievements-page.component.ts
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { CertificationsCardGridComponent } from '../certifications-page/components/certifications-card-grid/certifications-card-grid.component';
+import { CertificationsCardGridModernComponent } from '../certifications-page/components/certifications-card-grid-modern/certifications-card-grid-modern.component';
 
 
 @Component({
@@ -9,7 +9,7 @@ import { CertificationsCardGridComponent } from '../certifications-page/componen
   standalone: true,
   imports: [
     CommonModule, 
-    CertificationsCardGridComponent
+    CertificationsCardGridModernComponent
   ],
   templateUrl: './available-certifications-page.component.html',
   styleUrls: ['./available-certifications-page.component.scss']

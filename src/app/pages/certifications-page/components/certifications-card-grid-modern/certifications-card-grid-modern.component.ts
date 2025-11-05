@@ -17,7 +17,7 @@ import { Certification } from '../../models/certification-models'; // Reutiliza 
 import { AuthService } from '../../../../core/services/auth.service'; // Para futuras verificações de permissão
 
 @Component({
-  selector: 'app-certifications-card-grid', // Nome do seletor
+  selector: 'app-certifications-card-grid-modern', // Nome do seletor
   standalone: true,
   imports: [
     CommonModule,
@@ -27,10 +27,10 @@ import { AuthService } from '../../../../core/services/auth.service'; // Para fu
     MatProgressSpinnerModule,
     MatTooltipModule,
   ],
-  templateUrl: './certifications-card-grid.component.html',
-  styleUrls: ['./certifications-card-grid.component.scss'],
+  templateUrl: './certifications-card-grid-modern.component.html',
+  styleUrls: ['./certifications-card-grid-modern.component.scss'],
 })
-export class CertificationsCardGridComponent implements OnInit {
+export class CertificationsCardGridModernComponent implements OnInit {
   // Injeções
   private certificationsService = inject(CertificationsService);
   private router = inject(Router);
