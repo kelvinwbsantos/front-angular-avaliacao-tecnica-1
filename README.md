@@ -18,7 +18,9 @@ Para manter nosso código organizado e escalável, seguimos uma arquitetura base
 
     /shared (As Lojas e Fábricas): Os recursos reutilizáveis. São os "Garçons" (componentes burros), as "Plantas" (modelos) e os "Cozinheiros" (serviços de API) que os "Bairros" usam.
 
-Estrutura de Pastas
+### Estrutura de Pastas
+
+```bash
 
 src/app/
 ├── core/               # 🏛️ A PREFEITURA (Lógica Central do App)
@@ -48,7 +50,7 @@ src/app/
     │   ├── user.model.ts
     │   ├── exam.model.ts
     │   ├── certificate.model.ts
-    │   ├── enrollment.model.ts 
+    │   ├── enrollment.model.ts  
     │   └── ...
     │
     └── services/       # (Os "Cozinheiros" da API)
@@ -57,6 +59,9 @@ src/app/
         ├── exam.service.ts
         ├── enrollment.service.ts
         └── ...
+
+```
+
 
 O Papel de Cada Um
 
