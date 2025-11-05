@@ -1,0 +1,128 @@
+/* src/app/pages/certification-take-classic/certification-take-classic.component.scss */
+
+.cert-take-container {
+  padding: 24px;
+  max-width: 900px;
+  margin: 20px auto;
+}
+
+.back-button {
+  margin-bottom: 24px;
+}
+
+// (Loading e Erro - sem mudança)
+.loading-spinner,
+.error-message {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 50px;
+  color: #777;
+  /* ... */
+}
+
+/* O Card Principal */
+.cert-details-card {
+  overflow: hidden;
+
+  // O avatar (igual ao do grid)
+  .card-avatar-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #3f51b5;
+    color: white;
+  }
+}
+
+/* * ****** NOVA SEÇÃO DE UTILIDADES ******
+ */
+.cert-utilities {
+  padding: 24px;
+  display: flex;
+  flex-wrap: wrap; // Quebra a linha em telas pequenas
+  justify-content: space-between; // Botão de um lado, stats do outro
+  align-items: center;
+  gap: 20px;
+  
+  // O botão de download
+  button {
+    // Alinha o spinner e o texto
+    span, .inline-spinner {
+      display: inline-flex;
+      align-items: center;
+      vertical-align: middle;
+    }
+    .inline-spinner {
+      margin-right: 8px;
+    }
+    mat-icon {
+      margin-right: 8px;
+    }
+  }
+
+  // Os stats discretos
+  .discreet-stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    font-size: 0.9em;
+    color: #555;
+    
+    span {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      
+      mat-icon {
+        font-size: 18px;
+        width: 18px;
+        height: 18px;
+        color: #777;
+      }
+    }
+  }
+}
+
+/* * ****** NOVA SEÇÃO DE DESCRIÇÃO ******
+ */
+.description-content {
+  padding: 24px;
+  
+  .section-title {
+    font-size: 1.25rem;
+    font-weight: 500;
+    margin-bottom: 16px;
+  }
+  
+  .description-text {
+    line-height: 1.7;
+    color: #333;
+    white-space: pre-wrap; // Preserva quebras de linha
+  }
+}
+
+
+/* As Ações (Botões Inscrever/etc) */
+.cert-actions {
+  padding: 16px 24px !important;
+  gap: 12px;
+  background-color: #f9f9f9;
+  border-top: 1px solid rgba(0,0,0,0.1);
+
+  // O wrapper de alinhamento (que já funciona)
+  .button-content-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  
+    mat-icon,
+    .inline-spinner {
+      margin-right: 8px;
+    }
+  }
+}

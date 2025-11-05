@@ -1,0 +1,130 @@
+<div class="cert-take-container">
+
+  <button mat-stroked-button routerLink="/app/available-certifications" class="back-button mb-4">
+    <mat-icon>arrow_back</mat-icon> Voltar para Lista
+  </button>
+
+  @if (isLoading) {
+    <div class="loading-spinner">
+      <mat-spinner diameter="50"></mat-spinner>
+      <p>Carregando detalhes da certificação...</p>
+    </div>
+  }
+
+  @if (!isLoading && errorLoading) {
+    <div class="error-message">
+      </div>
+  }
+
+  @if (!isLoading && !errorLoading && certification) {
+    <mat-card class="cert-details-card">
+      
+      <mat-card-header>
+        <div mat-card-avatar class="card-avatar-icon">
+          <mat-icon>{{ getModalityIcon(certification.modality) }}</mat-icon>
+        </div>
+        <mat-card-title>{{ certification.name }}</mat-card-title>
+        <mat-card-subtitle>{{ certification.shortDescription }}</mat-card-subtitle>
+      </mat-card-header>
+
+      <mat-card-content class="cert-utilities">
+        
+        <button mat-stroked-button 
+                color="primary"
+                (click)="downloadMaterial.emit()"
+                [disabled]="!certification.pdfPath || isDownloading">
+          @if (isDownloading) {
+            <mat-spinner [diameter]="20" class="inline-spinner"></mat-spinner>
+            <span>Baixando...</span>
+          } @else {
+            <mat-icon>download</mat-icon>
+            <span>Baixar Material de Estudo</span>
+          }
+        </button>
+        
+        <div class="discreet-stats">
+          <span>
+            <mat-icon>schedule</mat-icon> {{ certification.durationHours }}h
+          </span>
+          <span>
+            <mat-icon>{{ getModalityIcon(certification.modality) }}</mat-icon> {{ certification.modality === 'online' ? 'Online' : 'Presencial' }}
+          </span>
+          <span>
+            <mat-icon>verified_user</mat-icon> {{ certification.passingScore }}% (mín)
+          </span>
+        </div>
+        
+      </mat-card-content>
+
+      <mat-divider></mat-divider>
+
+      <mat-card-content class="description-content">
+        <h2 class="section-title">Sobre esta Certificação</h2>
+        <p class="description-text">
+          {{ certification.description || 'Nenhuma descrição detalhada disponível.' }}
+        </p>
+      </mat-card-content>
+      
+      <mat-card-actions align="end" class="cert-actions">
+        
+        @if (userEnrollmentId) {
+          <button mat-stroked-button
+                  color="warn"
+                  (click)="unenroll.emit()"
+                  [disabled]="isEnrolling">
+            @if (isEnrolling) {
+              <span class="button-content-wrapper">
+                <mat-spinner [diameter]="20" color="warn" class="inline-spinner"></mat-spinner>
+                Cancelando...
+              </span>
+            } @else {
+              <span class="button-content-wrapper">
+                <mat-icon>cancel</mat-icon> Cancelar Inscrição
+              </span>
+            }
+          </button>
+          
+          <button mat-stroked-button 
+                  color="primary" 
+                  (click)="scheduleExam.emit()" 
+                  [disabled]="isEnrolling || !certification.isActive"
+                  matTooltip="Agendar data e horário (Em desenvolvimento)">
+            <span class="button-content-wrapper">
+              <mat-icon>calendar_today</mat-icon> Agendar Prova
+            </span>
+          </button>
+
+          @if (certification.modality === 'online') {
+            <button mat-raised-button
+                    color="accent"
+                    (click)="startExam.emit()"
+                    [disabled]="!certification.isActive || isEnrolling"
+                    matTooltip="Iniciar a prova imediatamente (Online)">
+              <span class="button-content-wrapper">
+                <mat-icon>play_circle_filled</mat-icon> Realizar Prova Agora
+              </span>
+            </button>
+          }
+
+        } @else {
+          <button mat-raised-button
+                  color="primary"
+                  (click)="enroll.emit()"
+                  [disabled]="!certification.isActive || isEnrolling">
+            @if (isEnrolling) {
+              <span class="button-content-wrapper">
+                <mat-spinner [diameter]="20" color="primary" class="inline-spinner"></mat-spinner>
+                Inscrevendo...
+              </span>
+            } @else {
+              <span class="button-content-wrapper">
+                <mat-icon>check_circle_outline</mat-icon> Inscrever-se
+              </span>
+            }
+          </button>
+        }
+      </mat-card-actions>
+      
+    </mat-card>
+  }
+</div>
