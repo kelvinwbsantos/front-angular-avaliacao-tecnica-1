@@ -7,7 +7,7 @@ import { MatMenuModule } from '@angular/material/menu'; // Para o menu do usuár
 import { MatBadgeModule } from '@angular/material/badge'; // Para o sino de notificações
 import { CommonModule } from '@angular/common'; // Para *ngIf
 import { AuthService, } from '../../core/services/auth.service'; // Import AuthService e UserData
-import { UserData } from '../../shared/models/users.models';
+import { UserData } from '../../features/shared/models/users.models';
 
 @Component({
   selector: 'app-header',

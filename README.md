@@ -8,88 +8,152 @@ Esta aplicação foi projetada para ser executada como parte de um ambiente Dock
 
 **➡️ [Link para o Repositório de Orquestração](https://github.com/kelvinwbsantos/avaliacao-tecnica.git)**
 
-🏛️ Arquitetura do Projeto (A Metáfora da Cidade)
 
-Para manter nosso código organizado e escalável, seguimos uma arquitetura baseada em "Separação de Responsabilidades". A maneira mais fácil de pensar nisso é como uma cidade:
+README - Arquitetura do Projeto
 
-    /core (A Prefeitura): A infraestrutura central. Coisas que a cidade inteira usa e que geralmente só existem uma vez.
+🏛️ Arquitetura do Projeto (Feature-Based / Domínios)
 
-    /pages (Os Bairros): Os destinos. São as "páginas" reais que o usuário visita, carregadas pelo roteador.
+Nossa arquitetura é baseada em "Features" (ou Domínios), onde cada grande "parte" do sistema é um mini-aplicativo independente.
 
-    /shared (As Lojas e Fábricas): Os recursos reutilizáveis. São os "Garçons" (componentes burros), as "Plantas" (modelos) e os "Cozinheiros" (serviços de API) que os "Bairros" usam.
+A estrutura segue a metáfora de uma cidade:
 
-### Estrutura de Pastas
+/core (A Prefeitura): Infraestrutura global, única, que serve a todos.
+
+/features (Os Bairros): Os domínios de negócio (Ex: Usuários, Certificações).
+
+/shared (A Praça Central): Componentes 100% genéricos e reutilizáveis (Ex: um botão Ok/Cancel).
+
+/layouts (O Prédio): A "casca" principal da aplicação (menu lateral, header).
 
 ```bash
-
 src/app/
-├── core/               # 🏛️ A PREFEITURA (Lógica Central do App)
-│   ├── guards/         # (Seguranças: "Pode entrar?")
-│   ├── interceptors/   # (Pedágio: "Deixa eu ver esse token.")
+├── core/               # 🏛️ A PREFEITURA (Lógica ÚNICA)
+│   ├── guards/         # (Seguranças: AuthGuard, PermissionGuard)
+│   ├── interceptors/   # (Pedágio: TokenInterceptor)
 │   └── services/       # (Infraestrutura: AuthService, LayoutService)
 │
-├── pages/              # 🏠 OS BAIRROS (Os "Pratos" / "Chefs")
-│   ├── certifications-admin/
-│   ├── certifications-available/
-│   ├── certifications-take/
-│   ├── achievements/
-│   ├── users-admin/
-│   ├── profile/
-│   └── ...
+├── features/           # 🚀 OS BAIRROS (Domínios de Negócio)
+│   │
+│   ├── certifications/   # <-- Domínio "Certificações"
+│   │   ├── components/   # (Garçons SÓ desta feature)
+│   │   │   ├── certification-grid-modern/
+│   │   │   ├── certification-grid-classic/
+│   │   │   ├── certification-list/         (Tabela do Admin)
+│   │   │   ├── certification-details/      (Modal de Edição)
+│   │   │   ├── ai-question-generator/
+│   │   │   └── ...
+│   │   ├── pages/        # (Os "Pratos" / "Chefs" da Rota)
+│   │   │   ├── certifications-admin-page/
+│   │   │   ├── certifications-available-page/
+│   │   │   ├── certifications-take-page/
+│   │   │   └── ...
+│   │   └── services/     # (Cozinheiros SÓ desta feature)
+│   │       ├── certifications.service.ts
+│   │       ├── exam.service.ts
+│   │       ├── certificate.service.ts
+│   │       ├── enrollment.service.ts
+│   │       ├── question.service.ts
+│   │       └── ... 
+│   │       
+│   ├── users/            # <-- Domínio "Usuários"
+│   │   ├── components/   # (Ex: user-details-modal)
+│   │   │   ├── user-details/
+│   │   │   ├── user-certificates-list/
+│   │   │   ├── user-exams-list/
+│   │   │   └── ...
+│   │   ├── pages/        
+│   │   │   ├── users-admin-page/
+│   │   │   ├── profile-page/
+│   │   │   ├── achievements-page/  (A "Conquistas" mora aqui!)
+│   │   │   └── ...
+│   │   ├── services/
+│   │   │   └── user.service.ts
+│   │   └── user-routes/
+│   │
+│   ├── shared/           # <-- Domínio "Conteúdo Compartilhado"
+│   │   ├── components/   # (Ex: content-shared.component.ts)
+│   │   ├── services/     # (Ex: content-shared.service.ts)
+│   │   └── models/
+│   │        ├── certification.model.ts
+│   │        ├── exam.model.ts
+│   │        ├── certificate.model.ts
+│   │        ├── enrollment.model.ts
+│   │        ├── question.model.ts
+│   │        ├── users.model.ts
+│   │        ├── product.model.ts # <-- Modelo Exemplo "WordPress/WooCommerce"
+│   │        └── ...
+│   │  
+│   └── new_feature/      # <-- Domínio de Exemplo "WordPress/WooCommerce" (FUTURO)
+│       ├── components/   # (product-card, cart-icon)
+│       ├── pages/        # (shop-page, product-detail-page)
+│       └── services/     # (woocommerce.service.ts)
 │
-└── shared/             # 🏭 AS LOJAS E FÁBRICAS (Reutilizáveis)
-    ├── components/     # (Os "Garçons" / "Comida")
-    │   ├── certification-grid-modern/
-    │   ├── certification-grid-classic/
-    │   ├── user-exams/
-    │   ├── user-details/
-    │   └── ...
-    │
-    ├── models/         # (As "Plantas" / "Contratos")
-    │   ├── certification.model.ts
-    │   ├── user.model.ts
-    │   ├── exam.model.ts
-    │   ├── certificate.model.ts
-    │   ├── enrollment.model.ts  
-    │   └── ...
-    │
-    └── services/       # (Os "Cozinheiros" da API)
-        ├── certifications.service.ts
-        ├── user.service.ts
-        ├── exam.service.ts
-        ├── enrollment.service.ts
-        └── ...
-
+├── layouts/            # 🏢 O PRÉDIO (A casca da App)
+│   ├── main-layout/
+│   ├── header/
+│   └── side-nav/
+│
+└── shared/             # 🏭 A PRAÇA CENTRAL (100% Genérico)
+    ├── components/     # (Ex: <app-spinner>, <app-confirm-dialog>)
+    ├── directives/     # (Ex: um 'click-outside.directive.ts')
+    ├── pipes/          # (Ex: um 'truncate.pipe.ts')
+    └── ...             
 ```
 
+O "Bugre" do Acoplamento (Ex: Usuário e Exames)
 
-O Papel de Cada Um
+P: "Mas a realização de um Exame (feature: certifications) não requer um Usuário (feature: users)? Isso não 'quebra' a independência?"
 
-    🏛️ /core (A Prefeitura)
+R: Excelente observação. A realização de um exame não requer o UserService (o "Cozinheiro" que gerencia a lista de usuários). Ela requer apenas o ID do usuário logado.
 
-    O que é? Coisas que rodam 1 vez e definem como o app funciona, não o que ele mostra. Regra: Se você apagar essa pasta, o app nem sobe.
+Essa informação (o usuário logado) não pertence a nenhum "Bairro" (feature). Ela pertence à "Prefeitura" (core/).
 
-        core/guards: Os seguranças. O auth.guard.ts que decide se o usuário (logado) pode ou não acessar uma rota.
+O AuthService (na "Prefeitura") é a Fonte Única da Verdade sobre o usuário logado.
 
-        core/interceptors: O "pedágio". O token.interceptor.ts (por exemplo) que "pega" toda chamada para a API e anexa o token de autenticação.
+O Fluxo Correto de Acoplamento (Saudável):
 
-        core/services: Serviços de infraestrutura. O AuthService (que guarda quem é o usuário) e o LayoutService (que guarda a preferência "Grid" vs "Lista") vivem aqui.
+O AuthService (Prefeitura) guarda o usuário:
 
-    🏠 /pages (Os Bairros)
+// src/app/core/services/auth.service.ts
+@Injectable({ providedIn: 'root' })
+export class AuthService {
+  // Usamos um signal para guardar o usuário logado
+  public currentUser = signal<User | null>(null);
+  public userId = computed(() => this.currentUser()?.id);
 
-    O que é? Os "Pratos" (ou "Chefs"). São os componentes "inteligentes" que o app.routes.ts carrega. Regra: Se tem uma URL, é uma "Page".
+  // ... (lógica de login/logout que preenche o signal)
+}
 
-        Responsabilidade (O Chef): A única responsabilidade de uma "Page" é buscar os dados (chamar os serviços) e decidir qual "Comida" mostrar.
 
-        Exemplo: O available-certifications-page.component.ts (nosso "Chef") busca as certificações na API e, baseado no LayoutService, decide se mostra o <app-certifications-grid-modern> ou o <app-certifications-grid-classic>. Ele que tem o isLoading = true e os .subscribe().
+O ExamService (Bairro) injeta o AuthService (Prefeitura):
 
-    🏭 /shared (As Lojas e Fábricas)
+// src/app/features/certifications/services/exam.service.ts
+@Injectable({ providedIn: 'root' })
+export class ExamService {
 
-    O que é? O coração do reuso. São componentes e lógicas "burras" que podem ser usados em qualquer "Bairro" (Page). Regra: Um componente "shared" nunca busca seus próprios dados. Ele os recebe via @Input().
+  private http = inject(HttpClient);
+  // 1. O "Bairro" (ExamService) injeta a "Prefeitura" (AuthService)
+  private authService = inject(AuthService); 
 
-        shared/components/ (Os Garçons / "Comida"): Os componentes visuais. O certification-grid-modern.component é um "Garçom": ele não sabe como os dados chegaram, ele só recebe [certifications]="..." e os exibe. Se o usuário clica em algo, ele "toca um sininho" (@Output()).
+  // 2. O `startExam` NÃO precisa receber o 'userId'.
+  //    Ele já sabe quem é o usuário!
+  startExam(enrollmentId: string): Observable<Exam> {
 
-        shared/models/ (As Plantas): Onde todas as interfaces (.model.ts) do projeto vivem. certification.model.ts, user.model.ts, etc. São os "contratos" que o Front e o Back concordam em usar.
+    // 3. Ele pega o ID direto da Fonte da Verdade (a Prefeitura)
+    const currentUserId = this.authService.userId(); 
 
-        shared/services/ (Os Cozinheiros): Os serviços que falam com a API. CertificationsService, UserService, ExamService. Eles são os "cozinheiros" que sabem fazer os pedidos (GET, POST) para o backend.
+    // (Lógica de segurança)
+    if (!currentUserId) {
+      return throwError(() => new Error('Usuário não autenticado.'));
+    }
+
+    // 4. Ele faz a chamada para a API
+    const payload = { enrollmentId, userId: currentUserId };
+    return this.http.post<Exam>(`${BASE_PATH}`, payload);
+  }
+}
+
+
+Conclusão: O "acoplamento" acontece, mas é um acoplamento saudável Feature -> Core. Os "Bairros" (features/) podem (e devem) depender da "Prefeitura" (core/), mas eles nunca devem depender uns dos outros.
+
 ---

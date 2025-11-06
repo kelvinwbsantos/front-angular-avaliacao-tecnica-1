@@ -1,16 +1,16 @@
 import { Routes } from '@angular/router';
-import { LoginPage } from './pages/login-page/login-page';
+import { LoginPage } from './features/users/pages/login-page/login-page';
 import { LandingPage } from './pages/landing-page/landing-page';
-import { InvitePage } from './pages/invite-page/invite-page';
-import { Expired } from './pages/invite-page/expired/expired';
+import { InvitePage } from './features/invite/components/invite-details/invite-details.component';
+import { Expired } from './features/invite/pages/expired/expired';
 import { authGuard } from './core/guards/auth-guard'; // Seu guarda de autenticação
 import { roleGuard } from './core/guards/role-guard'; // Seu guarda de role (vamos substituir/complementar)
 import { PermissionGuard } from './core/guards/permission.guard'; // Importe o guarda de permissão quando criado
 
 // Importa o novo Layout e a página de Métricas
 import { MainLayoutComponent } from './layouts/main-layout/main-layout.component';
-import { DashboardMetricsComponent } from './pages/dashboard-metrics/dashboard-metrics.component';
-import { UnauthorizedComponent } from './pages/unauthorized-page/unauthorized.component'; // Importa a nova página
+import { DashboardMetricsComponent } from './features/users/pages/dashboard-metrics/dashboard-metrics.component';
+import { UnauthorizedComponent } from './features/users/pages/unauthorized-page/unauthorized.component'; // Importa a nova página
 //import { Welcome } from './pages/welcome/welcome'; // Assumindo que exista
 
 export const routes: Routes = [
@@ -43,53 +43,53 @@ export const routes: Routes = [
             // Rotas dos Módulos/Páginas (Lazy Loaded)
             {
                 path: 'users',
-                loadChildren: () => import('./pages/users-page/users.routes').then(m => m.USERS_ROUTES),
+                loadChildren: () => import('./features/users/pages/users-page/users.routes').then(m => m.USERS_ROUTES),
                 canActivate: [PermissionGuard], // Usar guarda de permissão aqui
                 data: { permissions: ['READ_USERS'] }
             },
             {
                 path: 'certifications',
                 // Usando loadChildren para consistência (precisa criar certifications.routes.ts)
-                loadChildren: () => import('./pages/certifications-page/certifications.routes').then(m => m.CERTIFICATIONS_ROUTES),
+                loadChildren: () => import('./features/certifications/pages/certifications-page/certifications.routes').then(m => m.CERTIFICATIONS_ROUTES),
                 canActivate: [PermissionGuard],
                 data: { permissions: ['READ_CERTIFICATIONS'] }
             },
             {
                 path: 'invite',
-                loadChildren: () => import('./pages/invite/invite.routes').then(m => m.INVITE_ROUTES),
+                loadChildren: () => import('./features/invite/invite.routes').then(m => m.INVITE_ROUTES),
                 canActivate: [PermissionGuard],
                 data: { permissions: ['INVITE_USER'] }
             },
             {
                 path: 'profile',
-                loadChildren: () => import('./pages/profile-page/profile.routes').then(m => m.PROFILE_ROUTES),
+                loadChildren: () => import('./features/users/pages/profile-page/profile.routes').then(m => m.PROFILE_ROUTES),
                 // Geralmente não precisa de guarda específico aqui, só o authGuard do pai
             },
             {
                 path: 'available-certifications', // 
-                loadComponent: () => import('./pages/available-certifications-page/available-certifications-page.component').then(m => m.AvailableCertificationsPageComponent),
+                loadComponent: () => import('./features/certifications/pages/available-certifications-page/available-certifications-page.component').then(m => m.AvailableCertificationsPageComponent),
                  canActivate: [PermissionGuard], // Proteger com permissão de candidato
                  data: { permissions: ['TAKE_CERTIFICATIONS'] } // Exemplo
             },
 
             { // Rota para detalhes da certificação (visão candidato)
                 path: 'available-certifications/:id',
-                loadComponent: () => import('./pages/certification-take-page/certification-take-page.component').then(m => m.CertificationTakeComponent),
+                loadComponent: () => import('./features/certifications/pages/certification-take-page/certification-take-page.component').then(m => m.CertificationTakeComponent),
                 canActivate: [PermissionGuard],
                 data: { permissions: ['TAKE_CERTIFICATIONS'] }
             },
             { // Rota para a REALIZAÇÃO da prova em si
                 path: 'exam/:enrollmentId', 
-                loadComponent: () => import('./pages/exam-page/exam-page.component').then(m => m.ExamPageComponent),
+                loadComponent: () => import('./features/certifications/pages/exam-page/exam-page.component').then(m => m.ExamPageComponent),
                 canActivate: [PermissionGuard],
                 data: { permissions: ['TAKE_CERTIFICATIONS', 'SIMULATE_EXAM'] } // Permitir ambos
             },
             {
                 path: 'achievements', // <-- SUA NOVA ROTA
-                loadComponent: () => import('./pages/achievements-page/achievements-page.component').then(m => m.AchievementsPageComponent),
+                loadComponent: () => import('./features/users/pages/achievements-page/achievements-page.component').then(m => m.AchievementsPageComponent),
                 canActivate: [PermissionGuard],
                 data: { permissions: ['TAKE_CERTIFICATIONS'] } // Ou qualquer permissão de "candidato"
-},
+            },
             //outras rotas filhas aqui
         ]
     },
