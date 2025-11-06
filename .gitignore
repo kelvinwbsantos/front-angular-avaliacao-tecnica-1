@@ -6,6 +6,11 @@
 /out-tsc
 /bazel-out
 
+# Dev Files
+ARQ.md
+Artigo ARQUITETURA.md
+
+
 # Node
 /node_modules
 npm-debug.log

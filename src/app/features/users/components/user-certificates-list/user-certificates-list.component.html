@@ -1,0 +1,71 @@
+<mat-card class="exam-card">
+  
+  <mat-card-header class="card-header-icon-trophy">
+    <mat-icon mat-card-avatar>emoji_events</mat-icon>
+    <mat-card-title>Minhas Certificações</mat-card-title>
+    <mat-card-subtitle>Suas certificações aprovadas e válidas</mat-card-subtitle>
+  </mat-card-header>
+
+  <mat-card-content [class.has-overlay]="isDownloading">
+    @if (isDownloading) {
+      <div class="download-overlay">
+        <mat-progress-spinner mode="indeterminate" [diameter]="50"></mat-progress-spinner>
+        <p>Gerando seu certificado...</p>
+      </div>
+    }
+
+    @if (isLoadingCerts) {
+      <div class="loading-state">
+        <mat-progress-spinner mode="indeterminate" [diameter]="40"></mat-progress-spinner>
+      </div>
+    } @else {
+      @if (passedCerts.length > 0) {
+        <mat-list role="list">
+          @for (cert of passedCerts; track cert.id) {
+            <mat-list-item role="listitem" class="cert-list-item">
+              <mat-icon matListItemIcon color="accent">workspace_premium</mat-icon>
+              
+              <div matListItemTitle>{{ cert.certificationName || cert.certificationId }}</div>
+              
+              <div matListItemLine>
+                Emitido em: {{ cert.createdAt | date:'dd/MM/yyyy' }} | 
+                Status: <span [class.active-cert]="cert.active" [class.inactive-cert]="!cert.active">
+                  {{ cert.active ? 'Ativo' : 'Expirado' }}
+                </span>
+              </div>
+
+              <div matListItemMeta class="cert-actions">
+                
+                <button mat-icon-button 
+                        [matMenuTriggerFor]="shareMenu" 
+                        matTooltip="Compartilhar"
+                        (click)="onShareCertificate(cert)"> <mat-icon>share</mat-icon>
+                </button>
+                
+                <button mat-flat-button 
+                        color="primary"
+                        (click)="onGenerateCertificate(cert)" [disabled]="isDownloading"
+                        matTooltip="Baixar PDF">
+                  <mat-icon>download</mat-icon>
+                  Gerar PDF
+                </button>
+              </div>
+
+              <mat-menu #shareMenu="matMenu">
+                <button mat-menu-item (click)="onShareCertificate(cert)"> <mat-icon>link</mat-icon>
+                  <span>Copiar Link</span>
+                </button>
+                <button mat-menu-item (click)="onShareCertificate(cert)"> <mat-icon>share</mat-icon>
+                  <span>Compartilhar...</span>
+                </button>
+              </mat-menu>
+            </mat-list-item>
+            <mat-divider></mat-divider>
+          }
+        </mat-list>
+      } @else {
+        <p class="empty-state">Você ainda não possui certificações emitidas.</p>
+      }
+    }
+  </mat-card-content>
+</mat-card>
