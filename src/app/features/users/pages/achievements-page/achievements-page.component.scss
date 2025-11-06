@@ -1,0 +1,12 @@
+/* src/app/pages/achievements-page/achievements-page.component.scss */
+.achievements-container {
+  padding: 24px;
+  max-width: 1200px;
+  margin: 20px auto;
+}
+
+// Descola o segundo card do primeiro
+app-user-exams-list {
+  margin-top: 24px;
+  display: block; // Garante que a margem funcione
+}

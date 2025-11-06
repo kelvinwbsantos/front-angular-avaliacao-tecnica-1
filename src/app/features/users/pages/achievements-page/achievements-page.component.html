@@ -1,0 +1,27 @@
+<div class="achievements-container">
+  
+  @if (isLoading) {
+    <div class="loading-state">
+      <mat-progress-spinner mode="indeterminate" [diameter]="50"></mat-progress-spinner>
+      <p>Carregando suas conquistas...</p>
+    </div>
+  } @else {
+    
+    <app-user-certificates-list
+      [passedCerts]="passedCerts"
+      [isLoadingCerts]="isLoading" 
+      [isDownloading]="isDownloading"
+      (generateCertificate)="onGenerateCertificate($event)"
+      (shareCertificate)="onShareCertificate($event)">
+    </app-user-certificates-list>
+    
+    <app-user-exams-list
+      [allExams]="allExams"
+      [isLoadingExams]="isLoading"
+      (resumeExam)="onResumeExam($event)"
+      (openResultModal)="onOpenResultModal($event)">
+    </app-user-exams-list>
+    
+  }
+
+</div>
