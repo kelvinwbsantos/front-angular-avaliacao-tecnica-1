@@ -1,5 +1,5 @@
 <h2 mat-dialog-title>
-    {{ data.isCreation ? 'Nova Certificação' : 'Detalhes da Certifaaaaicação' }}
+    {{ data.isCreation ? 'Nova Certificação' : 'Detalhes da Certificação' }}
     @if (!data.isCreation && data.certification) {
         <span>: {{ data.certification.name }}</span>
     }
@@ -144,7 +144,9 @@
             @if (isLoadingQuestions) { <mat-progress-spinner diameter="20" mode="indeterminate" class="mr-2"></mat-progress-spinner> Salvando... } @else { Salvar & Gerar Questões com IA }
         </button>
     }
-    <button mat-button (click)="dialogRef.close(false)" [disabled]="isLoadingQuestions">Cancelar</button>
+
+    
+    
     @if (!data.isCreation) {
         
         <button mat-flat-button (click)="openQuestionBank()" [disabled]="isLoadingQuestions"> <mat-icon>list_alt</mat-icon> Acessar Banco de Questões </button>
@@ -153,4 +155,7 @@
              @if (isLoadingQuestions) { <mat-progress-spinner diameter="20" mode="indeterminate" class="mr-2"></mat-progress-spinner> Salvando... } @else { Salvar Alterações }
         </button>
     }
+    
+    <button mat-button (click)="dialogRef.close(false)" [disabled]="isLoadingQuestions">Cancelar</button>
+
 </mat-dialog-actions>

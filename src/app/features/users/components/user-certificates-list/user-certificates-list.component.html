@@ -25,7 +25,7 @@
             <mat-list-item role="listitem" class="cert-list-item">
               <mat-icon matListItemIcon color="accent">workspace_premium</mat-icon>
               
-              <div matListItemTitle>{{ cert.certificationName || cert.certificationId }}</div>
+              <div matListItemTitle>{{ cert.certification?.name || cert.certificationId }}</div>
               
               <div matListItemLine>
                 Emitido em: {{ cert.createdAt | date:'dd/MM/yyyy' }} | 

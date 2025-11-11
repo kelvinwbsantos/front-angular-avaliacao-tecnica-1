@@ -11,7 +11,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTooltipModule } from '@angular/material/tooltip';
 
 // Serviços e Models (Ajuste os caminhos!)
-import { Certification } from '../../../shared/models/certification.models'; // Reutiliza o model
+import { CompleteCertification } from '../../../shared/models/certification.models'; // Reutiliza o model
 
 @Component({
   selector: 'app-certifications-card-grid-modern', // Nome do seletor
@@ -32,7 +32,7 @@ export class CertificationsCardGridModernComponent {
   private router = inject(Router);
 
   // Estado do componente
-  @Input() certifications: Certification[] = [];
+  @Input() certifications: CompleteCertification[] = [];
   @Input() isLoading = true;
   @Input() errorLoading = false;
   @Output() retryLoad = new EventEmitter<void>();

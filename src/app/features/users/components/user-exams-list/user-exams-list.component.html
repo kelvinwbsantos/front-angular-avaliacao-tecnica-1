@@ -19,7 +19,7 @@
           
           <ng-container matColumnDef="certificationName">
             <th mat-header-cell *matHeaderCellDef> Certificação </th>
-            <td mat-cell *matCellDef="let exam"> {{ exam.certificationName || exam.certificationId }} </td>
+            <td mat-cell *matCellDef="let exam"> {{ exam.certification.name || exam.certificationId }} </td>
           </ng-container>
 
           <ng-container matColumnDef="status">

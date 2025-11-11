@@ -13,7 +13,7 @@ import { MatListModule } from '@angular/material/list';
 
 // Serviços e Modelos
 import { ExamService } from '../../../certifications/services/exam.service';
-import { ExamResult } from '../../../shared/models/exam.model';
+import { ExamResult } from '../../models/exam.model';
 
 @Component({
   selector: 'app-exam-result-modal',

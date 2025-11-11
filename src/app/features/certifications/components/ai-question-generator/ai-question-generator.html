@@ -1,31 +1,57 @@
+<!-- Caminho: src/app/features/certifications/components/ai-question-generator/ai-question-generator.html -->
+
+
 <h2 mat-dialog-title>Geração e Revisão de Questões com I.A.</h2>
 
 <mat-dialog-content class="dialog-content">
   <mat-card class="mb-6">
     <mat-card-header class="!pb-0">
-      <mat-card-title>Passo 1: Upload para Geração (Cert: {{ data.certificationTitle }})</mat-card-title>
+      <mat-card-title>Passo 1: Upload para Geração (Cert: {{ data.certification.name }})</mat-card-title>
     </mat-card-header>
-    <mat-card-content class="p-6">
+    
+   <mat-card-content class="p-6">
       <div (click)="triggerFileInput()" class="upload-area cursor-pointer p-6 border-2 border-dashed border-gray-300 rounded-lg hover:bg-gray-50 transition-colors">
         <input #fileInput type="file" accept="application/pdf" (change)="onFileSelected($event)" hidden />
         <div class="flex flex-col items-center justify-center">
           <mat-icon color="primary" style="font-size: 48px; width: 48px; height: 48px;">upload_file</mat-icon>
+          
           <ng-container *ngIf="selectedFile; else checkPdf">
             <p class="text-lg mt-2 font-medium text-primary">{{ selectedFile.name }}</p>
-            <p class="text-sm text-gray-500 mt-1">Clique para mudar o arquivo.</p>
+            <p class="text-sm text-green-600 mt-1 font-medium">Novo PDF selecionado. Clique em "Substituir" para salvá-lo.</p>
           </ng-container>
-          <ng-template #checkPdf>
-            <ng-container *ngIf="existingPdfName; else defaultUpload">
+
+                    <ng-template #checkPdf>
+                        <ng-container *ngIf="existingPdfName; else defaultUpload">
               <p class="text-lg mt-2 font-medium text-gray-700">{{ existingPdfName }}</p>
               <p class="text-sm text-gray-500 mt-1">PDF existente. Clique para selecionar um novo e substituí-lo.</p>
             </ng-container>
-            <ng-template #defaultUpload>
-              <p class="text-lg mt-2">Clique para selecionar o NOVO PDF ou arraste e solte</p>
-              <p class="text-sm text-gray-500 mt-1">Essa será a NOVA MATRIZ para a I.A. gerar questões a partir de agora.</p>
+                        <ng-template #defaultUpload>
+              <p class="text-lg mt-2">Nenhum PDF encontrado.</p>
+              <p class="text-sm text-gray-500 mt-1">Clique para selecionar um PDF e associá-lo a esta certificação.</p>
             </ng-template>
           </ng-template>
         </div>
       </div>
+
+      <div *ngIf="selectedFile" class="text-right mt-4">
+        <button mat-raised-button color="accent" 
+                (click)="substitutePdf()" 
+                [disabled]="isSavingPdf || isGeneratingQuestions">
+            <ng-container *ngIf="isSavingPdf; else notSaving">
+                <span class="button-wrapper">
+                    <mat-progress-spinner diameter="20" mode="indeterminate"></mat-progress-spinner>
+                    <span>Salvando PDF...</span>
+                </span>
+            </ng-container>
+            <ng-template #notSaving>
+                <span class="button-wrapper">
+                    <mat-icon>save</mat-icon>
+                    <span>Substituir PDF</span>
+                </span>
+            </ng-template>
+        </button>
+      </div>
+
     </mat-card-content>
   </mat-card>
 
