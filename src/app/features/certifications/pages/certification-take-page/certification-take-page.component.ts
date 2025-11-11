@@ -110,8 +110,9 @@ export class CertificationTakeComponent implements OnInit, OnDestroy {
       }
       
       this.certification = certification;
+
       const foundEnrollment = enrollments.find(
-        (e: Enrollment) => e.certificationId === this.certificationId
+        (e: Enrollment) => e.certificationId === this.certificationId && e.status === 'active'
       );
       this.userEnrollmentId = foundEnrollment ? foundEnrollment.id : null;
     });
