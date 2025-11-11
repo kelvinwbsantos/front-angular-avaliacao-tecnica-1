@@ -18,7 +18,7 @@ import { DatePipe, NgClass, CommonModule } from '@angular/common';
 import { CertificationsService } from '../../services/certifications.service'; 
 import { CertificationDetails, CertificationModalData } from '../../components/certifification-details/certification-details'; 
 import { 
-    Certification, 
+    CompleteCertification, 
     CertificationFilterDTO, 
     PaginatedCertificationsResponse 
 } from '../../../shared/models/certification.models';
@@ -49,7 +49,7 @@ export class CertificationsPage implements AfterViewInit, OnInit {
   private snackBar = inject(MatSnackBar); // <-- ADICIONADO
 
   displayedColumns: string[] = ['title', 'status', 'questionsCount', 'validUntil', 'pdfFile','actions'];
-  dataSource = new MatTableDataSource<Certification>([]); 
+  dataSource = new MatTableDataSource<CompleteCertification>([]); 
   totalCertifications = 0;
   isLoading = true;
   isDeleting = false; 
@@ -151,7 +151,7 @@ export class CertificationsPage implements AfterViewInit, OnInit {
    * Abre o modal para ver os detalhes ou editar.
    * (Seu código original, está perfeito)
    */
-  openCertificationDetails(cert: Certification): void {
+  openCertificationDetails(cert: CompleteCertification): void {
     const data: CertificationModalData = { 
       certificationId: cert.id, 
       isCreation: false, 

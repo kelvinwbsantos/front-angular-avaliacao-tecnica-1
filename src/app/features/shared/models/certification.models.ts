@@ -8,7 +8,7 @@ export interface Option {
 /**
  * Interface para os dados de criação/atualização (Payload - POST/PATCH)
  */
-export interface CertificationPayloadDTO {
+export interface InitialCertification {
     name: string; 
     shortDescription: string;
     description: string;
@@ -21,7 +21,7 @@ export interface CertificationPayloadDTO {
 /**
  * Interface para a Certificação completa retornada pelo backend (GET).
  */
-export interface Certification extends CertificationPayloadDTO {
+export interface CompleteCertification extends InitialCertification {
     id: string;
     title: string; // Mantido para compatibilidade com o componente de listagem
     status: 'Draft' | 'Published' | 'Pending Review';
@@ -46,7 +46,7 @@ export interface CertificationFilterDTO {
 
 // Interface para a resposta paginada do backend
 export interface PaginatedCertificationsResponse {
-    data: Certification[];
+    data: CompleteCertification[];
     total: number; 
     page: number;
     limit: number;

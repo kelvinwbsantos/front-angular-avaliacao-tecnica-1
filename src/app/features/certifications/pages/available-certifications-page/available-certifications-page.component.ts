@@ -9,7 +9,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { EMPTY, catchError, finalize } from 'rxjs'; 
 import { CertificationsService } from '../../services/certifications.service';
-import { Certification } from '../../../shared/models/certification.models';
+import { CompleteCertification } from '../../../shared/models/certification.models';
 
 // Importa os dois "Garçons" (layouts)
 
@@ -29,7 +29,7 @@ export class AvailableCertificationsPageComponent implements OnInit {
   public layoutService = inject(LayoutService);
   private certificationsService = inject(CertificationsService);
 
-  public certifications: Certification[] = [];
+  public certifications: CompleteCertification[] = [];
   public isLoading = true;
   public errorLoading = false;
 

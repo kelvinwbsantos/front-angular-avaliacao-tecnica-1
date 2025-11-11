@@ -15,7 +15,7 @@ import { ExamService } from '../../services/exam.service';
 import { AuthService } from '../../../../core/services/auth.service';
 
 // Modelos
-import { Certification } from '../../../shared/models/certification.models';
+import { CompleteCertification } from '../../../shared/models/certification.models';
 import { Enrollment } from '../../../shared/models/enrollment.model';
 
 // Os dois "Garçons" (as duas Comidas)
@@ -49,7 +49,7 @@ export class CertificationTakeComponent implements OnInit, OnDestroy {
   private snackBar = inject(MatSnackBar);
 
   // Estado
-  public certification: Certification | null = null;
+  public certification: CompleteCertification | null = null;
   public isLoading = true;
   public errorLoading = false;
   public certificationId: string | null = null;
@@ -76,7 +76,7 @@ export class CertificationTakeComponent implements OnInit, OnDestroy {
     this.loadSubscription?.unsubscribe();
   }
 
-  // 3. A LÓGICA DE CARREGAMENTO (agora mora aqui)
+  // 3. A LÓGICA DE CARREGAMENTO 
   loadCertificationDetails(): void {
     this.isLoading = true;
     this.errorLoading = false;

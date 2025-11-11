@@ -24,11 +24,13 @@ import { QuestionDetails } from '../../components/question-details/question-deta
 import { AiQuestionGenerator, AiGeneratorModalData } from '../../components/ai-question-generator/ai-question-generator';
 import { BackendQuestion } from '../../../shared/models/question-models';
 import { QuestionFilterDTO } from '../../../shared/models/question-models';  
+import { CompleteCertification } from '../../../shared/models/certification.models';
 
 export interface QuestionBankModalData {
     certificationId: string | null; // ID da certificação para pré-filtrar
     certificationTitle?: string;
     certificationPdfPath?: string | null;
+    certification?: CompleteCertification
 }
 
 @Component({
@@ -57,6 +59,7 @@ export class QuestionsPage implements OnInit, AfterViewInit {
     certificationId: string | null;
     certificationTitle: string | null;
     certificationPdfPath: string | null;
+    certification: CompleteCertification | null;
 
     // Tabela
     displayedColumns: string[] = ['question', 'isActive', 'createdAt', 'actions'];
@@ -71,6 +74,7 @@ export class QuestionsPage implements OnInit, AfterViewInit {
         this.certificationId = data.certificationId;
         this.certificationTitle = data.certificationTitle || null;
         this.certificationPdfPath = data.certificationPdfPath || null;
+        this.certification = data.certification || null;
     }
 
     ngOnInit(): void {
@@ -169,26 +173,35 @@ export class QuestionsPage implements OnInit, AfterViewInit {
      * Abre o modal de Geração com I.A.
      */
     openAiGenerator(): void {
-        if (!this.certificationId || !this.certificationTitle) {
-            alert("Não é possível usar a I.A. sem o contexto de uma certificação (ID e Título).");
-            // TODO: Permitir que o usuário selecione a certificação aqui
+        // Usa o objeto 'certification' que recebemos do 'CertificationDetails'
+        if (!this.certification) {
+            alert("Erro: Os dados completos da certificação não foram encontrados.");
             return;
         }
 
+        // Prepara os dados para o modal da IA (enviando o objeto inteiro)
         const aiData: AiGeneratorModalData = { 
-            certificationId: this.certificationId,
-            certificationTitle: this.certificationTitle,
-            existingPdfPath: this.certificationPdfPath // TODO: Precisaríamos buscar o PDF da certificação
+            certification: this.certification 
         };
 
         this.dialog.open(AiQuestionGenerator, {
             width: '900px', 
             maxWidth: '95vw',
             data: aiData,
-        }).afterClosed().subscribe(result => {
-            if (result === true) {
+            disableClose: true // Boa prática para modais complexos
+        }).afterClosed().subscribe((result: CompleteCertification | boolean) => {
+            // O modal da IA pode retornar a certificação atualizada (se o PDF mudou)
+            if (typeof result === 'object' && result !== null) {
+                console.log("[Banco] IA retornou certificação atualizada.");
+                // Atualiza a cópia local no 'Banco de Questões'
+                this.certification = result;
+                this.certificationPdfPath = result.pdfPath || null;
+                this.loadQuestions(); // Recarrega a lista
+            } else if (result === true) {
+                // Se só gerou (sem trocar PDF)
                 this.loadQuestions(); // Recarrega a lista
             }
+            // Se 'false', não faz nada (Cancelou)
         });
     }
 
