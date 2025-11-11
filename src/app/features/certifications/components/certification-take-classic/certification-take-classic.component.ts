@@ -11,7 +11,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { Certification } from '../../../shared/models/certification.models';
+import { CompleteCertification } from '../../../shared/models/certification.models';
 
 @Component({
   selector: 'app-certification-take-classic',
@@ -26,7 +26,7 @@ import { Certification } from '../../../shared/models/certification.models';
 export class CertificationTakeClassicComponent { 
   
   // --- O "GARÇOM" (BURRO) SÓ RECEBE DADOS ---
-  @Input() certification: Certification | null = null;
+  @Input() certification: CompleteCertification | null = null;
   @Input() isLoading: boolean = true;
   @Input() errorLoading: boolean = false;
   @Input() userEnrollmentId: string | null = null;

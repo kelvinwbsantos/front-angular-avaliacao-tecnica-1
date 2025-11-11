@@ -17,6 +17,9 @@ export interface Exam {
   completedAt: string | null;
   // A API de lista NÃO retorna as questões
   questions?: ExamQuestion[]; // Torna opcional
+  certification:{
+    name?: string;
+  }
 }
 
 // ... (interfaces Exam, ExamQuestion, AnswerPayload que já existem) ...

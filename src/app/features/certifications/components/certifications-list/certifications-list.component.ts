@@ -6,7 +6,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { Certification } from '../../../shared/models/certification.models';
+import { CompleteCertification } from '../../../shared/models/certification.models';
 
 @Component({
   selector: 'app-certifications-list',
@@ -26,7 +26,7 @@ import { Certification } from '../../../shared/models/certification.models';
 export class CertificationsListComponent {
 
   // --- O "GARÇOM" (BURRO) SÓ RECEBE DADOS ---
-  @Input() dataSource = new MatTableDataSource<Certification>([]);
+  @Input() dataSource = new MatTableDataSource<CompleteCertification>([]);
   @Input() isLoading = true;
   @Input() isDeleting = false;
   @Input() isUploadingPdf = false;
@@ -34,7 +34,7 @@ export class CertificationsListComponent {
 
   // --- E EMITE EVENTOS ("SININHOS") ---
   @Output() pdfUpload = new EventEmitter<string>();
-  @Output() openDetails = new EventEmitter<Certification>();
+  @Output() openDetails = new EventEmitter<CompleteCertification>();
   
   // (A lógica de 'loadCertifications' etc. FOI REMOVIDA)
 }

@@ -89,7 +89,7 @@ export class UserService {
 
   
   /**
-   * O MÉTODO "FACHADA" (Facade)
+   * MÉTODO "FACHADA" (Facade)
    * Orquestra múltiplas chamadas para montar os dados da
    * página de "Conquistas".
    * CORRIGIDO PARA SER "ANTI-FRÁGIL"
@@ -117,7 +117,7 @@ export class UserService {
       })
     );
 
-    // 3. O forkJoin agora NUNCA vai falhar.
+    // 3. O forkJoin agora não vai falhar.
     //    Na pior das hipóteses, ele retorna { certificates: [], exams: [] }
     return forkJoin({
       certificates: certificates$,

@@ -1,5 +1,4 @@
-// src/app/pages/certifications/components/certification-details/certification-details.ts
-// v9.0 - Limpo: Removeu lógica da tabela de questões interna
+// src/app/features/certifications/components/certification-details/certification-details.ts
 
 import { Component, inject, Inject, OnInit, ViewChild, ElementRef } from '@angular/core'; // Removido AfterViewInit
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -18,9 +17,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatOptionModule } from '@angular/material/core';
 import { Observable, catchError, finalize, of, tap } from 'rxjs';
 // Imports de Models e Serviços
-import { Certification, CertificationPayloadDTO } from '../../../shared/models/certification.models'; 
+import { CompleteCertification, InitialCertification } from '../../../shared/models/certification.models'; 
 import { CertificationsService } from '../../services/certifications.service';
-import { AiQuestionGenerator, AiGeneratorModalData } from '../../components/ai-question-generator/ai-question-generator';
 
 // Imports para abrir o Banco de Questões
 import { QuestionsPage, QuestionBankModalData } from '../../pages/questions-page/questions'; 
@@ -28,7 +26,7 @@ import { QuestionsPage, QuestionBankModalData } from '../../pages/questions-page
 export interface CertificationModalData {
     certificationId: string | null;
     isCreation: boolean;
-    certification?: Certification;
+    certification?: CompleteCertification;
 }
 
 @Component({
@@ -38,13 +36,13 @@ export interface CertificationModalData {
         CommonModule, ReactiveFormsModule, MatDialogModule,
         MatCardModule, MatButtonModule, MatIconModule, MatFormFieldModule, 
         MatInputModule, MatDividerModule, MatProgressSpinnerModule, 
-        MatTooltipModule, MatSlideToggleModule, // Removido MatTableModule, MatPaginatorModule
+        MatTooltipModule, MatSlideToggleModule, 
         MatOptionModule, MatSelectModule
     ],
     templateUrl: './certification-details.html',
     styleUrl: './certification-details.scss',
 })
-export class CertificationDetails implements OnInit { // Removido AfterViewInit
+export class CertificationDetails implements OnInit { 
     
     private readonly dialog = inject(MatDialog);
     private readonly fb = inject(FormBuilder);
@@ -141,6 +139,10 @@ export class CertificationDetails implements OnInit { // Removido AfterViewInit
         }
     }
 
+     /**
+     * ****** FUNÇÃO 'SALVAR' (SIMPLIFICADA) ******
+     * Agora ela faz UMA chamada, tanto para Criar quanto para Editar.
+     */
     saveCertificationDetails(shouldClose: boolean): void {
         if (this.certificationForm.invalid) {
             console.warn("Formulário inválido.");
@@ -148,120 +150,91 @@ export class CertificationDetails implements OnInit { // Removido AfterViewInit
             return;
         }
 
-        this.isLoadingQuestions = true;
+        this.isLoadingQuestions = true; // Spinner de "Salvando..."
         const formValue = this.certificationForm.getRawValue();
 
-        if (this.data.isCreation) {
-            // --- MODO CRIAÇÃO (POST com FormData) ---
+        // Prepara o Observable
+        let save$: Observable<CompleteCertification>; // (Usando seu tipo 'CompleteCertification')
 
-            // CORREÇÃO: A definição de createPayload estava faltando aqui.
-            const createPayload: CertificationPayloadDTO = {
+        if (this.data.isCreation) {
+            // --- MODO CRIAÇÃO ---
+            
+            // 1. Monta o payload (sem 'isActive', como você pediu)
+            const createPayload: InitialCertification = {
                 name: formValue.name!,
                 shortDescription: formValue.shortDescription!,
                 description: formValue.description!,
                 passingScore: Number(formValue.passingScore!),
                 modality: formValue.modality!,
                 durationHours: Number(formValue.durationHours!),
-           };
-            // Fim da correção
+            };
 
-            console.log("Chamando createCertification com createPayload:", createPayload);
-            this.certificationsService.createCertification(createPayload, this.selectedFile!).pipe(
-                tap(savedCert => {
-                    console.log('Certificação criada com sucesso:', savedCert);
-                    this.data.certification = savedCert;
-                    this.data.certificationId = savedCert.id.toString();
-                    this.data.isCreation = false;
-                    this.existingPdfFileName = savedCert.pdfFileName || null; // Atualiza nome do PDF
-                }),
-                catchError(error => {
-                     console.error('Erro ao criar certificação:', error);
-                     let errorMsg = 'Erro ao criar. Verifique o console.';
-                     if (error.error?.message) {
-                        errorMsg = Array.isArray(error.error.message) ? error.error.message.join('\n') : error.error.message;
-                     }
-                     alert(errorMsg);
-                    return of(null);
-                }),
-                finalize(() => this.isLoadingQuestions = false)
-            ).subscribe(result => {
-                if (result && shouldClose) {
-                    this.dialogRef.close(true);
-                }
-            });
-
+            if (!this.selectedFile) {
+                alert('Por favor, selecione um arquivo PDF para criar a certificação.');
+                this.isLoadingQuestions = false;
+                return;
+            }
+            
+            console.log("[Modal] Modo Criação. Payload:", createPayload, "Arquivo:", this.selectedFile.name);
+            save$ = this.certificationsService.createCertification(createPayload, this.selectedFile);
+        
         } else {
-            // --- MODO EDIÇÃO (PATCH para texto, depois POST/PUT para PDF) ---
+            // --- MODO EDIÇÃO (O Conserto) ---
             if (!this.data.certificationId) {
                 console.error('Erro: ID da certificação não encontrado para atualização.');
                 this.isLoadingQuestions = false;
                 return;
             }
-            const updatePayload: Partial<Certification> = {
+
+            // 1. Monta o payload (com 'isActive', como o backend espera)
+            const updatePayload: InitialCertification & { isActive: boolean } = {
                 name: formValue.name!,
                 shortDescription: formValue.shortDescription!,
                 description: formValue.description!,
                 passingScore: Number(formValue.passingScore!),
                 modality: formValue.modality!,
                 durationHours: Number(formValue.durationHours!),
-                isActive: formValue.isActive!
-                
+                isActive: formValue.isActive! // 'isActive' é enviado na edição
             };
 
-            // 1. Salva os dados de texto primeiro
-            this.certificationsService.updateCertification(this.data.certificationId, updatePayload).pipe(
-                tap(savedCert => {
-                    console.log('Dados da certificação atualizados:', savedCert);
-                    this.data.certification = savedCert;
-                    this.existingPdfFileName = savedCert.pdfFileName || null;
-                }),
-                catchError(error => {
-                    console.error('Erro ao atualizar dados da certificação:', error);
-                    let errorMsg = 'Erro ao salvar alterações. Verifique o console.';
-                     if (error.error?.message) {
-                        errorMsg = Array.isArray(error.error.message) ? error.error.message.join('\n') : error.error.message;
-                    }
-                    alert(errorMsg);
-                    this.isLoadingQuestions = false;
-                    return of(null);
-                })
-            ).subscribe(updateResult => {
-                if (!updateResult) { return; }
-
-                // 2. Se um NOVO arquivo foi selecionado, faz o upload
-                if (this.selectedFile) {
-                    console.log(`Atualização de dados OK. Fazendo upload do novo PDF: ${this.selectedFile.name}`);
-                    this.certificationsService.uploadCertificationPdf(this.data.certificationId!, this.selectedFile).pipe(
-                        finalize(() => {
-                             this.isLoadingQuestions = false;
-                             if (shouldClose) this.dialogRef.close(true);
-                        }),
-                        catchError(uploadError => {
-                            console.error('Erro ao fazer upload do PDF:', uploadError);
-                            alert('Os dados foram salvos, mas houve um erro ao enviar o novo PDF.');
-                            return of(null);
-                        }),
-                        // Atualiza o nome do PDF exibido após o upload
-                        tap(uploadResult => {
-                            if (uploadResult) {
-                                this.existingPdfFileName = uploadResult.pdfFileName || null;
-                            }
-                        })
-                    ).subscribe(uploadResult => {
-                         if (uploadResult) {
-                            console.log("Upload do PDF concluído com sucesso.");
-                            this.selectedFile = null;
-                            this.fileName = 'Nenhum arquivo selecionado';
-                         }
-                    });
-
-                } else {
-                    // Se não havia arquivo novo, finaliza
-                    this.isLoadingQuestions = false;
-                    if (shouldClose) this.dialogRef.close(true);
-                }
-            });
+            // 2. Chama o 'updateCertification' (o CORRIGIDO)
+            //    Ele agora aceita o 'selectedFile' (que pode ser 'null')
+            console.log("[Modal] Modo Edição. Payload:", updatePayload, "Arquivo:", this.selectedFile?.name || "(nenhum arquivo novo)");
+            save$ = this.certificationsService.updateCertification(
+                this.data.certificationId, 
+                updatePayload, 
+                this.selectedFile // <-- Envia o novo arquivo (ou null)
+            );
         }
+
+        // 3. Executa o Observable (salva) - (Esta lógica é a mesma para Criar e Editar)
+        save$.pipe(
+            finalize(() => this.isLoadingQuestions = false), // Desliga o spinner
+            catchError(error => {
+                console.error('Erro ao salvar certificação:', error);
+                let errorMsg = 'Erro ao salvar. Verifique o console.';
+                if (error.error?.message) {
+                    errorMsg = Array.isArray(error.error.message) ? error.error.message.join('\n') : error.error.message;
+                }
+                alert(errorMsg);
+                return of(null); // Não fecha o modal
+            })
+        ).subscribe(savedCert => {
+            if (savedCert) {
+                console.log('Salvo com sucesso:', savedCert);
+                if (shouldClose) {
+                    this.dialogRef.close(true); // Fecha o modal e avisa o "Pai"
+                } else {
+                    // Se salvou, mas não fechou (Modo Criação -> Edição)
+                    this.data.certification = savedCert;
+                    this.data.certificationId = savedCert.id;
+                    this.data.isCreation = false;
+                    this.existingPdfFileName = savedCert.pdfFileName || null;
+                    this.selectedFile = null; // Limpa o arquivo selecionado
+                    this.fileName = 'Nenhum arquivo selecionado';
+                }
+            }
+        });
     }
     
     /**
@@ -276,7 +249,8 @@ export class CertificationDetails implements OnInit { // Removido AfterViewInit
         const modalData: QuestionBankModalData = {
             certificationId: this.data.certificationId,
             certificationTitle: this.data.certification?.name,
-            certificationPdfPath: this.data.certification?.pdfPath || null 
+            certificationPdfPath: this.data.certification?.pdfPath || null,
+            certification: this.data.certification 
         };
         
 

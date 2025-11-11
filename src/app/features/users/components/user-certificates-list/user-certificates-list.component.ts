@@ -35,13 +35,12 @@ export class UserCertificatesListComponent { // <-- Remove OnInit
   @Output() generateCertificate = new EventEmitter<{id: string, name: string}>();
   @Output() shareCertificate = new EventEmitter<Certificate>();
   
-  // A lógica de 'loadUserCertificates' e o 'CertificateService' foram REMOVIDOS.
   
   // (Ações que disparam os sininhos)
   onGenerateCertificate(cert: Certificate): void {
     this.generateCertificate.emit({
       id: cert.id, 
-      name: cert.certificationName || 'Certificado'
+      name: cert.certification?.name || 'Certificado'
     });
   }
 

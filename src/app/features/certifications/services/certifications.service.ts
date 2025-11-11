@@ -3,10 +3,11 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, map } from 'rxjs';
 import {
     
-    Certification,
+    InitialCertification,
+    CompleteCertification,
     CertificationFilterDTO,
-    CertificationPayloadDTO,
-    PaginatedCertificationsResponse
+    PaginatedCertificationsResponse,
+    
 } from '../../shared/models/certification.models';
 import { ApiResponse } from '../../shared/models/question-models';     
 
@@ -54,10 +55,10 @@ export class CertificationsService {
     /**
      * Busca uma certificação pelo ID (GET /certification/{id})
      */
-    findCertificationById(id: number | string): Observable<Certification> {
-        return this.http.get<Certification>(`${BASE_PATH}/${id}`).pipe(
+    findCertificationById(id: number | string): Observable<CompleteCertification> {
+        return this.http.get<CompleteCertification>(`${BASE_PATH}/${id}`).pipe(
         
-        map((cert: Certification) => {
+        map((cert: CompleteCertification) => {
             if (cert.pdfPath) {
             const fileNameOnDisk = cert.pdfPath.split('/').pop() || '';
             const parts = fileNameOnDisk.split('-');
@@ -72,7 +73,7 @@ export class CertificationsService {
      /**
      * Cria uma nova certificação (POST /certifications) - aceita multipart/form-data
      */
-    createCertification(payload: CertificationPayloadDTO, file:File ) : Observable<Certification> {
+    createCertification(payload: InitialCertification, file:File ) : Observable<CompleteCertification> {
         const formData = new FormData();
         formData.append('name', payload.name);
         formData.append('shortDescription', payload.shortDescription);
@@ -84,22 +85,55 @@ export class CertificationsService {
         if (file) {
             formData.append('file', file, file.name);
         }
-        return this.http.post<Certification>(BASE_PATH, formData);
+        return this.http.post<CompleteCertification>(BASE_PATH, formData);
     }
 
     /**
-     * Atualiza uma certificação existente (PATCH /certification/{id})
+     * Atualiza uma certificação (PATCH /certifications/{id})
+     * 1. Usa a interface 'InitialCertification' + 'isActive'.
+     * 2. Trabalha o 'isActive' como string, pois FormData exige e backend é boolean.
+     * 3. Adiciona o 'file' opcional.
+     * 4. Retorna a certificação completa atualizada.
      */
-    updateCertification(id: number | string, payload: Partial<CertificationPayloadDTO>): Observable<Certification> {
-        return this.http.patch<Certification>(`${BASE_PATH}/${id}`, payload);
+    updateCertification(
+      id: string, 
+      // O payload são todos os campos de texto, incluindo isActive
+      payload: InitialCertification & { isActive: boolean }, 
+      file: File | null // O arquivo opcional
+    ): Observable<CompleteCertification> { // Retorna a certificação completa
+        
+        const formData = new FormData();
+
+        // 1. Adiciona os campos de texto
+        formData.append('name', payload.name);
+        formData.append('shortDescription', payload.shortDescription);
+        formData.append('description', payload.description);
+        formData.append('modality', payload.modality);
+        formData.append('passingScore', payload.passingScore.toString());
+        formData.append('durationHours', payload.durationHours.toString());
+        
+        // 2. O Swagger exige 'isActive' (boolean). O FormData envia string.
+        // Se o backend não preparado para converter "true" -> true trabalhamos com o campo vazio para 0.
+        formData.append('isActive', payload.isActive ? 'true' : '');        
+       
+        // 3. Adiciona o arquivo, se fornecido
+        if (file) {
+            console.log("[Service] Anexando NOVO arquivo PDF:", file.name);
+            formData.append('file', file, file.name);
+        }
+        
+        // 4. Envia o FormData usando PATCH
+        console.log("[Service] Enviando FormData (PATCH) para:", `${BASE_PATH}/${id}`);
+        return this.http.patch<CompleteCertification>(`${BASE_PATH}/${id}`, formData);
     }
-    
     /**
      * Apaga uma certificação (DELETE /certification/{id})
      */
     deleteCertification(id: string): Observable<void> {
         return this.http.delete<void>(`${BASE_PATH}/${id}`);
     }
+
+
     
     /**
      * Gera questões de IA a partir de um PDF (POST /questions/generate-from-pdf)
@@ -118,11 +152,11 @@ export class CertificationsService {
      * Envia o arquivo PDF para uma certificação existente.
      * Rota: POST /certifications/{id}/pdf
      */
-    uploadCertificationPdf(id: string, file: File): Observable<Certification> {
+    uploadCertificationPdf(id: string, file: File): Observable<CompleteCertification> {
         const formData = new FormData();
         formData.append('file', file, file.name);
         const url = `${BASE_PATH}/${id}/pdf`; 
-        return this.http.post<Certification>(url, formData); 
+        return this.http.post<CompleteCertification>(url, formData); 
     }
     
     // ******************************************************

@@ -1,0 +1,210 @@
+[
+  {
+    "name": "Agente de Viagens",
+    "shortDescription": "Profissional responsável por atender clientes e auxiliá-los na aquisição de passagens, hospedagens e pacotes.",
+    "description": "O Agente de Viagens atua em agências físicas ou online, oferecendo consultoria personalizada, comparando preços, rotas e atrativos turísticos. Precisa conhecer sistemas de reserva e normas do setor.",
+    "passingScore": 70,
+    "modality": "online",
+    "durationHours": 16
+  },
+  {
+    "name": "Camareira / Arrumador",
+    "shortDescription": "Responsável pela limpeza, arrumação e organização de quartos, áreas comuns e enxoval.",
+    "description": "A Camareira ou Arrumador garante o padrão de higiene e conforto dos hóspedes, seguindo normas de hotelaria, checklist de limpeza e protocolos de segurança.",
+    "passingScore": 70,
+    "modality": "inPerson",
+    "durationHours": 12
+  },
+  {
+    "name": "Chefe de Governança",
+    "shortDescription": "Coordena a equipe de limpeza e arrumação de hotéis e resorts.",
+    "description": "Organiza escala da equipe, supervisiona procedimentos de limpeza, controla enxoval e garante cumprimento dos padrões do estabelecimento.",
+    "passingScore": 75,
+    "modality": "inPerson",
+    "durationHours": 20
+  },
+  {
+    "name": "Eletricista instalador predial de baixa tensão",
+    "shortDescription": "Profissional que instala sistemas elétricos em edificações residenciais e comerciais.",
+    "description": "Executa passagem de cabos, montagem de quadros, instalação de equipamentos e leitura de diagramas, seguindo normas de segurança elétrica e NR10.",
+    "passingScore": 80,
+    "modality": "inPerson",
+    "durationHours": 40
+  },
+  {
+    "name": "Encanador instalador predial",
+    "shortDescription": "Realiza instalação de tubulações de água, esgoto e sistemas hidráulicos.",
+    "description": "Interpreta projetos, faz cortes, soldas, reparos e testes de estanqueidade, garantindo funcionalidade e segurança do sistema hidráulico.",
+    "passingScore": 75,
+    "modality": "inPerson",
+    "durationHours": 32
+  },
+  {
+    "name": "Encarregado de Pedreiro de Obras",
+    "shortDescription": "Lidera equipes de construção em serviços de alvenaria e acabamento.",
+    "description": "Organiza tarefas, distribui funções, acompanha a execução e garante que os serviços atendam ao projeto e às normas de segurança.",
+    "passingScore": 70,
+    "modality": "inPerson",
+    "durationHours": 24
+  },
+  {
+    "name": "Especialista em Eficiência Energética",
+    "shortDescription": "Profissional que aplica técnicas e tecnologias para reduzir consumo de energia.",
+    "description": "Analisa consumo energético de sistemas industriais, comerciais e residenciais, propondo soluções de economia, automação e novas tecnologias.",
+    "passingScore": 85,
+    "modality": "online",
+    "durationHours": 36
+  },
+  {
+    "name": "Garçom em Função Polivalente",
+    "shortDescription": "Serve clientes e executa atividades de apoio em restaurantes e eventos.",
+    "description": "Realiza atendimento ao público, montagem de mesas, organização do salão e boas práticas de higiene.",
+    "passingScore": 70,
+    "modality": "inPerson",
+    "durationHours": 12
+  },
+  {
+    "name": "Gerente de Agências de Viagens",
+    "shortDescription": "Administra equipes e operações de agências de turismo.",
+    "description": "Gerencia vendas, metas, atendimento, relacionamento com fornecedores e estratégias comerciais.",
+    "passingScore": 80,
+    "modality": "online",
+    "durationHours": 40
+  },
+  {
+    "name": "Gerente de Meios de Hospedagem",
+    "shortDescription": "Lidera operações de pousadas, hotéis e resorts.",
+    "description": "Gerencia equipes, atendimento, governança, manutenção e experiência do hóspede.",
+    "passingScore": 80,
+    "modality": "inPerson",
+    "durationHours": 36
+  },
+  {
+    "name": "Hospitalidade para Profissionais Operacionais",
+    "shortDescription": "Capacitação de atendimento para equipes operacionais.",
+    "description": "Treina profissionais para comunicação, postura, recepção e experiência do cliente.",
+    "passingScore": 65,
+    "modality": "online",
+    "durationHours": 10
+  },
+  {
+    "name": "Hospitalidade para Supervisores e Gerentes",
+    "shortDescription": "Formação para lideranças em hotelaria e turismo.",
+    "description": "Foco em atendimento, gestão de conflitos, qualidade e liderança.",
+    "passingScore": 75,
+    "modality": "online",
+    "durationHours": 18
+  },
+  {
+    "name": "Maitre",
+    "shortDescription": "Profissional de alto nível em atendimento e coordenação de salão.",
+    "description": "Controla equipes de garçons, organiza eventos, gerencia atendimento e padrões de serviço.",
+    "passingScore": 85,
+    "modality": "inPerson",
+    "durationHours": 30
+  },
+  {
+    "name": "Montador de Sistemas Fotovoltaicos",
+    "shortDescription": "Instala e configura painéis solares.",
+    "description": "Monta estruturas, realiza conexões elétricas, testes e manutenção de sistemas solares.",
+    "passingScore": 80,
+    "modality": "inPerson",
+    "durationHours": 48
+  },
+  {
+    "name": "Motorista de Táxi",
+    "shortDescription": "Profissional de condução urbana autorizada.",
+    "description": "Atua com atendimento ao público, direção defensiva, rotas e normas de segurança.",
+    "passingScore": 65,
+    "modality": "inPerson",
+    "durationHours": 10
+  },
+  {
+    "name": "Pedreiro de alvenaria de vedação",
+    "shortDescription": "Executa alvenaria de fechamento sem função estrutural.",
+    "description": "Realiza assentamento de blocos, prumos, níveis e acabamento.",
+    "passingScore": 70,
+    "modality": "inPerson",
+    "durationHours": 32
+  },
+  {
+    "name": "Pedreiro de alvenaria estrutural",
+    "shortDescription": "Executa paredes com função estrutural.",
+    "description": "Interpreta projetos, reforços, cintamentos, argamassa e amarrações.",
+    "passingScore": 80,
+    "modality": "inPerson",
+    "durationHours": 40
+  },
+  {
+    "name": "Pedreiro de revestimento horizontal contrapiso",
+    "shortDescription": "Executa preparação e regularização de piso.",
+    "description": "Realiza contrapiso, nivelamento, espessura e aplicação de técnicas corretas.",
+    "passingScore": 75,
+    "modality": "inPerson",
+    "durationHours": 24
+  },
+  {
+    "name": "Pedreiro de revestimento vertical externo",
+    "shortDescription": "Faz revestimentos e acabamentos externos em paredes.",
+    "description": "Prepara superfícies, aplica argamassa e corrige imperfeições.",
+    "passingScore": 75,
+    "modality": "inPerson",
+    "durationHours": 24
+  },
+  {
+    "name": "Pedreiro de revestimento vertical interno",
+    "shortDescription": "Realiza acabamentos internos em paredes.",
+    "description": "Aplica argamassa, corrige superfícies e prepara acabamento para pintura.",
+    "passingScore": 75,
+    "modality": "inPerson",
+    "durationHours": 24
+  },
+  {
+    "name": "Pintor de Obras Imobiliárias",
+    "shortDescription": "Executa pintura de imóveis residenciais e comerciais.",
+    "description": "Prepara superfícies, aplica massa corrida, utiliza equipamentos de pintura e segue normas de segurança.",
+    "passingScore": 70,
+    "modality": "inPerson",
+    "durationHours": 20
+  },
+  {
+    "name": "Garçom em Função Especializada",
+    "shortDescription": "Atendimento técnico em restaurantes e eventos de alto padrão.",
+    "description": "Faz serviço à francesa, harmonização, apresentação de pratos e manejo de equipamentos especiais.",
+    "passingScore": 85,
+    "modality": "inPerson",
+    "durationHours": 24
+  },
+  {
+    "name": "Projetista de Sistemas de Sprinklers",
+    "shortDescription": "Planeja e projeta sistemas automáticos de combate a incêndio.",
+    "description": "Desenha sistemas hidráulicos e tubulações, dimensiona reservatórios, bombas e bicos, garantindo normas e segurança.",
+    "passingScore": 80,
+    "modality": "online",
+    "durationHours": 36
+  },
+  {
+    "name": "Recepcionista em Função Polivalente",
+    "shortDescription": "Atende clientes, faz check-in, check-out e presta suporte administrativo.",
+    "description": "Opera sistemas de hospedagem, fornece informações, organiza reservas e segue padrões de qualidade.",
+    "passingScore": 70,
+    "modality": "inPerson",
+    "durationHours": 20
+  },
+  {
+    "name": "Recepcionista que Atua em Função Especializada",
+    "shortDescription": "Atuação de alto nível em recepção corporativa, clínica ou hotelaria premium.",
+    "description": "Atendimento diferenciado, resolução de problemas, controle de informações e experiência do cliente.",
+    "passingScore": 80,
+    "modality": "inPerson",
+    "durationHours": 28
+  },
+  {
+    "name": "Reparador Polivalente ou Can-Fix-It",
+    "shortDescription": "Profissional multiuso que executa pequenos reparos em imóveis.",
+    "description": "Lida com instalações elétricas simples, hidráulica leve, pintura, fixações e manutenção predial básica.",
+    "passingScore": 70,
+    "modality": "inPerson",
+    "durationHours": 16
+  }
+]
