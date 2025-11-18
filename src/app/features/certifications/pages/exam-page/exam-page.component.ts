@@ -1,11 +1,10 @@
-// src/app/pages/exam-page/exam-page.component.ts
+// src/app/features/certifications/pages/exam-page/exam-page.component.ts
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Observable, Subscription, EMPTY, timer, map, take, of, switchMap } from 'rxjs';
 import { catchError, finalize, tap } from 'rxjs/operators';
-
 // Imports do Material
 import { MatCardModule } from '@angular/material/card';
 import { MatRadioModule } from '@angular/material/radio';
@@ -20,7 +19,8 @@ import { ExamService } from '../../services/exam.service';
 import { 
   Answer, 
   Exam, 
-  ExamQuestion, 
+  ExamQuestion,
+  ExamResult, 
   ExamQuestionsResponse 
 } from '../../../shared/models/exam.model';
 
@@ -190,6 +190,9 @@ export class ExamPageComponent implements OnInit, OnDestroy {
       return;
     }
 
+    const examId = this.exam.id;
+    const certificationId = this.exam.certificationId;
+
     this.isSubmitting = true;
     this.timerSubscription?.unsubscribe();
 
@@ -206,16 +209,38 @@ export class ExamPageComponent implements OnInit, OnDestroy {
     }
 
     this.examService.submitExam(this.exam.id, payload).pipe(
+      // 1. Após o POST /submit ser bem-sucedido...
+        switchMap(() => {
+          console.log('[ExamPage] Prova enviada. Buscando resultado...');
+          this.snackBar.open('Prova enviada! Verificando resultado...', 'OK', { duration: 2000 });
+          // 2. ...chama o GET /result
+          return this.examService.getExamResult(examId);
+        }),
+      
       finalize(() => this.isSubmitting = false),
       catchError(err => {
-        console.error('Erro ao enviar exame:', err);
+        console.error('Erro ao enviar exame ou buscar resultado do exame:', err);
         this.snackBar.open('Erro ao enviar. Tente novamente.', 'Fechar', { duration: 3000 });
         return EMPTY;
       })
-    ).subscribe(() => {
-      this.snackBar.open('Prova enviada com sucesso!', 'OK', { duration: 5000 });
-      // TODO: Navegar para a tela de "Resultados" (GET /exams/{id}/result)
-      this.router.navigate(['/app/available-certifications']);
+    ).subscribe((result: ExamResult) => {
+      // 3. Recebe o resultado e navega para a rota correta
+      console.log('[ExamPage] Resultado recebido:', result);
+      if (result.passed === true) {
+          // Navega para a página de APROVADO
+          // Passamos o ID do Exame (para mostrar a nota) e o ID do Certificado (para gerar o PDF)
+          this.router.navigate(['/app/exam-result/passed', certificationId, examId]);
+        } 
+        else if (result.passed === false) {
+          // Navega para a página de REPROVADO
+          // Passamos o ID do Exame (para a nota) e o ID do Certificado (para o botão "Tentar Novamente")
+          this.router.navigate(['/app/exam-result/failed', certificationId, examId]);
+        }
+        else {
+          // Fallback (se 'passed' vier como nulo ou indefinido, o que seria um erro)
+          this.snackBar.open('Seu exame foi salvo, mas o resultado é inconclusivo.', 'OK', { duration: 5000 });
+          this.router.navigate(['/app/available-certifications']);
+        }
     });
   }
 }

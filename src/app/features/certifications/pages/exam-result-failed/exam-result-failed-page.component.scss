@@ -1,0 +1,192 @@
+/* =========================================================
+ * ESTILOS DA PÁGINA (certification-take.component.scss)
+ * ========================================================= */
+
+.cert-take-container {
+  padding: 24px;
+  max-width: 900px;
+  margin: 20px auto;
+  position: relative;
+}
+
+.back-button {
+  position: absolute;
+  top: 0;
+  left: 24px;
+  z-index: 20;
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(4px);
+}
+
+.loading-spinner,
+.error-message {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 50px;
+  color: #777;
+  gap: 16px;
+
+  mat-icon {
+    font-size: 48px;
+    width: 48px;
+    height: 48px;
+  }
+}
+
+.cert-details-card {
+  position: relative;
+  padding: 12px;
+  border-radius: 12px !important;
+  overflow: hidden;
+  margin-top: 40px;
+
+  /* ATENÇÃO: Verifique se este caminho de imagem está correto para este componente */
+  background-image: url('/fundo-card-2.jpg'); 
+  background-size: cover;
+  background-position: center;
+}
+
+/* 1. O ADESIVO (Badge) */
+.modality-badge {
+  padding: 8px 15px; 
+  background: rgba(255, 255, 255, 0.95); 
+  backdrop-filter: blur(6px); 
+  border-radius: 20px; 
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); 
+  display: inline-flex;
+  align-items: center;
+  gap: 8px; 
+  font-size: 0.9rem; 
+  font-weight: 600; 
+  z-index: 10;
+
+  mat-icon {
+    font-size: 20px; 
+    width: 20px;
+    height: 20px;
+  }
+  
+  // --- CORREÇÃO AQUI (Ícone Reprovado) ---
+  &.failed-badge {
+    color: #fff;
+    background: #dc3545; // Vermelho
+    mat-icon {
+      color: #fff;
+    }
+  }
+
+  // NOVO TAMANHO (Maior)
+  &.large-badge {
+    padding: 12px 24px;
+    font-size: 1.1rem;
+    mat-icon {
+      font-size: 24px; 
+      width: 24px;
+      height: 24px;
+    }
+  }
+}
+
+/* 2. O "ADESIVO" BRANCO */
+.cert-info-wrapper {
+  background: white;
+  border-radius: 8px; 
+  border-bottom-left-radius: 12px; 
+  border-bottom-right-radius: 12px; 
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  position: relative;
+  z-index: 5;
+}
+
+/* 3. SEÇÕES DE CONTEÚDO */
+
+mat-card-header {
+  // Centralização
+  display: flex;
+  flex-direction: column; // Empilha
+  align-items: center;   // Centraliza
+  justify-content: center;
+  padding: 24px 24px 16px;
+  margin-top: 100px; // Margem para o "adesivo" (que agora está dentro dele)
+}
+
+mat-card-title {
+  font-size: 1.8rem;
+  font-weight: 500;
+  text-align: center; // Centraliza o texto
+}
+
+mat-card-subtitle {
+  text-align: center; // Centraliza o texto
+  margin-top: 8px;
+}
+
+// Cores dos Títulos
+.passed-title { color: #28a745; }
+.failed-title { color: #dc3545; } // <-- Classe usada
+
+
+.cert-utilities {
+  padding: 16px 24px 24px;
+  display: flex;
+  flex-wrap: wrap; 
+  justify-content: center; // Centraliza o score-display
+  align-items: center;
+  gap: 20px;
+
+  // Estilo do Score
+  .score-display {
+    width: 100%; // Faz ocupar o espaço
+    text-align: center;
+    font-size: 1.2em;
+    padding: 16px 0;
+    color: #333;
+    
+    .score {
+      font-weight: 700;
+      font-size: 1.5em;
+    }
+    .passed-score { color: #28a745; }
+    .failed-score { color: #dc3545; } // <-- Classe usada
+  }
+}
+
+.description-content {
+  padding: 24px;
+  text-align: center; // Centraliza o texto de descrição
+  .description-text {
+    line-height: 1.7;
+    color: #333;
+  }
+}
+
+.cert-actions {
+  padding: 16px 24px !important;
+  gap: 12px;
+  background-color: #f9f9ff;
+  border-top: 1px solid rgba(0,0,0,0.1);
+
+  // Alinhamento dos botões (Centralizado)
+  display: flex;
+  justify-content: center;
+
+  // Alinhamento ícone/spinner/texto dentro dos botões
+  button { 
+    span,
+    mat-icon,
+    mat-progress-spinner {
+      display: inline-flex;
+      align-items: center;
+      vertical-align: middle;
+      margin-right: 8px;
+    }
+    span:last-child, 
+    mat-icon:last-child,
+    mat-progress-spinner:last-child {
+      margin-right: 0;
+    }
+  }
+}

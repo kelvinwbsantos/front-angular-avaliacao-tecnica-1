@@ -19,8 +19,11 @@ import { CertificateService } from '../../certifications/services/certificate.se
 
 // --- CONFIGURAÇÃO DA API  ---
 const API_URL = 'http://localhost:3000'; 
-const ADMIN_USERS_PATH = `${API_URL}/admin/users`; // Rota da Coleção (plural)
-const ADMIN_USER_PATH = `${API_URL}/admin/user`;   // Rota do Item (singular)
+// --- DEFINIÇÃO DE ROTAS HÍBRIDAS ---
+// 1. Rota para LISTAGEM (AdminController no backend)
+const LIST_PATH = `${API_URL}/admin/users`; 
+// 2. Rota UsersController para AÇÕES DE UM ITEM
+const ITEM_PATH = `${API_URL}/users`;
 
 
 @Injectable({
@@ -32,31 +35,21 @@ export class UserService {
   private certificateService = inject(CertificateService);
 
   /**
-   * Busca usuários com paginação e filtros.
-   * Rota: GET /admin/users
-   */
-  findAllUsers(params: UserApiParams): Observable<UserApiResponse> {
-    
-    const url = ADMIN_USERS_PATH;
-
-    // ************ CORREÇÃO AQUI ************
-    // Removendo todos os HttpParams para imitar o Postman
-    
-    console.log(`[UserService] findAllUsers (TESTE SEM PARAMS) Chamando: ${url}`);
-    
-    // Chamada "pura", sem { params: ... }
-    return this.http.get<UserApiResponse>(url);
-    // ***************************************
-  }
-
-  /**
    * Busca os detalhes completos de um usuário pelo ID.
    * Rota: GET /admin/user/:id
    */
   findById(userId: string): Observable<FullUserResponse> {
-    const url = `${ADMIN_USER_PATH}/${userId}`; 
+    const url = `${ITEM_PATH}/${userId}`; 
     console.log(`[UserService] findById Chamando: ${url}`);
     return this.http.get<FullUserResponse>(url);
+  }
+
+  /**
+   * GET /admin/user/{id}
+   * Usa a rota SINGULAR
+   */
+  getUserById(id: number): Observable<User> {
+    return this.http.get<User>(`${ITEM_PATH}/${id}`);
   }
 
   /**
@@ -64,7 +57,7 @@ export class UserService {
    * Rota: GET /admin/users/exportXlsx
    */
   exportUsers(filters: { name?: string, email?: string, cpf?: string }): Observable<Blob> {
-    const url = `${ADMIN_USERS_PATH}/exportXlsx`; 
+    const url = `${LIST_PATH}/exportXlsx`; 
     let httpParams = new HttpParams();
 
     // ... (filtros) ...
@@ -77,16 +70,57 @@ export class UserService {
   }
 
   /**
+   * Atualiza usuário existente
+   * PATCH /admin/user/{id}
+   * Usa a rota SINGULAR
+   */
+  updateUser(id: number, payload: any): Observable<User> {
+    return this.http.patch<User>(`${ITEM_PATH}/${id}`, payload);
+  }
+
+  /**
+   * Cria novo usuário
+   * POST /admin/users (Geralmente cria-se na coleção)
+   */
+  createUser(payload: any): Observable<User> {
+    return this.http.post<User>(ITEM_PATH, payload);
+  }
+
+  /**
+   * Busca usuários paginados (Lista)
+   * Usa a rota PLURAL: /admin/users
+   */
+  findAllUsers(filters: any): Observable<any> {
+    let params = new HttpParams()
+        .set('page', filters.page.toString())
+        .set('limit', filters.limit.toString());
+
+    if (filters.name) params = params.set('name', filters.name);
+    if (filters.email) params = params.set('email', filters.email);
+    if (filters.cpf) params = params.set('cpf', filters.cpf);
+
+    return this.http.get<any>(LIST_PATH, { params });
+  }
+
+  /**
    * Atualiza a role de um usuário específico.
    * Rota: PATCH /admin/user/:id/role
    */
   updateUserRole(userId: string, roleName: string): Observable<User> {
-    const url = `${ADMIN_USER_PATH}/${userId}/role`; 
+    const url = `${ITEM_PATH}/${userId}/role`; 
     const payload = { roleName }; 
     console.log(`[UserService] updateUserRole Chamando: ${url} com payload:`, payload);
     return this.http.patch<User>(url, payload);
   }
 
+  /**
+   * Exclui usuário
+   * DELETE /admin/user/{id}
+   * Usa a rota SINGULAR
+   */
+  deleteUser(id: number): Observable<void> {
+    return this.http.delete<void>(`${ITEM_PATH}/${id}`);
+  }
   
   /**
    * MÉTODO "FACHADA" (Facade)

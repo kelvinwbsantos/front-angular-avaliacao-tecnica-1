@@ -12,7 +12,7 @@ export interface Certificate {
   // para o código não quebrar, mas eles virão como 'undefined'.
   certificationName?: string; 
   expiresAt?: string;
-  certification:{
+  certification: {
     name?: string;
   }
 }

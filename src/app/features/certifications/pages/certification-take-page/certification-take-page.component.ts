@@ -165,30 +165,30 @@ export class CertificationTakeComponent implements OnInit, OnDestroy {
   }
 
   downloadMaterial(): void {
-    if (!this.certification?.pdfPath || !this.certification.id) {
-      this.snackBar.open('Material de estudo não disponível.', 'Fechar', { duration: 3000 });
-      return;
-    }
-    this.isDownloading = true;
-    const certId = this.certification.id;
-    const fileName = this.certification.pdfFileName || 'material_de_estudo.pdf';
+    // if (!this.certification?.pdfPath || !this.certification.id) {
+    //   this.snackBar.open('Material de estudo não disponível.', 'Fechar', { duration: 3000 });
+    //   return;
+    // }
+    // this.isDownloading = true;
+    // const certId = this.certification.id;
+    // const fileName = this.certification.pdfFileName || 'material_de_estudo.pdf';
 
-    this.certificationsService.generateCertificate(certId).pipe(
-      finalize(() => this.isDownloading = false)
-    ).subscribe({
-      next: (blob) => {
-        const url = window.URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        document.body.appendChild(a);
-        a.href = url;
-        a.download = fileName;
-        a.click();
-        window.URL.revokeObjectURL(url);
-        document.body.removeChild(a);
-      },
-      error: (err) => {
-        this.snackBar.open('Não foi possível baixar o material.', 'Fechar', { duration: 3000 });
-      }
-    });
+    // this.certificationsService.downloadMaterial(certId).pipe(
+    //   finalize(() => this.isDownloading = false)
+    // ).subscribe({
+    //   next: (blob) => {
+    //     const url = window.URL.createObjectURL(blob);
+    //     const a = document.createElement('a');
+    //     document.body.appendChild(a);
+    //     a.href = url;
+    //     a.download = fileName;
+    //     a.click();
+    //     window.URL.revokeObjectURL(url);
+    //     document.body.removeChild(a);
+    //   },
+    //   error: (err) => {
+    //     this.snackBar.open('Não foi possível baixar o material.', 'Fechar', { duration: 3000 });
+    //   }
+    // });
   }
 }

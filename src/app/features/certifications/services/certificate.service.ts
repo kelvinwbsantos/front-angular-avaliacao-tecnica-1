@@ -48,4 +48,18 @@ export class CertificateService {
       responseType: 'blob' 
     });
   }
+
+  /**
+   * (GET /certificates/public/{uuid})
+   * Busca os dados públicos de um certificado para o validador.
+   * @param uuid O ID (uuid) do certificado a ser validado.
+   */
+  getPublicValidationData(uuid: string): Observable<any> {
+    // Este método usa o endpoint público que a equipe de backend
+    // irá criar (ex: /api/certificates/public/01914bf6-...)
+    //
+    // Note que usamos <any> porque ainda não definimos um 
+    // modelo (interface) para a resposta pública.
+    return this.http.get<any>(`${BASE_PATH}/public/${uuid}`);
+  }
 }

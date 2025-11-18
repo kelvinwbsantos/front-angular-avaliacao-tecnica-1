@@ -1,0 +1,106 @@
+<h2 mat-dialog-title>
+    {{ data.isCreation ? 'Novo Usuário' : 'Detalhes do Usuário' }}
+    @if (!data.isCreation && userForm.get('name')?.value) {
+        <span>: {{ userForm.get('name')?.value }}</span>
+    }
+</h2>
+
+<mat-dialog-content class="dialog-content">
+
+    @if (isLoadingDetails) {
+        <div class="spinner-overlay">
+            <mat-progress-spinner color="primary" mode="indeterminate"></mat-progress-spinner>
+            <p>Carregando dados do usuário...</p>
+        </div>
+    }
+
+    @if (!isLoadingDetails) {
+
+        <form [formGroup]="userForm" class="config-form">
+            <mat-card>
+                <mat-card-header>
+                    <mat-card-title>Informações Pessoais</mat-card-title>
+                </mat-card-header>
+
+                <mat-card-content class="config-fields grid grid-cols-1 md:grid-cols-2 gap-x-4">
+
+                    <mat-form-field appearance="outline" class="w-full md:col-span-2">
+                        <mat-label>Nome Completo</mat-label>
+                        <input matInput formControlName="name" placeholder="Ex: João da Silva">
+                        @if (userForm.get('name')?.invalid && userForm.get('name')?.touched) {
+                            <mat-error>O nome é obrigatório.</mat-error>
+                        }
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline" class="w-full">
+                        <mat-label>CPF</mat-label>
+                        <input matInput formControlName="cpf" placeholder="000.000.000-00">
+                        @if (userForm.get('cpf')?.invalid && userForm.get('cpf')?.touched) {
+                            <mat-error>CPF inválido ou obrigatório.</mat-error>
+                        }
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline" class="w-full">
+                        <mat-label>E-mail</mat-label>
+                        <input matInput formControlName="email" type="email" placeholder="exemplo@email.com">
+                        @if (userForm.get('email')?.invalid && userForm.get('email')?.touched) {
+                            <mat-error>E-mail inválido.</mat-error>
+                        }
+                    </mat-form-field>
+
+                    @if (data.isCreation) {
+                        <mat-form-field appearance="outline" class="w-full md:col-span-2">
+                            <mat-label>Senha Inicial</mat-label>
+                            <input matInput formControlName="password" type="password">
+                            <mat-hint>Mínimo de 6 caracteres</mat-hint>
+                            @if (userForm.get('password')?.invalid && userForm.get('password')?.touched) {
+                                <mat-error>Senha é obrigatória.</mat-error>
+                            }
+                        </mat-form-field>
+                    }
+
+                </mat-card-content>
+
+                @if (!data.isCreation) {
+                    <mat-card-actions class="px-6 pb-4">
+                        <mat-slide-toggle formControlName="isActive" color="primary">
+                            Usuário Ativo
+                        </mat-slide-toggle>
+                        <mat-hint class="ml-2">[Se inativo, o usuário não poderá fazer login]</mat-hint>
+                    </mat-card-actions>
+                }
+            </mat-card>
+        </form>
+
+        }
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+    
+    @if (!data.isCreation) {
+        <button mat-stroked-button color="warn"
+                class="mr-auto" (click)="deleteUser()"
+                [disabled]="isSaving || isDeleting">
+            @if (isDeleting) {
+                <mat-progress-spinner diameter="20" mode="indeterminate" class="mr-2"></mat-progress-spinner> Excluindo...
+            } @else {
+                <span class="button-content-wrapper"> <mat-icon>delete_forever</mat-icon> Excluir Usuário</span>
+            }
+        </button>
+    }
+    
+    <button mat-button (click)="dialogRef.close(false)" [disabled]="isSaving || isDeleting">Cancelar</button>
+
+    <button mat-raised-button color="primary" (click)="saveUser()" [disabled]="userForm.invalid || isSaving || isDeleting">
+        @if (isSaving) {
+            <span class="button-content-wrapper">
+                <mat-progress-spinner diameter="20" mode="indeterminate" class="mr-2"></mat-progress-spinner> Salvando...
+            </span>
+        } @else {
+            <span class="button-content-wrapper">
+                <mat-icon>save</mat-icon> {{ data.isCreation ? 'Criar Usuário' : 'Salvar Alterações' }}
+            </span>
+        }
+    </button>
+
+</mat-dialog-actions>

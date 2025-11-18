@@ -1,60 +1,106 @@
+/* src/app/features/users/pages/users-page/users-page.component.scss */
+
 .user-card {
   margin: 20px;
-  padding: 16px;
+  padding: 0; // Remove padding padrão para ter controle total
   display: flex;
-  box-shadow: 12px 12px 20px rgba(0, 0, 0, 0.3);
+  flex-direction: column;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); // Sombra suave
+  border-radius: 8px;
+  overflow: hidden;
 }
 
-.filter-form {
+.custom-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px;
+  background-color: #fff;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+
+  .header-actions {
+    display: flex;
+    gap: 12px;
+  }
+}
+
+/* --- BARRA DE AÇÃO / FILTROS --- */
+.action-bar {
   display: flex;
   gap: 16px;
   align-items: center;
-  padding: 16px 0;
+  padding: 24px;
   flex-wrap: wrap;
+  background-color: #fcfcfc; // Fundo leve para diferenciar
+  border-bottom: 1px solid rgba(0,0,0,0.04);
 }
 
-.filter-form mat-form-field {
+.action-bar .filter-group {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  flex-grow: 1;
+}
+
+.action-bar mat-form-field {
   flex: 1 1 200px;
-}
-
-.table-container {
-  position: relative;
-  display: flex;
-  overflow-x: auto;
-}
-
-.spinner-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(255, 255, 255, 0.7);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 10;
-  border-radius: 12px;
-}
+  font-size: 14px;
   
-
-mat-card-actions {
-justify-content: space-between;
+  // Opcional: remove espaço extra embaixo se não tiver erro visível
+  .mat-mdc-form-field-subscript-wrapper {
+    display: none; 
+  }
 }
 
-@media (max-width: 600px) {
-  /* Reduce table font size and padding */
-  .mat-table {
-    font-size: 12px;
+.action-bar .action-group {
+  display: flex;
+  gap: 16px;
+  margin-left: auto; // Empurra para a direita
+  flex-shrink: 0;
+  align-items: center;
+
+  .mat-button-base mat-icon {
+    margin-right: 8px;
+  }
+}
+
+/* Ações do Card (Paginação) */
+.custom-card-actions {
+  display: flex;
+  justify-content: flex-end;
+  padding: 8px 24px !important;
+  background-color: #fff;
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+/* Responsividade */
+@media (max-width: 800px) {
+  .custom-card-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+    
+    .header-actions {
+      width: 100%;
+      justify-content: flex-start;
+      
+      button {
+        flex: 1;
+      }
+    }
   }
 
-  .mat-cell,
-  .mat-header-cell {
-    padding: 8px; /* Reduce padding */
-  }
-
-  /* Hide Actions column on mobile */
-  [matColumnDef="actions"] {
-    display: none;
+  .action-bar {
+    flex-direction: column;
+    align-items: stretch;
+    
+    .action-group {
+      margin-left: 0;
+      justify-content: stretch;
+      
+      button {
+        flex: 1;
+      }
+    }
   }
 }

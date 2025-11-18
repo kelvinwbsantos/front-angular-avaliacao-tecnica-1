@@ -56,8 +56,11 @@
   </mat-card-content>
 
   <mat-card-actions>
-    <mat-paginator [length]="totalCertifications" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]"
-      aria-label="Selecione a página de certificações">
+    <mat-paginator 
+      [length]="totalCertifications" 
+      [pageSize]="10" 
+      [pageSizeOptions]="[5, 10, 25, 100]"
+      (page)="onPageChange($event)"  aria-label="Selecione a página de certificações">
     </mat-paginator>
   </mat-card-actions>
 </mat-card>
