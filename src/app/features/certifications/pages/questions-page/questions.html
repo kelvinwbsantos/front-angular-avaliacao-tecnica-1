@@ -11,10 +11,20 @@
                     }
                 </mat-card-subtitle>
             </div>
-            <div class="header-actions">
-                <button mat-flat-button color="accent" (click)="openAiGenerator()" matTooltip="Gerar/Adicionar questões com base em um PDF">
-                    <mat-icon>psychology</mat-icon> Adicionar com I.A.
-                </button>
+           <div class="header-actions">
+                
+                <span [matTooltip]="hasPdf ? 'Gerar/Adicionar questões com base em um PDF' : 'Adicione um PDF na tela de detalhes para usar a I.A.'"
+                    [style.cursor]="!hasPdf ? 'not-allowed' : 'auto'">
+                    
+                    <button mat-flat-button 
+                            color="accent" 
+                            (click)="openAiGenerator()" 
+                            [disabled]="!hasPdf"
+                            [style.pointer-events]="!hasPdf ? 'none' : 'auto'"> <mat-icon>psychology</mat-icon> Adicionar com I.A.
+                    </button>
+                    
+                </span>
+
                 <button mat-raised-button color="primary" (click)="openQuestionDetails()">
                     <mat-icon>add</mat-icon> Adicionar Nova Questão
                 </button>

@@ -125,10 +125,9 @@
     } </mat-dialog-content>
 
 <mat-dialog-actions align="end">
+    
     @if (!data.isCreation) {
-        <button mat-stroked-button color="warn"
-                class="mr-auto" (click)="deleteCertification()"
-                [disabled]="isLoadingQuestions || isDeleting">
+        <button mat-stroked-button color="warn" class="mr-auto" (click)="deleteCertification()" [disabled]="isLoadingQuestions || isDeleting">
             @if (isDeleting) {
                 <mat-progress-spinner diameter="20" mode="indeterminate" class="mr-2"></mat-progress-spinner> Excluindo...
             } @else {
@@ -138,24 +137,30 @@
     }
     
     @if (data.isCreation) {
-        <button mat-flat-button (click)="saveCertificationDetails(true)" [disabled]="certificationForm.invalid || isLoadingQuestions"> Salvar Certificação </button>
-
-        <button mat-raised-button color="primary" (click)="openQuestionBank()" [disabled]="certificationForm.invalid || !selectedFile || isLoadingQuestions">
-            @if (isLoadingQuestions) { <mat-progress-spinner diameter="20" mode="indeterminate" class="mr-2"></mat-progress-spinner> Salvando... } @else { Salvar & Gerar Questões com IA }
+        <button mat-raised-button color="primary" (click)="saveCertificationDetails()" [disabled]="certificationForm.invalid || isLoadingQuestions">
+            @if (isLoadingQuestions) { 
+                <mat-progress-spinner diameter="20" mode="indeterminate" class="mr-2"></mat-progress-spinner> Salvando... 
+            } @else { 
+                Salvar Certificação 
+            }
         </button>
     }
 
-    
-    
     @if (!data.isCreation) {
         
-        <button mat-flat-button (click)="openQuestionBank()" [disabled]="isLoadingQuestions"> <mat-icon>list_alt</mat-icon> Acessar Banco de Questões </button>
+        <button mat-flat-button (click)="openQuestionBank()" [disabled]="isLoadingQuestions"> 
+            <mat-icon>list_alt</mat-icon> Banco de Questões 
+        </button>
         
-        <button mat-raised-button color="primary" (click)="saveCertificationDetails(true)" [disabled]="certificationForm.invalid || isLoadingQuestions">
-             @if (isLoadingQuestions) { <mat-progress-spinner diameter="20" mode="indeterminate" class="mr-2"></mat-progress-spinner> Salvando... } @else { Salvar Alterações }
+        <button mat-raised-button color="primary" (click)="saveCertificationDetails()" [disabled]="certificationForm.invalid || isLoadingQuestions">
+             @if (isLoadingQuestions) { 
+                 <mat-progress-spinner diameter="20" mode="indeterminate" class="mr-2"></mat-progress-spinner> Salvando... 
+             } @else { 
+                 Salvar Alterações 
+             }
         </button>
     }
     
-    <button mat-button (click)="dialogRef.close(false)" [disabled]="isLoadingQuestions">Cancelar</button>
+    <button mat-button (click)="dialogRef.close(true)" [disabled]="isLoadingQuestions">Fechar</button>
 
 </mat-dialog-actions>

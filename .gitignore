@@ -7,8 +7,7 @@
 /bazel-out
 
 # Dev Files
-ARQ.md
-Artigo ARQUITETURA.md
+src/app/1.dev.files
 /utils
 
 
@@ -53,4 +52,5 @@ Desktop.ini
 
 # Streams de segurança do Windows
 *:Zone.Identifier
+
 

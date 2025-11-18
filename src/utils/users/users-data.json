@@ -1,0 +1,848 @@
+[
+  {
+    "cpf": "123.456.789-09",
+    "password": "Senha@1234",
+    "email": "joao.silva@example.com",
+    "name": "João Silva"
+  },
+  {
+    "cpf": "234.567.890-18",
+    "password": "Senha@1234",
+    "email": "maria.santos@example.com",
+    "name": "Maria Santos"
+  },
+  {
+    "cpf": "345.678.901-27",
+    "password": "Senha@1234",
+    "email": "pedro.oliveira@example.com",
+    "name": "Pedro Oliveira"
+  },
+  {
+    "cpf": "456.789.012-36",
+    "password": "Senha@1234",
+    "email": "ana.costa@example.com",
+    "name": "Ana Costa"
+  },
+  {
+    "cpf": "567.890.123-45",
+    "password": "Senha@1234",
+    "email": "carlos.rodrigues@example.com",
+    "name": "Carlos Rodrigues"
+  },
+  {
+    "cpf": "678.901.234-54",
+    "password": "Senha@1234",
+    "email": "juliana.pereira@example.com",
+    "name": "Juliana Pereira"
+  },
+  {
+    "cpf": "789.012.345-63",
+    "password": "Senha@1234",
+    "email": "rafael.almeida@example.com",
+    "name": "Rafael Almeida"
+  },
+  {
+    "cpf": "890.123.456-72",
+    "password": "Senha@1234",
+    "email": "fernanda.lima@example.com",
+    "name": "Fernanda Lima"
+  },
+  {
+    "cpf": "901.234.567-81",
+    "password": "Senha@1234",
+    "email": "bruno.souza@example.com",
+    "name": "Bruno Souza"
+  },
+  {
+    "cpf": "012.345.678-90",
+    "password": "Senha@1234",
+    "email": "patricia.ferreira@example.com",
+    "name": "Patrícia Ferreira"
+  },
+  {
+    "cpf": "111.222.333-44",
+    "password": "Senha@1234",
+    "email": "lucas.barbosa@example.com",
+    "name": "Lucas Barbosa"
+  },
+  {
+    "cpf": "222.333.444-55",
+    "password": "Senha@1234",
+    "email": "amanda.cardoso@example.com",
+    "name": "Amanda Cardoso"
+  },
+  {
+    "cpf": "333.444.555-66",
+    "password": "Senha@1234",
+    "email": "diegomartins@example.com",
+    "name": "Diego Martins"
+  },
+  {
+    "cpf": "444.555.666-77",
+    "password": "Senha@1234",
+    "email": "leticia.rocha@example.com",
+    "name": "Letícia Rocha"
+  },
+  {
+    "cpf": "555.666.777-88",
+    "password": "Senha@1234",
+    "email": "guilherme.melo@example.com",
+    "name": "Guilherme Melo"
+  },
+  {
+    "cpf": "666.777.888-99",
+    "password": "Senha@1234",
+    "email": "vanessa.nunes@example.com",
+    "name": "Vanessa Nunes"
+  },
+  {
+    "cpf": "777.888.999-00",
+    "password": "Senha@1234",
+    "email": "ricardo.dias@example.com",
+    "name": "Ricardo Dias"
+  },
+  {
+    "cpf": "888.999.000-11",
+    "password": "Senha@1234",
+    "email": "bianca.castro@example.com",
+    "name": "Bianca Castro"
+  },
+  {
+    "cpf": "999.000.111-22",
+    "password": "Senha@1234",
+    "email": "andre.ribeiro@example.com",
+    "name": "André Ribeiro"
+  },
+  {
+    "cpf": "000.111.222-33",
+    "password": "Senha@1234",
+    "email": "camila.monteiro@example.com",
+    "name": "Camila Monteiro"
+  },
+  {
+    "cpf": "111.333.444-55",
+    "password": "Senha@1234",
+    "email": "thiago.moraes@example.com",
+    "name": "Thiago Moraes"
+  },
+  {
+    "cpf": "222.444.555-66",
+    "password": "Senha@1234",
+    "email": "larissa.campos@example.com",
+    "name": "Larissa Campos"
+  },
+  {
+    "cpf": "333.555.666-77",
+    "password": "Senha@1234",
+    "email": "felipe.duarte@example.com",
+    "name": "Felipe Duarte"
+  },
+  {
+    "cpf": "444.666.777-88",
+    "password": "Senha@1234",
+    "email": "natalia.andrade@example.com",
+    "name": "Natália Andrade"
+  },
+  {
+    "cpf": "555.777.888-99",
+    "password": "Senha@1234",
+    "email": "marcos.teixeira@example.com",
+    "name": "Marcos Teixeira"
+  },
+  {
+    "cpf": "666.888.999-00",
+    "password": "Senha@1234",
+    "email": "isabela.freitas@example.com",
+    "name": "Isabela Freitas"
+  },
+  {
+    "cpf": "777.999.000-11",
+    "password": "Senha@1234",
+    "email": "vinicius.moreira@example.com",
+    "name": "Vinícius Moreira"
+  },
+  {
+    "cpf": "888.000.111-22",
+    "password": "Senha@1234",
+    "email": "raquel.gomes@example.com",
+    "name": "Raquel Gomes"
+  },
+  {
+    "cpf": "999.111.222-33",
+    "password": "Senha@1234",
+    "email": "renato.carvalho@example.com",
+    "name": "Renato Carvalho"
+  },
+  {
+    "cpf": "000.222.333-44",
+    "password": "Senha@1234",
+    "email": "tania.brito@example.com",
+    "name": "Tânia Brito"
+  },
+  {
+    "cpf": "111.444.555-66",
+    "password": "Senha@1234",
+    "email": "paulo.peixoto@example.com",
+    "name": "Paulo Peixoto"
+  },
+  {
+    "cpf": "222.555.666-77",
+    "password": "Senha@1234",
+    "email": "elaine.porto@example.com",
+    "name": "Elaine Porto"
+  },
+  {
+    "cpf": "333.666.777-88",
+    "password": "Senha@1234",
+    "email": "rogerio.miranda@example.com",
+    "name": "Rogério Miranda"
+  },
+  {
+    "cpf": "444.777.888-99",
+    "password": "Senha@1234",
+    "email": "daniela.tavares@example.com",
+    "name": "Daniela Tavares"
+  },
+  {
+    "cpf": "555.888.999-00",
+    "password": "Senha@1234",
+    "email": "alexandre.pinto@example.com",
+    "name": "Alexandre Pinto"
+  },
+  {
+    "cpf": "666.999.000-11",
+    "password": "Senha@1234",
+    "email": "gabriela.macedo@example.com",
+    "name": "Gabriela Macedo"
+  },
+  {
+    "cpf": "777.000.111-22",
+    "password": "Senha@1234",
+    "email": "leonardo.queiroz@example.com",
+    "name": "Leonardo Queiroz"
+  },
+  {
+    "cpf": "888.111.222-33",
+    "password": "Senha@1234",
+    "email": "sandra.ramalho@example.com",
+    "name": "Sandra Ramalho"
+  },
+  {
+    "cpf": "999.222.333-44",
+    "password": "Senha@1234",
+    "email": "hugo.batista@example.com",
+    "name": "Hugo Batista"
+  },
+  {
+    "cpf": "000.333.444-55",
+    "password": "Senha@1234",
+    "email": "aline.sales@example.com",
+    "name": "Aline Sales"
+  },
+  {
+    "cpf": "111.555.666-77",
+    "password": "Senha@1234",
+    "email": "eduardo.fonseca@example.com",
+    "name": "Eduardo Fonseca"
+  },
+  {
+    "cpf": "222.666.777-88",
+    "password": "Senha@1234",
+    "email": "monique.aragao@example.com",
+    "name": "Monique Aragão"
+  },
+  {
+    "cpf": "333.777.888-99",
+    "password": "Senha@1234",
+    "email": "mauro.medeiros@example.com",
+    "name": "Mauro Medeiros"
+  },
+  {
+    "cpf": "444.888.999-00",
+    "password": "Senha@1234",
+    "email": "regina.paiva@example.com",
+    "name": "Regina Paiva"
+  },
+  {
+    "cpf": "555.999.000-11",
+    "password": "Senha@1234",
+    "email": "cristiano.leal@example.com",
+    "name": "Cristiano Leal"
+  },
+  {
+    "cpf": "666.000.111-22",
+    "password": "Senha@1234",
+    "email": "viviane.bento@example.com",
+    "name": "Viviane Bento"
+  },
+  {
+    "cpf": "777.111.222-33",
+    "password": "Senha@1234",
+    "email": "sergio.caldeira@example.com",
+    "name": "Sérgio Caldeira"
+  },
+  {
+    "cpf": "888.222.333-44",
+    "password": "Senha@1234",
+    "email": "helena.veloso@example.com",
+    "name": "Helena Veloso"
+  },
+  {
+    "cpf": "999.333.444-55",
+    "password": "Senha@1234",
+    "email": "wagner.meneses@example.com",
+    "name": "Wagner Meneses"
+  },
+  {
+    "cpf": "000.444.555-66",
+    "password": "Senha@1234",
+    "email": "rosana.pimentel@example.com",
+    "name": "Rosana Pimentel"
+  },
+  {
+    "cpf": "111.666.777-88",
+    "password": "Senha@1234",
+    "email": "gabriel.miranda@example.com",
+    "name": "Gabriel Miranda"
+  },
+  {
+    "cpf": "222.777.888-99",
+    "password": "Senha@1234",
+    "email": "beatriz.cunha@example.com",
+    "name": "Beatriz Cunha"
+  },
+  {
+    "cpf": "333.888.999-00",
+    "password": "Senha@1234",
+    "email": "rodrigo.borges@example.com",
+    "name": "Rodrigo Borges"
+  },
+  {
+    "cpf": "444.999.000-11",
+    "password": "Senha@1234",
+    "email": "carolina.dantas@example.com",
+    "name": "Carolina Dantas"
+  },
+  {
+    "cpf": "555.000.111-22",
+    "password": "Senha@1234",
+    "email": "marcelo.xavier@example.com",
+    "name": "Marcelo Xavier"
+  },
+  {
+    "cpf": "666.111.222-33",
+    "password": "Senha@1234",
+    "email": "suzana.correa@example.com",
+    "name": "Suzana Corrêa"
+  },
+  {
+    "cpf": "777.222.333-44",
+    "password": "Senha@1234",
+    "email": "antonio.mendes@example.com",
+    "name": "Antônio Mendes"
+  },
+  {
+    "cpf": "888.333.444-55",
+    "password": "Senha@1234",
+    "email": "luciana.ramos@example.com",
+    "name": "Luciana Ramos"
+  },
+  {
+    "cpf": "999.444.555-66",
+    "password": "Senha@1234",
+    "email": "julio.barros@example.com",
+    "name": "Júlio Barros"
+  },
+  {
+    "cpf": "000.555.666-77",
+    "password": "Senha@1234",
+    "email": "denise.moura@example.com",
+    "name": "Denise Moura"
+  },
+  {
+    "cpf": "111.777.888-99",
+    "password": "Senha@1234",
+    "email": "robson.vasconcelos@example.com",
+    "name": "Robson Vasconcelos"
+  },
+  {
+    "cpf": "222.888.999-00",
+    "password": "Senha@1234",
+    "email": "laura.assis@example.com",
+    "name": "Laura Assis"
+  },
+  {
+    "cpf": "333.999.000-11",
+    "password": "Senha@1234",
+    "email": "fabio.chaves@example.com",
+    "name": "Fábio Chaves"
+  },
+  {
+    "cpf": "444.000.111-22",
+    "password": "Senha@1234",
+    "email": "renata.matos@example.com",
+    "name": "Renata Matos"
+  },
+  {
+    "cpf": "555.111.222-33",
+    "password": "Senha@1234",
+    "email": "gustavo.paes@example.com",
+    "name": "Gustavo Paes"
+  },
+  {
+    "cpf": "666.222.333-44",
+    "password": "Senha@1234",
+    "email": "elisabeth.faria@example.com",
+    "name": "Elisabeth Faria"
+  },
+  {
+    "cpf": "777.333.444-55",
+    "password": "Senha@1234",
+    "email": "heitor.mello@example.com",
+    "name": "Heitor Mello"
+  },
+  {
+    "cpf": "888.444.555-66",
+    "password": "Senha@1234",
+    "email": "priscila.nascimento@example.com",
+    "name": "Priscila Nascimento"
+  },
+  {
+    "cpf": "999.555.666-77",
+    "password": "Senha@1234",
+    "email": "davi.marinho@example.com",
+    "name": "Davi Marinho"
+  },
+  {
+    "cpf": "000.666.777-88",
+    "password": "Senha@1234",
+    "email": "flavia.brandao@example.com",
+    "name": "Flávia Brandão"
+  },
+  {
+    "cpf": "111.888.999-00",
+    "password": "Senha@1234",
+    "email": "otavio.guerra@example.com",
+    "name": "Otávio Guerra"
+  },
+  {
+    "cpf": "222.999.000-11",
+    "password": "Senha@1234",
+    "email": "yasmin.pacheco@example.com",
+    "name": "Yasmin Pacheco"
+  },
+  {
+    "cpf": "333.000.111-22",
+    "password": "Senha@1234",
+    "email": "igor.maciel@example.com",
+    "name": "Igor Maciel"
+  },
+  {
+    "cpf": "444.111.222-33",
+    "password": "Senha@1234",
+    "email": "lilian.azevedo@example.com",
+    "name": "Lilian Azevedo"
+  },
+  {
+    "cpf": "555.222.333-44",
+    "password": "Senha@1234",
+    "email": "caio.siqueira@example.com",
+    "name": "Caio Siqueira"
+  },
+  {
+    "cpf": "666.333.444-55",
+    "password": "Senha@1234",
+    "email": "nina.oliveira@example.com",
+    "name": "Nina Oliveira"
+  },
+  {
+    "cpf": "777.444.555-66",
+    "password": "Senha@1234",
+    "email": "arthur.cavalcanti@example.com",
+    "name": "Arthur Cavalcanti"
+  },
+  {
+    "cpf": "888.555.666-77",
+    "password": "Senha@1234",
+    "email": "melissa.ribeiro@example.com",
+    "name": "Melissa Ribeiro"
+  },
+  {
+    "cpf": "999.666.777-88",
+    "password": "Senha@1234",
+    "email": "breno.lacerda@example.com",
+    "name": "Breno Lacerda"
+  },
+  {
+    "cpf": "000.777.888-99",
+    "password": "Senha@1234",
+    "email": "jessica.moraes@example.com",
+    "name": "Jéssica Moraes"
+  },
+  {
+    "cpf": "111.999.000-11",
+    "password": "Senha@1234",
+    "email": "leonardo.santana@example.com",
+    "name": "Leonardo Santana"
+  },
+  {
+    "cpf": "222.000.111-22",
+    "password": "Senha@1234",
+    "email": "tatiana.franco@example.com",
+    "name": "Tatiana Franco"
+  },
+  {
+    "cpf": "333.111.222-33",
+    "password": "Senha@1234",
+    "email": "samuel.costa@example.com",
+    "name": "Samuel Costa"
+  },
+  {
+    "cpf": "444.222.333-44",
+    "password": "Senha@1234",
+    "email": "lais.bispo@example.com",
+    "name": "Laís Bispo"
+  },
+  {
+    "cpf": "555.333.444-55",
+    "password": "Senha@1234",
+    "email": "henrique.matos@example.com",
+    "name": "Henrique Matos"
+  },
+  {
+    "cpf": "666.444.555-66",
+    "password": "Senha@1234",
+    "email": "raissa.goncalves@example.com",
+    "name": "Raissa Gonçalves"
+  },
+  {
+    "cpf": "777.555.666-77",
+    "password": "Senha@1234",
+    "email": "danilo.ferraz@example.com",
+    "name": "Danilo Ferraz"
+  },
+  {
+    "cpf": "888.666.777-88",
+    "password": "Senha@1234",
+    "email": "aline.rocha@example.com",
+    "name": "Aline Rocha"
+  },
+  {
+    "cpf": "999.777.888-99",
+    "password": "Senha@1234",
+    "email": "marcos.vinicius@example.com",
+    "name": "Marcos Vinicius"
+  },
+  {
+    "cpf": "000.888.999-00",
+    "password": "Senha@1234",
+    "email": "julio.cesar@example.com",
+    "name": "Júlio César"
+  },
+  {
+    "cpf": "111.000.111-22",
+    "password": "Senha@1234",
+    "email": "simone.araujo@example.com",
+    "name": "Simone Araújo"
+  },
+  {
+    "cpf": "222.111.222-33",
+    "password": "Senha@1234",
+    "email": "roger.machado@example.com",
+    "name": "Roger Machado"
+  },
+  {
+    "cpf": "333.222.333-44",
+    "password": "Senha@1234",
+    "email": "debora.silveira@example.com",
+    "name": "Débora Silveira"
+  },
+  {
+    "cpf": "444.333.444-55",
+    "password": "Senha@1234",
+    "email": "marcilio.junior@example.com",
+    "name": "Marcílio Júnior"
+  },
+  {
+    "cpf": "555.444.555-66",
+    "password": "Senha@1234",
+    "email": "angelica.monteiro@example.com",
+    "name": "Angélica Monteiro"
+  },
+  {
+    "cpf": "666.555.666-77",
+    "password": "Senha@1234",
+    "email": "cassio.barboza@example.com",
+    "name": "Cássio Barboza"
+  },
+  {
+    "cpf": "777.666.777-88",
+    "password": "Senha@1234",
+    "email": "valeria.santos@example.com",
+    "name": "Valéria Santos"
+  },
+  {
+    "cpf": "888.777.888-99",
+    "password": "Senha@1234",
+    "email": "mauro.junior@example.com",
+    "name": "Mauro Júnior"
+  },
+  {
+    "cpf": "999.888.999-00",
+    "password": "Senha@1234",
+    "email": "lucia.fernandes@example.com",
+    "name": "Lúcia Fernandes"
+  },
+  {
+    "cpf": "000.999.000-11",
+    "password": "Senha@1234",
+    "email": "rafaela.martins@example.com",
+    "name": "Rafaela Martins"
+  },
+  {
+    "cpf": "111.111.222-33",
+    "password": "Senha@1234",
+    "email": "leandro.oliveira@example.com",
+    "name": "Leandro Oliveira"
+  },
+  {
+    "cpf": "222.222.333-44",
+    "password": "Senha@1234",
+    "email": "claudia.souza@example.com",
+    "name": "Cláudia Souza"
+  },
+  {
+    "cpf": "333.333.444-55",
+    "password": "Senha@1234",
+    "email": "gilberto.alves@example.com",
+    "name": "Gilberto Alves"
+  },
+  {
+    "cpf": "444.444.555-66",
+    "password": "Senha@1234",
+    "email": "isadora.campos@example.com",
+    "name": "Isadora Campos"
+  },
+  {
+    "cpf": "555.555.666-77",
+    "password": "Senha@1234",
+    "email": "marcilio.santos@example.com",
+    "name": "Marcílio Santos"
+  },
+  {
+    "cpf": "666.666.777-88",
+    "password": "Senha@1234",
+    "email": "sueli.costa@example.com",
+    "name": "Sueli Costa"
+  },
+  {
+    "cpf": "777.777.888-99",
+    "password": "Senha@1234",
+    "email": "jorge.lima@example.com",
+    "name": "Jorge Lima"
+  },
+  {
+    "cpf": "888.888.999-00",
+    "password": "Senha@1234",
+    "email": "eliane.rodrigues@example.com",
+    "name": "Eliane Rodrigues"
+  },
+  {
+    "cpf": "999.999.000-11",
+    "password": "Senha@1234",
+    "email": "marcos.augusto@example.com",
+    "name": "Marcos Augusto"
+  },
+  {
+    "cpf": "000.000.111-22",
+    "password": "Senha@1234",
+    "email": "cristina.silva@example.com",
+    "name": "Cristina Silva"
+  },
+  {
+    "cpf": "111.222.444-55",
+    "password": "Senha@1234",
+    "email": "roberto.mendes@example.com",
+    "name": "Roberto Mendes"
+  },
+  {
+    "cpf": "222.333.555-66",
+    "password": "Senha@1234",
+    "email": "adriana.pereira@example.com",
+    "name": "Adriana Pereira"
+  },
+  {
+    "cpf": "333.444.666-77",
+    "password": "Senha@1234",
+    "email": "wesley.castro@example.com",
+    "name": "Wesley Castro"
+  },
+  {
+    "cpf": "444.555.777-88",
+    "password": "Senha@1234",
+    "email": "sandra.marques@example.com",
+    "name": "Sandra Marques"
+  },
+  {
+    "cpf": "555.666.888-99",
+    "password": "Senha@1234",
+    "email": "marcelo.henrique@example.com",
+    "name": "Marcelo Henrique"
+  },
+  {
+    "cpf": "666.777.999-00",
+    "password": "Senha@1234",
+    "email": "vanessa.oliveira@example.com",
+    "name": "Vanessa Oliveira"
+  },
+  {
+    "cpf": "777.888.000-11",
+    "password": "Senha@1234",
+    "email": "ricardo.santos@example.com",
+    "name": "Ricardo Santos"
+  },
+  {
+    "cpf": "888.999.111-22",
+    "password": "Senha@1234",
+    "email": "fernanda.costa@example.com",
+    "name": "Fernanda Costa"
+  },
+  {
+    "cpf": "999.000.222-33",
+    "password": "Senha@1234",
+    "email": "bruno.oliveira@example.com",
+    "name": "Bruno Oliveira"
+  },
+  {
+    "cpf": "000.111.333-44",
+    "password": "Senha@1234",
+    "email": "patricia.silva@example.com",
+    "name": "Patrícia Silva"
+  },
+  {
+    "cpf": "111.222.555-66",
+    "password": "Senha@1234",
+    "email": "lucas.santos@example.com",
+    "name": "Lucas Santos"
+  },
+  {
+    "cpf": "222.333.666-77",
+    "password": "Senha@1234",
+    "email": "amanda.oliveira@example.com",
+    "name": "Amanda Oliveira"
+  },
+  {
+    "cpf": "333.444.777-88",
+    "password": "Senha@1234",
+    "email": "diego.souza@example.com",
+    "name": "Diego Souza"
+  },
+  {
+    "cpf": "444.555.888-99",
+    "password": "Senha@1234",
+    "email": "leticia.santos@example.com",
+    "name": "Letícia Santos"
+  },
+  {
+    "cpf": "555.666.999-00",
+    "password": "Senha@1234",
+    "email": "guilherme.costa@example.com",
+    "name": "Guilherme Costa"
+  },
+  {
+    "cpf": "666.777.000-11",
+    "password": "Senha@1234",
+    "email": "vanessa.silva@example.com",
+    "name": "Vanessa Silva"
+  },
+  {
+    "cpf": "777.888.111-22",
+    "password": "Senha@1234",
+    "email": "ricardo.oliveira@example.com",
+    "name": "Ricardo Oliveira"
+  },
+  {
+    "cpf": "888.999.222-33",
+    "password": "Senha@1234",
+    "email": "bianca.souza@example.com",
+    "name": "Bianca Souza"
+  },
+  {
+    "cpf": "999.000.333-44",
+    "password": "Senha@1234",
+    "email": "andre.costa@example.com",
+    "name": "André Costa"
+  },
+  {
+    "cpf": "000.111.444-55",
+    "password": "Senha@1234",
+    "email": "camila.silva@example.com",
+    "name": "Camila Silva"
+  },
+  {
+    "cpf": "111.222.666-77",
+    "password": "Senha@1234",
+    "email": "thiago.santos@example.com",
+    "name": "Thiago Santos"
+  },
+  {
+    "cpf": "222.333.777-88",
+    "password": "Senha@1234",
+    "email": "larissa.oliveira@example.com",
+    "name": "Larissa Oliveira"
+  },
+  {
+    "cpf": "333.444.888-99",
+    "password": "Senha@1234",
+    "email": "felipe.souza@example.com",
+    "name": "Felipe Souza"
+  },
+  {
+    "cpf": "444.555.999-00",
+    "password": "Senha@1234",
+    "email": "natalia.costa@example.com",
+    "name": "Natália Costa"
+  },
+  {
+    "cpf": "555.666.000-11",
+    "password": "Senha@1234",
+    "email": "marcos.silva@example.com",
+    "name": "Marcos Silva"
+  },
+  {
+    "cpf": "666.777.111-22",
+    "password": "Senha@1234",
+    "email": "isabela.santos@example.com",
+    "name": "Isabela Santos"
+  },
+  {
+    "cpf": "777.888.222-33",
+    "password": "Senha@1234",
+    "email": "vinicius.oliveira@example.com",
+    "name": "Vinícius Oliveira"
+  },
+  {
+    "cpf": "888.999.333-44",
+    "password": "Senha@1234",
+    "email": "raquel.souza@example.com",
+    "name": "Raquel Souza"
+  },
+  {
+    "cpf": "999.000.444-55",
+    "password": "Senha@1234",
+    "email": "renato.costa@example.com",
+    "name": "Renato Costa"
+  },
+  {
+    "cpf": "000.111.555-66",
+    "password": "Senha@1234",
+    "email": "tania.silva@example.com",
+    "name": "Tânia Silva"
+  },
+  {
+    "cpf": "111.222.777-88",
+    "password": "Senha@1234",
+    "email": "paulo.santos@example.com",
+    "name": "Paulo Santos"
+  }
+]

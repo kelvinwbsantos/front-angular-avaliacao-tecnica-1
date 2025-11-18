@@ -90,6 +90,18 @@ export const routes: Routes = [
                 canActivate: [PermissionGuard],
                 data: { permissions: ['TAKE_CERTIFICATIONS'] } // Ou qualquer permissão de "candidato"
             },
+            {
+                path: 'exam-result/passed/:certificationId/:examId',
+                loadComponent: () => 
+                import('./features/certifications/pages/exam-result-passed/exam-result-passed-page.component')
+                .then(m => m.ExamResultPassedComponent)
+            },
+            {
+            path: 'exam-result/failed/:certificationId/:examId',
+            loadComponent: () => 
+            import('./features/certifications/pages/exam-result-failed/exam-result-failed-page.component')
+            .then(m => m.ExamResultFailedComponent)
+            },
             //outras rotas filhas aqui
         ]
     },

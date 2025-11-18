@@ -1,0 +1,54 @@
+<div class="table-container">
+  
+  @if (isLoading) {
+    <div class="spinner-overlay">
+      <mat-progress-spinner color="primary" mode="indeterminate"></mat-progress-spinner>
+    </div>
+  }
+
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+    
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef> Nome </th>
+      <td mat-cell *matCellDef="let user"> {{user.name}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="email">
+      <th mat-header-cell *matHeaderCellDef> E-mail </th>
+      <td mat-cell *matCellDef="let user"> {{user.email}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef> Ações </th>
+      <td mat-cell *matCellDef="let user">
+        
+        <div class="action-buttons-wrapper">
+            
+            <button mat-icon-button 
+                    class="action-button-edit"
+                    (click)="viewDetails.emit(user.id)" 
+                    matTooltip="Editar Usuário">
+                <mat-icon>edit</mat-icon>
+            </button>
+
+            <button mat-icon-button color="warn" 
+                    (click)="deleteUser.emit(user)" 
+                    matTooltip="Excluir Usuário">
+                <mat-icon>delete</mat-icon>
+            </button>
+
+        </div>
+
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    
+    <tr class="mat-row" *matNoDataRow>
+      <td class="mat-cell" [attr.colspan]="displayedColumns.length">
+        Nenhum usuário encontrado.
+      </td>
+    </tr>
+  </table>
+</div>

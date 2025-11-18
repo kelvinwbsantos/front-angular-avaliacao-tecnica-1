@@ -143,100 +143,83 @@ export class CertificationDetails implements OnInit {
      * ****** FUNÇÃO 'SALVAR' (SIMPLIFICADA) ******
      * Agora ela faz UMA chamada, tanto para Criar quanto para Editar.
      */
-    saveCertificationDetails(shouldClose: boolean): void {
+    /**
+     * FUNÇÃO SALVAR (Mantém a modal ABERTA)
+     */
+    saveCertificationDetails(): void {
         if (this.certificationForm.invalid) {
-            console.warn("Formulário inválido.");
             this.certificationForm.markAllAsTouched();
             return;
         }
 
-        this.isLoadingQuestions = true; // Spinner de "Salvando..."
+        this.isLoadingQuestions = true; // Liga spinner
         const formValue = this.certificationForm.getRawValue();
-
-        // Prepara o Observable
-        let save$: Observable<CompleteCertification>; // (Usando seu tipo 'CompleteCertification')
+        
+        let save$: Observable<CompleteCertification>;
 
         if (this.data.isCreation) {
-            // --- MODO CRIAÇÃO ---
-            
-            // 1. Monta o payload (sem 'isActive', como você pediu)
-            const createPayload: InitialCertification = {
-                name: formValue.name!,
-                shortDescription: formValue.shortDescription!,
-                description: formValue.description!,
-                passingScore: Number(formValue.passingScore!),
-                modality: formValue.modality!,
-                durationHours: Number(formValue.durationHours!),
-            };
-
-            if (!this.selectedFile) {
-                alert('Por favor, selecione um arquivo PDF para criar a certificação.');
+             // --- CORREÇÃO AQUI ---
+             // O TypeScript precisa garantir que o arquivo existe para criar
+             if (!this.selectedFile) {
+                alert('É necessário selecionar um arquivo PDF para criar a certificação.');
                 this.isLoadingQuestions = false;
                 return;
-            }
-            
-            console.log("[Modal] Modo Criação. Payload:", createPayload, "Arquivo:", this.selectedFile.name);
-            save$ = this.certificationsService.createCertification(createPayload, this.selectedFile);
-        
+             }
+
+             const createPayload: InitialCertification = { 
+                 name: formValue.name,
+                 shortDescription: formValue.shortDescription,
+                 description: formValue.description,
+                 passingScore: Number(formValue.passingScore),
+                 modality: formValue.modality,
+                 durationHours: Number(formValue.durationHours)
+             };
+             
+             // Agora passamos 'this.selectedFile' com segurança
+             save$ = this.certificationsService.createCertification(createPayload, this.selectedFile);
+
         } else {
-            // --- MODO EDIÇÃO (O Conserto) ---
-            if (!this.data.certificationId) {
-                console.error('Erro: ID da certificação não encontrado para atualização.');
-                this.isLoadingQuestions = false;
-                return;
-            }
-
-            // 1. Monta o payload (com 'isActive', como o backend espera)
-            const updatePayload: InitialCertification & { isActive: boolean } = {
-                name: formValue.name!,
-                shortDescription: formValue.shortDescription!,
-                description: formValue.description!,
-                passingScore: Number(formValue.passingScore!),
-                modality: formValue.modality!,
-                durationHours: Number(formValue.durationHours!),
-                isActive: formValue.isActive! // 'isActive' é enviado na edição
-            };
-
-            // 2. Chama o 'updateCertification' (o CORRIGIDO)
-            //    Ele agora aceita o 'selectedFile' (que pode ser 'null')
-            console.log("[Modal] Modo Edição. Payload:", updatePayload, "Arquivo:", this.selectedFile?.name || "(nenhum arquivo novo)");
-            save$ = this.certificationsService.updateCertification(
-                this.data.certificationId, 
-                updatePayload, 
-                this.selectedFile // <-- Envia o novo arquivo (ou null)
-            );
+             const updatePayload = { 
+                 name: formValue.name,
+                 shortDescription: formValue.shortDescription,
+                 description: formValue.description,
+                 passingScore: Number(formValue.passingScore),
+                 modality: formValue.modality,
+                 durationHours: Number(formValue.durationHours),
+                 isActive: formValue.isActive
+             };
+             
+             // Na edição, o arquivo pode ser null (o service aceita), então não precisa de IF
+             save$ = this.certificationsService.updateCertification(this.data.certificationId!, updatePayload, this.selectedFile);
         }
 
-        // 3. Executa o Observable (salva) - (Esta lógica é a mesma para Criar e Editar)
         save$.pipe(
-            finalize(() => this.isLoadingQuestions = false), // Desliga o spinner
+            finalize(() => this.isLoadingQuestions = false),
             catchError(error => {
-                console.error('Erro ao salvar certificação:', error);
-                let errorMsg = 'Erro ao salvar. Verifique o console.';
-                if (error.error?.message) {
-                    errorMsg = Array.isArray(error.error.message) ? error.error.message.join('\n') : error.error.message;
-                }
-                alert(errorMsg);
-                return of(null); // Não fecha o modal
+                console.error('Erro ao salvar:', error);
+                // Tenta extrair mensagem amigável do backend
+                const msg = error.error?.message || 'Erro ao salvar. Verifique os dados.';
+                alert(Array.isArray(msg) ? msg.join('\n') : msg); 
+                return of(null);
             })
         ).subscribe(savedCert => {
             if (savedCert) {
-                console.log('Salvo com sucesso:', savedCert);
-                if (shouldClose) {
-                    this.dialogRef.close(true); // Fecha o modal e avisa o "Pai"
-                } else {
-                    // Se salvou, mas não fechou (Modo Criação -> Edição)
-                    this.data.certification = savedCert;
-                    this.data.certificationId = savedCert.id;
-                    this.data.isCreation = false;
-                    this.existingPdfFileName = savedCert.pdfFileName || null;
-                    this.selectedFile = null; // Limpa o arquivo selecionado
-                    this.fileName = 'Nenhum arquivo selecionado';
-                }
+                console.log('Salvo com sucesso. Modal permanece aberta.');
+                
+                // ATUALIZA O ESTADO DA TELA
+                this.data.certification = savedCert;
+                this.data.certificationId = savedCert.id;
+                this.data.isCreation = false; 
+                this.existingPdfFileName = savedCert.pdfFileName || null;
+                this.selectedFile = null; 
+                this.fileName = 'Nenhum arquivo selecionado';
             }
         });
     }
-    
+    get hasPdf(): boolean {
+        // Verifica se temos um nome de arquivo na tela OU um path no objeto
+        return !!this.existingPdfFileName || !!this.data.certification?.pdfPath;
+    }
     /**
      * Abre o modal do Banco de Questões
      */

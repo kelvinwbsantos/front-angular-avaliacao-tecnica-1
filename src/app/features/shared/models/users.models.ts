@@ -39,6 +39,7 @@ export interface User {
   email: string;
   cpf?: string;
   role: string;
+  isActive?: boolean;
 }
 
 // --- Interface para Registro (Usada pelo AuthService) ---
