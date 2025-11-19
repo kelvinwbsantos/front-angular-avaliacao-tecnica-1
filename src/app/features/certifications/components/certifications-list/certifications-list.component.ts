@@ -50,6 +50,40 @@ export class CertificationsListComponent {
     if (!modality) return 'Não Definido';
     return modality === 'online' ? 'Online' : 'Presencial';
   }
+  /**
+   * Limpa o nome do arquivo, removendo o prefixo TIMESTAMP e UUID.
+   * Assume o formato: 1762806999280-459504317-nome_original.pdf
+   */
+  cleanPdfFileName(originalName: string | null | undefined): string {
+    if (!originalName) {
+      return 'PDF disponível';
+    }
+    
+    // Expressão regular para remover a UUID/Timestamp no início do nome
+    // Padrão: [números]-[uuid]-[nome] OU [timestamp]-[nome]
+    // Tentamos encontrar o primeiro traço (-) e removemos tudo antes dele,
+    // mas garantindo que o nome não comece com o UUID da certificação.
+    
+    // Solução mais segura: Tenta achar o terceiro traço (se o formato for timestamp-uuid-nome)
+    const parts = originalName.split('-');
+    
+    // Se tiver pelo menos 3 partes (ou mais) e o nome começa com o ID do item
+    if (parts.length >= 3 && parts[0].length > 8) { // Heurística: se a primeira parte parece um timestamp/hash
+        // Exemplo: '1762806999280-459504317-nome_original.pdf'
+        // Retorna a união das partes após o segundo traço (índice 2)
+        return parts.slice(2).join('-').trim(); 
+    } 
+    
+    // Caso o formato seja apenas UUID-nome_original ou não tenha prefixo, 
+    // tentamos encontrar o primeiro traço longo (UUID tem 36 caracteres).
+    if (parts.length > 1 && parts[0].length >= 36) { 
+         // Exemplo: 'f16c4998-bd06-48d5-98e2-1d67b948877e-nome_original.pdf'
+         return parts.slice(1).join('-').trim();
+    }
+    
+    // Retorna o nome original se não encontrar um prefixo para limpar
+    return originalName;
+  }
   
   // (A lógica de 'loadCertifications' etc. FOI REMOVIDA)
 }

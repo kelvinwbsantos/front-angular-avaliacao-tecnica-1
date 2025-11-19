@@ -63,7 +63,7 @@ async function main() {
             }
         }
     } catch (error) {
-        console.error('💥 Falha no seed:', error.message || error);
+        console.error('💥 Falha no seed, erro na leitura do arquivo:', error.message || error);
     }
 }
 

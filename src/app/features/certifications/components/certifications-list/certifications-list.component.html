@@ -64,14 +64,14 @@
                 @if (cert.pdfPath) {
                     
                     <!-- Ícone de Visualização (Sempre desabilitado e com tooltip) -->
-                    <span matTooltip="{{ cert.pdfFileName || 'PDF disponível' }}">
+                    <span matTooltip="{{ cleanPdfFileName(cert.pdfFileName) }}"> 
                         <button mat-icon-button disabled class="pdf-icon-button" style="pointer-events: none;">
                             <mat-icon>picture_as_pdf</mat-icon>
                         </button>
                     </span>
                     
                     <!-- Botão de Substituir (DESABILITADO com Tooltip) -->
-                    <span matTooltip="Substituir PDF (Funcionalidade disponível em breve)"
+                    <span matTooltip="Substituir PDF a Partir da Tabela(Funcionalidade disponível em breve)"
                           [style.cursor]="'not-allowed'">
                         <button mat-icon-button 
                                 class="pdf-upload-button"
@@ -85,7 +85,7 @@
                     <!-- 2. CASO O PDF NÃO EXISTA (MOSTRAR BOTÃO ADICIONAR) -->
                     
                     <!-- Botão de Adicionar (DESABILITADO com Tooltip) -->
-                    <span matTooltip="Adicionar PDF (Funcionalidade disponível em breve)"
+                    <span matTooltip="Adicionar PDF a Partir da Tabela(Funcionalidade disponível em breve)"
                           [style.cursor]="'not-allowed'">
                         <button mat-icon-button 
                                 class="pdf-upload-button" 
