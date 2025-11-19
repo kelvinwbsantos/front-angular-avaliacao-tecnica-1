@@ -47,7 +47,9 @@ export interface CertificationFilterDTO {
 // Interface para a resposta paginada do backend
 export interface PaginatedCertificationsResponse {
     data: CompleteCertification[];
-    total: number; 
-    page: number;
-    limit: number;
+    meta: {
+        total: number;
+        page: number;
+        last_page: number;
+    };
 }

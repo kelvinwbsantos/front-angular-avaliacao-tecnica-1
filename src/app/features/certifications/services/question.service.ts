@@ -9,15 +9,15 @@ import {
     QuestionFilterDTO, 
     PaginatedTfQuestionsResponse
 } from '../../../features/shared/models/question-models'; 
-
-// Configuração da API (Ajuste a URL base)
-const API_URL = 'http://localhost:3000'; 
-const BASE_PATH = `${API_URL}/questions`; // Rota base de questões
+import { environment } from '../../../environments/environment';
 
 @Injectable({
     providedIn: 'root'
 })
 export class QuestionsService {
+    private readonly API_URL = environment.apiUrl;
+    private readonly BASE_PATH = `${this.API_URL}/questions`;
+    
     private http = inject(HttpClient);
     
     /**
@@ -42,21 +42,21 @@ export class QuestionsService {
             params = params.set('onlyValid', filters.validUntilEnd.toString());
         }
         
-        return this.http.get<PaginatedTfQuestionsResponse>(BASE_PATH, { params });
+        return this.http.get<PaginatedTfQuestionsResponse>(this.BASE_PATH, { params });
     }
 
     /**
      * Apaga uma questão (DELETE /questions/{id})
      */
     deleteQuestion(id: string): Observable<void> {
-        return this.http.delete<void>(`${BASE_PATH}/${id}`);
+        return this.http.delete<void>(`${this.BASE_PATH}/${id}`);
     }
 /**
      * (NOVO) Cria uma nova questão V/F (POST /questions)
      * O DTO exato pode precisar de ajuste (ex: CreateQuestionDto)
      */
     createQuestion(payload: Partial<BackendQuestion>): Observable<BackendQuestion> {
-        return this.http.post<BackendQuestion>(BASE_PATH, payload);
+        return this.http.post<BackendQuestion>(this.BASE_PATH, payload);
     }
 
     /**
@@ -64,6 +64,6 @@ export class QuestionsService {
      * O DTO exato pode precisar de ajuste (ex: UpdateQuestionDto)
      */
     updateQuestion(id: string, payload: Partial<BackendQuestion>): Observable<BackendQuestion> {
-        return this.http.patch<BackendQuestion>(`${BASE_PATH}/${id}`, payload);
+        return this.http.patch<BackendQuestion>(`${this.BASE_PATH}/${id}`, payload);
     }
 }

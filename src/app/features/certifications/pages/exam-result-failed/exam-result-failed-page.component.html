@@ -1,0 +1,53 @@
+<div class="cert-take-container">
+  <button mat-stroked-button routerLink="/app/achievements" class="back-button mb-4">
+    <mat-icon>arrow_back</mat-icon> Voltar para Conquistas
+  </button>
+
+  @if (isLoading) {
+    <div class="loading-spinner">
+      <mat-spinner diameter="50"></mat-spinner>
+      <p>Carregando seu resultado...</p>
+    </div>
+  } @else if (result) {
+    <mat-card class="cert-details-card">
+      <div class="cert-info-wrapper">
+
+        <mat-card-header>
+          <div class="modality-badge failed-badge large-badge">
+            <mat-icon>warning</mat-icon> <span>Reprovado</span>
+          </div>
+          
+          <mat-card-title class="failed-title">Você não obteve aprovação desta vez.</mat-card-title>
+          <mat-card-subtitle>{{ result.certificationName }}</mat-card-subtitle>
+        </mat-card-header>
+
+        <mat-card-content class="cert-utilities">
+          <div class="score-display">
+            Seu aproveitamento: <span class="score failed-score">{{ result.score | number:'1.0-1' }}%</span> 
+            (Mínimo: {{ result.passingScore }}%)
+          </div>
+        </mat-card-content>
+
+        <mat-divider></mat-divider>
+
+        <mat-card-content class="description-content">
+          <p class="description-text">
+            Não desanime! Revise o material de estudo e tente novamente quando se sentir preparado.
+          </p>
+        </mat-card-content>
+        
+        <mat-card-actions align="end" class="cert-actions">
+          <button mat-button routerLink="/app/available-certifications">Ver Outras Certificações</button>
+          <button mat-raised-button color="primary" [routerLink]="['/app/certification-take', certificationId]">
+            <mat-icon>refresh</mat-icon>
+            <span>Tentar Novamente</span>
+          </button>
+        </mat-card-actions>
+
+      </div> </mat-card> } @else {
+    <div class="error-message">
+       <mat-icon color="warn">error_outline</mat-icon>
+       <p>Não foi possível carregar seu resultado.</p>
+    </div>
+  }
+</div>

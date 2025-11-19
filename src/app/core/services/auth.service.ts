@@ -7,15 +7,12 @@ import { Router } from '@angular/router';
 import { jwtDecode } from 'jwt-decode';
 import { Observable, of } from 'rxjs';
 import { tap, catchError, switchMap, map } from 'rxjs/operators';
-
-// Importa TODAS as interfaces necessárias do local centralizado (VERIFIQUE O CAMINHO!)
 import {
     RegistrationData,
     JwtPayload,
     UserData
 } from '../../features/shared/models/users.models';
-
-
+import { environment } from '../../environments/environment';
 // Interface para a resposta do Login
 export interface LoginResponse {
   access_token: string;
@@ -31,8 +28,9 @@ export interface LoginCredentials {
   providedIn: 'root'
 })
 export class AuthService {
-  private baseUrl = 'http://localhost:3000/auth';
-  private permissionsUrl = 'http://localhost:3000/users/me/permissions'; // Endpoint de permissões
+  private readonly API_URL = environment.apiUrl;
+  private readonly BASE_PATH = `${this.API_URL}/auth`;
+  private permissionsUrl = `${this.API_URL}/users/me/permissions`; 
   private readonly http = inject(HttpClient);
   private readonly router = inject(Router);
   private readonly TOKEN_KEY = 'auth_token';
@@ -65,7 +63,7 @@ export class AuthService {
     console.log("[AuthService Login] Iniciando login...");
     let loginResponse: LoginResponse; // Variável para guardar a resposta original
 
-    return this.http.post<LoginResponse>(`${this.baseUrl}/login`, credentials).pipe(
+    return this.http.post<LoginResponse>(`${this.BASE_PATH}/login`, credentials).pipe(
       tap({
           next: response => {
               console.log("[AuthService Login] Token recebido.");
@@ -107,7 +105,7 @@ export class AuthService {
   }
 
   register(registrationData: RegistrationData): Observable<any> {
-    const url = `${this.baseUrl}/register`;
+    const url = `${this.BASE_PATH}/register`;
     console.log(`[AuthService] register Chamando: ${url}`);
     return this.http.post(url, registrationData);
   }

@@ -28,12 +28,12 @@
     </ng-container>
 
     <ng-container matColumnDef="questionsCount">
-      <th mat-header-cell *matHeaderCellDef> Questões </th>
-      <td mat-cell *matCellDef="let cert" class="text-center"> {{ cert.questionsCount || 0 }} </td>
+      <th mat-header-cell *matHeaderCellDef> Modalidade </th>
+      <td mat-cell *matCellDef="let cert" class="text-center"> {{ cert.modality || 0 }} </td>
     </ng-container>
 
     <ng-container matColumnDef="validUntil">
-      <th mat-header-cell *matHeaderCellDef> Data Validade </th>
+      <th mat-header-cell *matHeaderCellDef> Início </th>
       <td mat-cell *matCellDef="let cert"> {{ cert.createdAt | date:'dd/MM/yyyy' }} </td>
     </ng-container>
     

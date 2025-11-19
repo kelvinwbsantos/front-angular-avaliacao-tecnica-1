@@ -172,38 +172,35 @@ export class QuestionsPage implements OnInit, AfterViewInit {
     /**
      * Abre o modal de Geração com I.A.
      */
-    openAiGenerator(): void {
-        // Usa o objeto 'certification' que recebemos do 'CertificationDetails'
-        if (!this.certification) {
-            alert("Erro: Os dados completos da certificação não foram encontrados.");
-            return;
-        }
+    get hasPdf(): boolean {
+        // Verifica se o objeto certification existe e se tem path ou filename
+        return !!this.certification && (!!this.certification.pdfPath || !!this.certification.pdfFileName);
+    }
 
-        // Prepara os dados para o modal da IA (enviando o objeto inteiro)
+    // 2. Remova a validação de alerta do openAiGenerator (já que o botão estará bloqueado)
+    openAiGenerator(): void {
+        if (!this.certification) return;
+
+        // Prepara dados e abre modal
         const aiData: AiGeneratorModalData = { 
-            certification: this.certification 
+            certification: this.certification
         };
 
         this.dialog.open(AiQuestionGenerator, {
             width: '900px', 
             maxWidth: '95vw',
             data: aiData,
-            disableClose: true // Boa prática para modais complexos
-        }).afterClosed().subscribe((result: CompleteCertification | boolean) => {
-            // O modal da IA pode retornar a certificação atualizada (se o PDF mudou)
-            if (typeof result === 'object' && result !== null) {
-                console.log("[Banco] IA retornou certificação atualizada.");
-                // Atualiza a cópia local no 'Banco de Questões'
-                this.certification = result;
-                this.certificationPdfPath = result.pdfPath || null;
-                this.loadQuestions(); // Recarrega a lista
-            } else if (result === true) {
-                // Se só gerou (sem trocar PDF)
-                this.loadQuestions(); // Recarrega a lista
+            disableClose: true
+        }).afterClosed().subscribe(result => {
+            if (result) {
+                this.loadQuestions(); 
+                if (typeof result === 'object') {
+                    this.certification = result; 
+                }
             }
-            // Se 'false', não faz nada (Cancelou)
         });
     }
+// ...
 
     /**
      * Exclui uma questão

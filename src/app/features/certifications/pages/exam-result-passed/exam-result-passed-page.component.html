@@ -1,0 +1,59 @@
+<div class="cert-take-container">
+  <button mat-stroked-button routerLink="/app/achievements" class="back-button mb-4">
+    <mat-icon>arrow_back</mat-icon> Voltar para Conquistas
+  </button>
+
+  @if (isLoading) {
+    <div class="loading-spinner">
+      <mat-spinner diameter="50"></mat-spinner>
+      <p>Carregando seu resultado...</p>
+    </div>
+  } @else if (result) {
+    <mat-card class="cert-details-card">
+      <div class="cert-info-wrapper">
+
+        <mat-card-header>
+          <div class="modality-badge passed-badge large-badge">
+            <mat-icon>emoji_events</mat-icon>
+            <span>Aprovado</span>
+          </div>
+          
+          <mat-card-title class="passed-title">Parabéns! Você foi Aprovado!</mat-card-title>
+          <mat-card-subtitle>{{ result.certificationName }}</mat-card-subtitle>
+        </mat-card-header>
+
+        <mat-card-content class="cert-utilities">
+          <div class="score-display">
+            Sua nota: <span class="score passed-score">{{ result.score | number:'1.0-1' }}%</span> 
+            (Mínimo: {{ result.passingScore }}%)
+          </div>
+        </mat-card-content>
+
+        <mat-divider></mat-divider>
+
+        <mat-card-content class="description-content">
+          <p class="description-text">
+            Seu certificado já está disponível para download. Guarde-o em um local seguro e parabéns pela sua conquista.
+          </p>
+        </mat-card-content>
+        
+        <mat-card-actions align="end" class="cert-actions">
+          <button mat-raised-button color="primary" routerLink="/app/achievements">Ver Minhas Conquistas e Baixar Meu Certificado</button>
+          <!-- <button mat-raised-button color="primary" (click)="downloadCertificate()" [disabled]="isDownloading">
+            @if (isDownloading) {
+              <mat-progress-spinner [diameter]="20"></mat-progress-spinner>
+              <span>Gerando PDF...</span>
+            } @else {
+              <mat-icon>download</mat-icon>
+              <span>Emitir Certificado</span>
+            }
+          </button> -->
+        </mat-card-actions>
+
+      </div> </mat-card> } @else {
+    <div class="error-message">
+       <mat-icon color="warn">error_outline</mat-icon>
+       <p>Não foi possível carregar seu resultado.</p>
+    </div>
+  }
+</div>

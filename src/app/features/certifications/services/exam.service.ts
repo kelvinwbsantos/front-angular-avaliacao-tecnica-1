@@ -8,15 +8,14 @@ import {
   ExamQuestionsResponse,
   ExamResult 
 } from '../../shared/models/exam.model';
-
-// Configuração da API
-const API_URL = 'http://localhost:3000'; // Ajuste sua URL
-const BASE_PATH = `${API_URL}/exams`;
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ExamService {
+  private readonly API_URL = environment.apiUrl;
+  private readonly BASE_PATH = `${this.API_URL}/exams`;
 
   private http = inject(HttpClient);
 
@@ -25,7 +24,7 @@ export class ExamService {
    * Lista todos os exames do usuário.
    */
   getUserExams(): Observable<Exam[]> {
-    return this.http.get<Exam[]>(BASE_PATH);
+    return this.http.get<Exam[]>(this.BASE_PATH);
   }
 
   /**
@@ -36,7 +35,7 @@ export class ExamService {
   startExam(enrollmentId: string): Observable<Exam> {
     // Confirme o payload que o backend espera.
     // Estou assumindo que é { "enrollmentId": "uuid" }
-    return this.http.post<Exam>(BASE_PATH, { enrollmentId });
+    return this.http.post<Exam>(this.BASE_PATH, { enrollmentId });
   }
 
   /**
@@ -44,7 +43,7 @@ export class ExamService {
    * Obtém as questões para um exame em andamento.
    */
   getExamQuestions(examId: string): Observable<ExamQuestionsResponse> {
-    return this.http.get<ExamQuestionsResponse>(`${BASE_PATH}/${examId}/questions`);
+    return this.http.get<ExamQuestionsResponse>(`${this.BASE_PATH}/${examId}/questions`);
   }
 
   /**
@@ -52,14 +51,14 @@ export class ExamService {
    * Envia as respostas do exame para correção.
    */
   submitExam(examId: string, payload: AnswerPayload): Observable<any> { 
-    return this.http.post<any>(`${BASE_PATH}/${examId}/submit`, payload);
+    return this.http.post<any>(`${this.BASE_PATH}/${examId}/submit`, payload);
   }
   /**
    * (GET /exams/{id}/result)
    * Obtém o resultado de um exame finalizado.
    */
   getExamResult(examId: string): Observable<ExamResult> {
-    return this.http.get<ExamResult>(`${BASE_PATH}/${examId}/result`);
+    return this.http.get<ExamResult>(`${this.BASE_PATH}/${examId}/result`);
   }
 
   // A lógica 'findInProgressExam' está no componente.
