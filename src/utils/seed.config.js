@@ -8,7 +8,7 @@ const config = {
     },
     // Usado se você rodar "NODE_ENV=production node script.js"
     production: {
-        API_BASE_URL: 'https://mas.tiweb.app.br', // Substitua pela URL REAL do seu backend
+        API_BASE_URL: 'https://mas.tiweb.app.br/api', // Substitua pela URL REAL do seu backend
     }
 };
 
