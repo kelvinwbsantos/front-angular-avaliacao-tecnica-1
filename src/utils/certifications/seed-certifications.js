@@ -5,7 +5,6 @@ import { BASE_URL } from '../seed.config.js'; // Ajuste o caminho para a pasta s
 
 // Determina o ambiente e pega a URL base
 const ENV = process.env.NODE_ENV || 'development';
-const BASE_URL = Config[ENV].API_BASE_URL;
 
 // Constrói as URLs usando a variável BASE_URL
 const API_URL = `${BASE_URL}/certifications`;
