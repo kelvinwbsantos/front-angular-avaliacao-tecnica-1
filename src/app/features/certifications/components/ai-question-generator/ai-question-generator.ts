@@ -58,8 +58,21 @@ export class AiQuestionGenerator implements OnInit {
         const cert = this.data.certification;
         console.log(`[AI Gen] Modal aberto para: ${cert.name} (ID: ${cert.id})`);
 
-        // Requisito 1: Exibir nome do PDF
-        this.updatePdfInfo(cert);
+       // Lógica para extrair o nome do PDF (priorizando 'pdfFileName' limpo)
+        if (cert.pdfFileName) {
+            // Usa o nome do arquivo, mas aplica a limpeza
+            this.existingPdfName = this.cleanPdfFileName(cert.pdfFileName); 
+        } else if (cert.pdfPath) {
+            // Se veio apenas o path, extrai o nome e aplica a limpeza
+            try {
+                const fileNameFromPath = cert.pdfPath.substring(cert.pdfPath.lastIndexOf('/') + 1);
+                this.existingPdfName = this.cleanPdfFileName(fileNameFromPath);
+            } catch (e) { 
+                this.existingPdfName = 'Erro ao ler nome'; 
+            }
+        } else {
+            this.existingPdfName = null;
+        }
     }
 
     /**
@@ -207,6 +220,28 @@ export class AiQuestionGenerator implements OnInit {
         console.log("[AI Gen] Botão OK clicado. Fechando modal.");
         this.dialogRef.close(this.data.certification); // Retorna o estado atualizado
     }
+    cleanPdfFileName(originalName: string | null | undefined): string | null {
+        if (!originalName) {
+            return null;
+        }
+        
+        // Assume o formato: [timestamp]-[hash]-nome_original.pdf
+        const parts = originalName.split('-');
+        
+        // Heurística: Se tiver pelo menos 3 partes e a primeira for longa (timestamp/hash)
+        if (parts.length >= 3 && parts[0].length >= 8) { 
+            // Retorna tudo a partir da terceira parte (índice 2)
+            return parts.slice(2).join('-').trim(); 
+        } 
+        
+        // Se houver apenas um prefixo longo (ex: UUID-nome.pdf)
+        if (parts.length > 1 && parts[0].length >= 36) {
+             return parts.slice(1).join('-').trim();
+        }
+        
+        // Retorna o nome original se não encontrar prefixo
+        return originalName;
+    }
 
     // --- Funções da Tabela (Sem alterações) ---
     getAnswerText(answer: boolean): string { return answer ? 'Verdadeiro' : 'Falso'; }
