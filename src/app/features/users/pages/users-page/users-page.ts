@@ -8,7 +8,7 @@ import { FormControl, FormGroup, ReactiveFormsModule, FormBuilder } from '@angul
 import { UserService } from '../../services/user.service';
 import { AuthService } from '../../../../core/services/auth.service';
 //import { User } from './users-page';
-import { UserDetailsModalComponent } from '../../components/user-details/user-details-modal.component';
+import { UserDetailsModalComponent,UserModalData } from '../../components/user-details/user-details-modal.component';
 import { CommonModule } from '@angular/common'; // Necessário para ngIf
 // ... outros imports de módulos standalone ...
 import { MatCardModule } from '@angular/material/card';
@@ -25,6 +25,7 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { User } from '../../../shared/models/users.models';
 import { UsersListComponent } from '../../components/users-list/users-list.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
+
 @Component({
   selector: 'app-users-page',
   standalone: true,
@@ -45,7 +46,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   templateUrl: './users-page.html',
   styleUrl: './users-page.scss'
 })
-export class UsersPage implements AfterViewInit, OnInit { // Adicionado OnInit
+export class UsersPage implements  OnInit { // Adicionado OnInit
 
   // Injeções
   private userService = inject(UserService);
@@ -80,6 +81,27 @@ private fb = inject(FormBuilder);
     // Carrega a lista inicial
     this.loadUsers();
   }
+  openAddUserModal(): void {
+      const data: UserModalData = {
+        userId: null, 
+        isCreation: true 
+    };
+
+    const dialogRef = this.dialog.open(UserDetailsModalComponent, {
+      width: '600px',
+      maxWidth: '95vw',
+      data: data,
+    });
+
+    // Se a criação for bem-sucedida, recarrega a lista
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === true) {
+        this.loadUsers(); 
+        this.snackBar.open('Usuário criado com sucesso!', 'OK', { duration: 3000 });
+      }
+    });
+  }
+
   /**
    * Busca os usuários usando o serviço, aplicando filtros e paginação.
    */
@@ -113,41 +135,6 @@ private fb = inject(FormBuilder);
       });
   }
 
-
-  ngAfterViewInit() {
-    // Adia a atualização das colunas
-    setTimeout(() => this.updateDisplayedColumns());
-
-    // Carregamento inicial e reatividade a filtros/pagina
-    merge(this.paginator.page, this.filterForm.valueChanges.pipe(debounceTime(400), distinctUntilChanged()))
-      .pipe(
-          startWith({}),
-          tap(() => this.isLoading = true),
-          switchMap(() => {
-              const filters = this.filterForm.value;
-              const paramsToSend = {
-                  page: this.paginator ? this.paginator.pageIndex + 1 : 1,
-                  limit: this.paginator ? this.paginator.pageSize : 10,
-                  name: filters.name || undefined,
-                  email: filters.email || undefined,
-                  cpf: filters.cpf || undefined
-              };
-              return this.userService.findAllUsers(paramsToSend)
-                     .pipe(catchError((err) => {
-                         console.error("Erro ao buscar usuários:", err);
-                         // TODO: Mostrar mensagem de erro para o usuário
-                         return of({ data: [], total: 0 });
-                     }));
-          }),
-          map(response => {
-              this.isLoading = false;
-              this.totalUsers = response.total;
-              return response.data;
-          })
-      ).subscribe(data => {
-          this.dataSource.data = data;
-      });
-  }
 
   updateDisplayedColumns() {
       const columns = ['name', 'email'];
