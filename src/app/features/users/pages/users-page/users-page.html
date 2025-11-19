@@ -8,8 +8,8 @@
     
     <div class="header-actions">
       @if (authService.hasPermission('INVITE_USER')) {
-        <button mat-flat-button color="primary" (click)="openInviteModal()" matTooltip="Convidar novo usuário">
-          <mat-icon>person_add</mat-icon> Convidar Usuário
+        <button mat-flat-button color="primary" (click)="openAddUserModal()" matTooltip="Convidar novo usuário">
+          <mat-icon>person_add</mat-icon> Adicionar Usuário
         </button>
       }
       

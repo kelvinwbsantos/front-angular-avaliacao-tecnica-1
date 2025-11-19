@@ -6,7 +6,7 @@
 
 .logo { // Aplica-se à tag <img>
   display: block; // Garante que a imagem se comporte como bloco para margens
-  height: 80px;   // <-- AUMENTE A ALTURA AQUI (ex: 50px, ajuste conforme necessário)
+  height: 60px;   // <-- AUMENTE A ALTURA AQUI (ex: 50px, ajuste conforme necessário)
   max-height: calc(100% - 16px); // Garante que não ultrapasse a altura do toolbar (menos um padding)
   width: auto;    // Mantém a proporção
   margin-left: 16px;
