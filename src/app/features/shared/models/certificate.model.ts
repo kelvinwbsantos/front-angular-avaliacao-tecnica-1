@@ -1,4 +1,6 @@
 // src/app/core/models/certificate.model.ts
+import { User } from './users.models'; 
+import { CompleteCertification } from './certification.models';
 
 export interface Certificate {
   id: string;
@@ -15,4 +17,24 @@ export interface Certificate {
   certification: {
     name?: string;
   }
+}
+
+export interface VerificationResult {
+    id: string; // ID do Certificado
+    userId: number;
+    certificationId: string;
+    
+    // Dados para exibição
+    snapshot_student_name: string | null;
+    snapshot_certification_name: string | null;
+    expiresAt: string;
+    createdAt: string;
+    
+    // Status Blockchain
+    blockchainTxHash: string | null;
+    blockchain_minted: boolean;
+
+    // Relacionamentos completos (que vieram do backend)
+    user: User;
+    certification: CompleteCertification;
 }

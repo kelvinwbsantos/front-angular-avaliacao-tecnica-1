@@ -51,20 +51,23 @@ export class SideNavComponent {
       requiredPermission: 'TAKE_CERTIFICATIONS' 
     },
 
-    // ***************************************
-    // ****** COLOQUE O NOVO ITEM AQUI ******
-    // ***************************************
-    {
-      link: '/app/achievements', // A rota que criamos
-      label: 'Minhas Conquistas',  // O texto do link
-      icon: 'workspace_premium', // O ícone que você escolheu
-      requiredPermission: 'TAKE_CERTIFICATIONS' // A mesma permissão do candidato
+    {// Minhas Conquistas (Candidato)
+      link: '/app/achievements', 
+      label: 'Minhas Conquistas',
+      icon: 'workspace_premium', 
+      requiredPermission: 'TAKE_CERTIFICATIONS'
     },
-    // ***************************************
-
     // Convidar Colaboradores
     { link: '/app/invite', label: 'Convidar', icon: 'person_add', requiredPermission: 'INVITE_USER' }, 
+
+     {
+      link: '/app/certificate/verify', // Usamos um caminho genérico para a nova feature
+      label: 'Verificar Certificado',  
+      icon: 'verified_user', 
+      requiredPermission: 'TAKE_CERTIFICATIONS' 
+    }
   ];
+ 
 
   // Função auxiliar para verificar permissão (sem alteração)
   canView(item: NavItem): boolean {
