@@ -10,36 +10,37 @@ import {
   User,
   FullUserResponse
 } from '../../shared/models/users.models';
-
+import { environment } from '../../../environments/environment';
 //FACADE SERVICES
 import { Exam } from '../../shared/models/exam.model';
 import { Certificate } from '../../shared/models/certificate.model';
 import { ExamService } from '../../certifications/services/exam.service';
 import { CertificateService } from '../../certifications/services/certificate.service';
 
-// --- CONFIGURAÇÃO DA API  ---
-const API_URL = 'http://localhost:3000'; 
-// --- DEFINIÇÃO DE ROTAS HÍBRIDAS ---
-// 1. Rota para LISTAGEM (AdminController no backend)
-const LIST_PATH = `${API_URL}/admin/users`; 
-// 2. Rota UsersController para AÇÕES DE UM ITEM
-const ITEM_PATH = `${API_URL}/users`;
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
+    // --- CONFIGURAÇÃO DA API  ---
+  private readonly API_URL = environment.apiUrl;
+  // --- DEFINIÇÃO DE ROTAS HÍBRIDAS ---
+  // 1. Rota para LISTAGEM (AdminController no backend)
+  private readonly LIST_PATH = `${this.API_URL}/admin/users`; 
+  // 2. Rota UsersController para AÇÕES DE UM ITEM
+  private readonly ITEM_PATH = `${this.API_URL}/users`; 
+  
   private http = inject(HttpClient);
   private examService = inject(ExamService);
   private certificateService = inject(CertificateService);
-
+  
   /**
    * Busca os detalhes completos de um usuário pelo ID.
    * Rota: GET /admin/user/:id
    */
   findById(userId: string): Observable<FullUserResponse> {
-    const url = `${ITEM_PATH}/${userId}`; 
+    const url = `${this.ITEM_PATH}/${userId}`; 
     console.log(`[UserService] findById Chamando: ${url}`);
     return this.http.get<FullUserResponse>(url);
   }
@@ -49,7 +50,7 @@ export class UserService {
    * Usa a rota SINGULAR
    */
   getUserById(id: number): Observable<User> {
-    return this.http.get<User>(`${ITEM_PATH}/${id}`);
+    return this.http.get<User>(`${this.ITEM_PATH}/${id}`);
   }
 
   /**
@@ -57,7 +58,7 @@ export class UserService {
    * Rota: GET /admin/users/exportXlsx
    */
   exportUsers(filters: { name?: string, email?: string, cpf?: string }): Observable<Blob> {
-    const url = `${LIST_PATH}/exportXlsx`; 
+    const url = `${this.LIST_PATH}/exportXlsx`; 
     let httpParams = new HttpParams();
 
     // ... (filtros) ...
@@ -75,7 +76,7 @@ export class UserService {
    * Usa a rota SINGULAR
    */
   updateUser(id: number, payload: any): Observable<User> {
-    return this.http.patch<User>(`${ITEM_PATH}/${id}`, payload);
+    return this.http.patch<User>(`${this.ITEM_PATH}/${id}`, payload);
   }
 
   /**
@@ -83,7 +84,7 @@ export class UserService {
    * POST /admin/users (Geralmente cria-se na coleção)
    */
   createUser(payload: any): Observable<User> {
-    return this.http.post<User>(ITEM_PATH, payload);
+    return this.http.post<User>(this.ITEM_PATH, payload);
   }
 
   /**
@@ -99,7 +100,7 @@ export class UserService {
     if (filters.email) params = params.set('email', filters.email);
     if (filters.cpf) params = params.set('cpf', filters.cpf);
 
-    return this.http.get<any>(LIST_PATH, { params });
+    return this.http.get<any>(this.LIST_PATH, { params });
   }
 
   /**
@@ -107,7 +108,7 @@ export class UserService {
    * Rota: PATCH /admin/user/:id/role
    */
   updateUserRole(userId: string, roleName: string): Observable<User> {
-    const url = `${ITEM_PATH}/${userId}/role`; 
+    const url = `${this.ITEM_PATH}/${userId}/role`; 
     const payload = { roleName }; 
     console.log(`[UserService] updateUserRole Chamando: ${url} com payload:`, payload);
     return this.http.patch<User>(url, payload);
@@ -119,7 +120,7 @@ export class UserService {
    * Usa a rota SINGULAR
    */
   deleteUser(id: number): Observable<void> {
-    return this.http.delete<void>(`${ITEM_PATH}/${id}`);
+    return this.http.delete<void>(`${this.ITEM_PATH}/${id}`);
   }
   
   /**
