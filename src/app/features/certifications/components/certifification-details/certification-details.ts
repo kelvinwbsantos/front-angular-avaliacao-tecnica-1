@@ -146,76 +146,87 @@ export class CertificationDetails implements OnInit {
     /**
      * FUNÇÃO SALVAR (Mantém a modal ABERTA)
      */
-    saveCertificationDetails(): void {
-        if (this.certificationForm.invalid) {
-            this.certificationForm.markAllAsTouched();
-            return;
-        }
-
-        this.isLoadingQuestions = true; // Liga spinner
-        const formValue = this.certificationForm.getRawValue();
-        
-        let save$: Observable<CompleteCertification>;
-
-        if (this.data.isCreation) {
-             // --- CORREÇÃO AQUI ---
-             // O TypeScript precisa garantir que o arquivo existe para criar
-             if (!this.selectedFile) {
-                alert('É necessário selecionar um arquivo PDF para criar a certificação.');
-                this.isLoadingQuestions = false;
-                return;
-             }
-
-             const createPayload: InitialCertification = { 
-                 name: formValue.name,
-                 shortDescription: formValue.shortDescription,
-                 description: formValue.description,
-                 passingScore: Number(formValue.passingScore),
-                 modality: formValue.modality,
-                 durationHours: Number(formValue.durationHours)
-             };
-             
-             // Agora passamos 'this.selectedFile' com segurança
-             save$ = this.certificationsService.createCertification(createPayload, this.selectedFile);
-
-        } else {
-             const updatePayload = { 
-                 name: formValue.name,
-                 shortDescription: formValue.shortDescription,
-                 description: formValue.description,
-                 passingScore: Number(formValue.passingScore),
-                 modality: formValue.modality,
-                 durationHours: Number(formValue.durationHours),
-                 isActive: formValue.isActive
-             };
-             
-             // Na edição, o arquivo pode ser null (o service aceita), então não precisa de IF
-             save$ = this.certificationsService.updateCertification(this.data.certificationId!, updatePayload, this.selectedFile);
-        }
-
-        save$.pipe(
-            finalize(() => this.isLoadingQuestions = false),
-            catchError(error => {
-                console.error('Erro ao salvar:', error);
-                // Tenta extrair mensagem amigável do backend
-                const msg = error.error?.message || 'Erro ao salvar. Verifique os dados.';
-                alert(Array.isArray(msg) ? msg.join('\n') : msg); 
-                return of(null);
-            })
-        ).subscribe(savedCert => {
-            if (savedCert) {
-                console.log('Salvo com sucesso. Modal permanece aberta.');
-                
-                // ATUALIZA O ESTADO DA TELA
-                this.data.certification = savedCert;
-                this.data.certificationId = savedCert.id;
-                this.data.isCreation = false; 
-                this.existingPdfFileName = savedCert.pdfFileName || null;
-                this.selectedFile = null; 
-                this.fileName = 'Nenhum arquivo selecionado';
-            }
-        });
+   saveCertificationDetails(): void {
+    if (this.certificationForm.invalid) {
+        this.certificationForm.markAllAsTouched();
+        return;
     }
+
+    this.isLoadingQuestions = true; 
+    
+    // Usamos getRawValue() para incluir campos desabilitados se necessário
+    const formValue = this.certificationForm.getRawValue(); 
+    
+    let save$: Observable<CompleteCertification>;
+
+    // --- MODO CRIAÇÃO ---
+    if (this.data.isCreation) {
+         // 1. Garante que o arquivo foi selecionado (check de File | null)
+         if (!this.selectedFile) {
+            alert('É necessário selecionar um arquivo PDF para criar a certificação.');
+            this.isLoadingQuestions = false;
+            return;
+         }
+
+         // 2. MONTAGEM COMPLETA DO PAYLOAD DE CRIAÇÃO
+         const createPayload: InitialCertification = { 
+             name: formValue.name!,
+             shortDescription: formValue.shortDescription!,
+             description: formValue.description!,
+             passingScore: Number(formValue.passingScore!),
+             modality: formValue.modality!,
+             durationHours: Number(formValue.durationHours!)
+         };
+         
+         save$ = this.certificationsService.createCertification(createPayload, this.selectedFile);
+
+    // --- MODO EDIÇÃO ---
+    } else {
+          // 1. MONTAGEM COMPLETA DO PAYLOAD DE EDIÇÃO (Inclui isActive)
+          const updatePayload: InitialCertification & { isActive: boolean } = { 
+              name: formValue.name!,
+              shortDescription: formValue.shortDescription!,
+              description: formValue.description!,
+              passingScore: Number(formValue.passingScore!),
+              modality: formValue.modality!,
+              durationHours: Number(formValue.durationHours!),
+              isActive: formValue.isActive!
+          };
+          
+          // 2. O selectedFile é File | null, e a função updateCertification aceita isso.
+          save$ = this.certificationsService.updateCertification(this.data.certificationId!, updatePayload, this.selectedFile);
+    }
+
+    // O PIPE SEMPRE DEVE SER APLICADO NO OBSERVABLE (save$)
+    save$.pipe(
+        finalize(() => this.isLoadingQuestions = false),
+        catchError(error => {
+            console.error('Erro ao salvar:', error);
+            const msg = error.error?.message || 'Erro ao salvar. Verifique os dados.';
+            alert(Array.isArray(msg) ? msg.join('\n') : msg); 
+            return of(null);
+        })
+    ).subscribe(savedCert => {
+        if (savedCert) {
+            console.log('Salvo com sucesso. Modal permanece aberta.');
+            
+            // ATUALIZA O ESTADO DA TELA (Reset do Campo PDF)
+            this.data.certification = savedCert;
+            this.data.certificationId = savedCert.id;
+            this.data.isCreation = false; 
+
+            // Atualiza o nome com a função de limpeza
+            // Assumimos que a função cleanPdfFileName existe na classe
+            this.existingPdfFileName = this.cleanPdfFileName(savedCert.pdfFileName || savedCert.pdfPath);
+            
+            // Reseta a seleção de arquivo na UI
+            this.selectedFile = null; 
+            this.fileName = 'Nenhum arquivo selecionado';
+        }
+    });
+}
+
+
     get hasPdf(): boolean {
         // Verifica se temos um nome de arquivo na tela OU um path no objeto
         return !!this.existingPdfFileName || !!this.data.certification?.pdfPath;
@@ -285,5 +296,31 @@ export class CertificationDetails implements OnInit {
                 this.dialogRef.close('deleted'); // <-- Sinaliza exclusão para o componente pai
             }
         });
+    }
+
+    /**
+     * Limpa o nome do arquivo, removendo o prefixo de hash/timestamp do backend.
+     */
+    cleanPdfFileName(originalName: string | null | undefined): string {
+        if (!originalName) {
+            return 'N/A';
+        }
+        
+        // Assume o formato: [timestamp]-[hash]-nome_original.pdf
+        const parts = originalName.split('-');
+        
+        // Heurística: Se houver pelo menos 3 partes e a primeira for longa (timestamp/hash)
+        if (parts.length >= 3 && parts[0].length >= 8) { 
+            // Retorna tudo a partir da terceira parte (índice 2)
+            return parts.slice(2).join('-').trim(); 
+        } 
+        
+        // Se houver apenas um prefixo longo (ex: UUID-nome.pdf)
+        if (parts.length > 1 && parts[0].length >= 36) {
+             return parts.slice(1).join('-').trim();
+        }
+        
+        // Retorna o nome original se não encontrar prefixo
+        return originalName;
     }
 }

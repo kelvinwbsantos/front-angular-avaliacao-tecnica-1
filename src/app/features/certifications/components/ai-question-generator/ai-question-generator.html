@@ -6,7 +6,7 @@
 <mat-dialog-content class="dialog-content">
   <mat-card class="mb-6">
     <mat-card-header class="!pb-0">
-      <mat-card-title>Passo 1: Upload para Geração (Cert: {{ data.certification.name }})</mat-card-title>
+      <mat-card-title>Passo 1: Matriz para Geração (Cert: {{ data.certification.name }})</mat-card-title>
     </mat-card-header>
     
    <mat-card-content class="p-6">
@@ -23,7 +23,7 @@
                     <ng-template #checkPdf>
                         <ng-container *ngIf="existingPdfName; else defaultUpload">
               <p class="text-lg mt-2 font-medium text-gray-700">{{ existingPdfName }}</p>
-              <p class="text-sm text-gray-500 mt-1">PDF existente. Clique para selecionar um novo e substituí-lo.</p>
+              <p class="text-sm text-gray-500 mt-1">PDF existente. Clique para substituílr por uma nova Matriz(OPCIONAl). Essa alteração será permanente</p>
             </ng-container>
                         <ng-template #defaultUpload>
               <p class="text-lg mt-2">Nenhum PDF encontrado.</p>

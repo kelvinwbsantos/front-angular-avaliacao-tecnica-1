@@ -83,44 +83,54 @@
                 }
             </mat-card>
         </form>
-        @if (data.isCreation) {
-            <mat-card class="mt-4">
-                <mat-card-header>
-                    <mat-card-title>Arquivo Matriz (Opcional para Geração com I.A.)</mat-card-title>
-                </mat-card-header>
-                <mat-card-content class="upload-area cursor-pointer" (click)="triggerFileInput()">
-                    <input #fileInput type="file" accept="application/pdf" (change)="onFileSelected($event)" hidden>
-                    <div class="flex flex-col items-center justify-center p-4">
-                        <mat-icon color="primary" style="font-size: 48px; width: 48px; height: 48px;">cloud_upload</mat-icon>
-                        <p class="text-lg mt-2">Clique para selecionar o PDF ou arraste e solte</p>
-                        <p class="text-sm text-gray-500 mt-1">Arquivo: {{ fileName }}</p>
-                    </div>
-                </mat-card-content>
-            </mat-card>
-        }
         @if (!data.isCreation) {
-            <mat-card class="mt-4">
-                <mat-card-header>
-                    <mat-card-title>Arquivo Matriz (PDF)</mat-card-title>
-                </mat-card-header>
-                <input #fileInput type="file" accept="application/pdf" (change)="onFileSelected($event)" hidden>
-                <mat-card-content class="pdf-section-edit p-4">
-                    @if (existingPdfFileName && !selectedFile) {
-                        <div class="flex items-center justify-between gap-4">
-                            <div class="flex items-center gap-2"> <mat-icon color="warn">picture_as_pdf</mat-icon> <span class="font-medium" [matTooltip]="existingPdfFileName"> {{ existingPdfFileName | slice:0:40 }}{{ (existingPdfFileName?.length || 0) > 40 ? '...' : '' }} </span> </div>
-                            <button mat-stroked-button color="primary" (click)="triggerFileInput()"> <mat-icon>upload_file</mat-icon> Substituir PDF </button>
-                        </div>
-                    } @else if (selectedFile) {
-                         <div class="flex items-center justify-between gap-4">
-                            <div class="flex items-center gap-2 text-primary"> <mat-icon>attach_file</mat-icon> <span class="font-medium" [matTooltip]="fileName"> {{ fileName | slice:0:40 }}{{ (fileName?.length || 0) > 40 ? '...' : '' }} </span> <span class="text-sm text-gray-500">(Novo)</span> </div>
-                            <button mat-stroked-button color="accent" (click)="triggerFileInput()"> <mat-icon>cached</mat-icon> Alterar Seleção </button>
-                        </div>
-                    } @else {
-                        <div class="upload-area cursor-pointer text-center" (click)="triggerFileInput()"> <mat-icon color="primary" style="font-size: 48px; width: 48px; height: 48px;">cloud_upload</mat-icon> <p class="text-lg mt-2">Clique para adicionar o PDF</p> <p class="text-sm text-gray-500 mt-1">(Opcional)</p> </div>
-                    }
-                </mat-card-content>
-            </mat-card>
-        }
+    <mat-card class="mt-4">
+        <mat-card-header>
+            <mat-card-title>Arquivo Matriz (PDF)</mat-card-title>
+        </mat-card-header>
+        <input #fileInput type="file" accept="application/pdf" (change)="onFileSelected($event)" hidden>
+        <mat-card-content class="pdf-section-edit p-4">
+            
+            <!-- 1. PDF EXISTENTE (EXISTING) -->
+            @if (existingPdfFileName && !selectedFile) {
+                <div class="flex items-center justify-between gap-4">
+                    <div class="flex items-center gap-2"> 
+                        <mat-icon color="warn">picture_as_pdf</mat-icon> 
+                        
+                        <!-- AQUI: Aplica o cleanPdfFileName() -->
+                        <span class="font-medium" [matTooltip]="cleanPdfFileName(existingPdfFileName)"> 
+                            {{ cleanPdfFileName(existingPdfFileName) | slice:0:40 }}{{ (cleanPdfFileName(existingPdfFileName)?.length || 0) > 40 ? '...' : '' }} 
+                        </span> 
+                        
+                    </div>
+                    <button mat-stroked-button color="primary" (click)="triggerFileInput()"> <mat-icon>upload_file</mat-icon> Substituir PDF </button>
+                </div>
+            } @else if (selectedFile) {
+                <!-- 2. NOVO PDF SELECIONADO (SELECTED) -->
+                <div class="flex items-center justify-between gap-4">
+                    <div class="flex items-center gap-2 text-primary"> 
+                        <mat-icon>attach_file</mat-icon> 
+                        
+                        <!-- AQUI: Aplica o cleanPdfFileName() -->
+                        <span class="font-medium" [matTooltip]="cleanPdfFileName(fileName)"> 
+                            {{ cleanPdfFileName(fileName) | slice:0:40 }}{{ (cleanPdfFileName(fileName)?.length || 0) > 40 ? '...' : '' }} 
+                        </span> 
+                        
+                        <span class="text-sm text-gray-500">(Novo)</span> 
+                    </div>
+                    <button mat-stroked-button color="accent" (click)="triggerFileInput()"> <mat-icon>cached</mat-icon> Alterar Seleção </button>
+                </div>
+            } @else {
+                <!-- 3. NENHUM PDF -->
+                <div class="upload-area cursor-pointer text-center" (click)="triggerFileInput()"> 
+                    <mat-icon color="primary" style="font-size: 48px; width: 48px; height: 48px;">cloud_upload</mat-icon> 
+                    <p class="text-lg mt-2">Clique para adicionar o PDF</p> 
+                    <p class="text-sm text-gray-500 mt-1">(Opcional)</p> 
+                </div>
+            }
+        </mat-card-content>
+    </mat-card>
+}
 
     } </mat-dialog-content>
 
