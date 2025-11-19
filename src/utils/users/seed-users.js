@@ -1,6 +1,6 @@
 import fetch from 'node-fetch';
 import fs from 'fs/promises';
-import { BASE_URL } from './seed.config.js'; // Ajuste o caminho conforme a localização real
+import { BASE_URL } from '..seed.config.js'; // Ajuste o caminho conforme a localização real
 
 const API_URL = `${BASE_URL}/auth/registerWithoutInvitation`;
 
