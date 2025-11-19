@@ -1,0 +1,163 @@
+/* src/app/pages/certificate-verify-page/certificate-verify-page.component.scss */
+
+// --- 1. CONTAINER GERAL (Centralização) ---
+.verify-page-container {
+  padding: 24px 16px;
+  max-width: 800px; 
+  margin: 20px auto; 
+}
+
+// --- 2. ESTILOS DE CARD PADRÃO (V4) ---
+mat-card {
+  border-radius: 12px !important; 
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); 
+}
+
+.form-card {
+  margin-bottom: 24px;
+}
+
+.result-card {
+  min-height: 250px;
+}
+
+mat-card-header {
+  padding: 24px 24px 16px;
+}
+
+mat-card-title {
+  font-size: 1.8rem; 
+  font-weight: 500;
+}
+
+// --- CORREÇÃO CRÍTICA: LARGURA E INPUT ---
+
+mat-card-content {
+  /* Mantém o padding do Card Content (24px laterais) */
+  padding: 16px 24px 24px 24px !important; 
+}
+
+form {
+    /* Ocupa a largura total para que o MatFormField possa expandir */
+    width: 100%;
+}
+
+mat-form-field {
+    /* Força o Mat-Form-Field a ocupar 100% da largura disponível */
+    width: 100%; 
+    display: block;
+}
+
+/* --- 3. BOTÃO E ALINHAMENTO --- */
+.action-buttons {
+    /* Alinha o botão à direita e garante o padding do content */
+    display: flex;
+    justify-content: flex-end; 
+    padding-top: 16px;
+    
+    button {
+        width: auto; 
+        min-width: 150px; 
+        
+        mat-icon, mat-progress-spinner {
+            vertical-align: middle;
+            margin-right: 8px;
+        }
+    }
+}
+
+// --- ESTADOS DA VERIFICAÇÃO (MANTIDOS) ---
+
+.loading-state,
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 0;
+}
+
+.loading-state p, .empty-state p {
+  font-style: italic;
+  font-size: 0.9em;
+  margin-top: 16px;
+}
+
+.error-state {
+  border: 1px solid #dc3545; 
+  background-color: #ffebee;
+  border-radius: 8px;
+  padding: 16px;
+}
+
+.success-state {
+  background-color: #e8f5e9;
+  border: 1px solid #28a745;
+  border-radius: 8px;
+  padding: 16px;
+
+  h3 {
+    color: #28a745;
+    mat-icon {
+      color: #28a745;
+    }
+  }
+
+  .text-gray-500 {
+    font-size: 0.85em;
+    font-weight: 400;
+    color: #666;
+  }
+}
+.success-state {
+  background-color: #e8f5e9;
+  border: 1px solid #28a745;
+  border-radius: 8px;
+  padding: 16px;
+
+  h3 {
+    color: #28a745;
+    
+    /* CORREÇÃO 1: Aumenta o título "Certificado Válido" */
+    font-size: 1.6rem; 
+    font-weight: 700; 
+
+    mat-icon {
+      color: #28a745;
+      font-size: 30px; /* Aumenta o ícone de verificação */
+      width: 30px;
+      height: 30px;
+    }
+  }
+
+  /* Estilo do Grid de Dados */
+  .grid {
+    font-size: 1.0em; /* Fonte base um pouco maior */
+  }
+
+  /* CORREÇÃO 2: Garante que os dados em negrito tenham maior impacto */
+  .font-bold { 
+    font-weight: 700 !important; 
+    color: #1a1a1a; /* Cor mais escura para contraste */
+    font-size: 1.1em; /* Leve aumento para os dados principais */
+    display: block; /* Garante que o valor preencha a linha */
+  }
+  
+  .text-gray-500 {
+    font-size: 0.85em;
+    font-weight: 400;
+    color: #666;
+    margin-bottom: 4px; /* Espaço entre label e valor */
+  }
+}
+
+/* Responsividade */
+@media (max-width: 600px) {
+    .action-buttons {
+        justify-content: center; 
+        
+        button {
+            width: 100%; 
+        }
+    }
+}

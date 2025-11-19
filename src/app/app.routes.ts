@@ -21,7 +21,6 @@ export const routes: Routes = [
     { path: 'invite/:token', component: InvitePage },
     // Rota para Acesso Negado
     { path: 'unauthorized', component: UnauthorizedComponent },
-
     // Rotas Protegidas
     {
         path: 'app', // Prefixo para rotas autenticadas (ou pode ser '')
@@ -101,6 +100,16 @@ export const routes: Routes = [
             loadComponent: () => 
             import('./features/certifications/pages/exam-result-failed/exam-result-failed-page.component')
             .then(m => m.ExamResultFailedComponent)
+            },
+            {
+                path: 'certificate/verify',
+                loadComponent: () => import('./features/certifications/pages/certificate-verify-page/certificate-verify-page.component')
+                    .then(m => m.CertificateVerifyPageComponent) // Usando o nome correto do componente
+            },
+            {
+                path: 'certificate/verify',
+                loadComponent: () => import('./features/certifications/pages/certificate-verify-page/certificate-verify-page.component')
+                    .then(m => m.CertificateVerifyPageComponent)
             },
             //outras rotas filhas aqui
         ]
