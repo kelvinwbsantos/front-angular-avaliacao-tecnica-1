@@ -1,7 +1,7 @@
 import fs from 'fs/promises';
 import fetch from 'node-fetch';
 // Troque a linha problemática por esta:
-import { Config } from '../seed.config.js'; // Ajuste o caminho para a pasta src/utils/
+import { BASE_URL } from '../seed.config.js'; // Ajuste o caminho para a pasta src/utils/
 
 // Determina o ambiente e pega a URL base
 const ENV = process.env.NODE_ENV || 'development';
