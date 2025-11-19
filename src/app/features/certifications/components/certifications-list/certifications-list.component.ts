@@ -35,6 +35,21 @@ export class CertificationsListComponent {
   // --- E EMITE EVENTOS ("SININHOS") ---
   @Output() pdfUpload = new EventEmitter<string>();
   @Output() openDetails = new EventEmitter<CompleteCertification>();
+
+  /**
+   * Retorna o ícone do Material Symbols com base na modalidade.
+   */
+  getModalityIcon(modality: string | undefined): string {
+    if (!modality) return 'help_outline';
+    return modality === 'online' ? 'computer' : 'groups'; // 'groups' para Presencial
+  }
+  /**
+   * Retorna o texto traduzido da modalidade.
+   */
+  getModalityText(modality: string | undefined): string {
+    if (!modality) return 'Não Definido';
+    return modality === 'online' ? 'Online' : 'Presencial';
+  }
   
   // (A lógica de 'loadCertifications' etc. FOI REMOVIDA)
 }

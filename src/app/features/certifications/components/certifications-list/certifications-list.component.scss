@@ -8,6 +8,7 @@
   box-shadow: 12px 12px 20px rgba(0, 0, 0, 0.3);
 }
 
+/* --- ESTILOS DE FILTRO E AÇÕES DE PÁGINA (Mantidos) --- */
 .action-bar {
   display: flex;
   gap: 16px;
@@ -62,10 +63,9 @@
   }
 }
 
-/* 1. Estilos de Status (Badge) - (Funcionando) */
+/* 1. Estilos de Status (Badge) - Ativa/Inativa */
 .status-active,
 .status-inactive {
-  //display: inline-flex;//-block;
   padding: 6px 10px;
   border-radius: 16px;
   font-size: 0.8em;
@@ -82,14 +82,47 @@
   }
 }
 
+/* 2. Estilos de Modalidade (Badge) - Online/Presencial */
+.modality-display {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 6px 10px;
+  border-radius: 16px;
+  font-size: 0.8em;
+  font-weight: 500;
+  text-transform: uppercase;
+  min-width: 100px; 
+  margin: 0 auto; 
+  
+  mat-icon {
+    font-size: 18px;
+    height: 18px;
+    width: 18px;
+  }
+  
+  /* Cores para Online (Tons de Azul - Tema Primário) */
+  &.modality-online {
+    background-color: rgba(63, 81, 181, 0.15); 
+    color: #3f51b5; 
+  }
+  
+  /* Cores para Presencial (Tons de Destaque - Roxo/Ciano) */
+  &.modality-presencial {
+    background-color: rgba(0, 150, 136, 0.15); 
+    color: #00796b; 
+  }
+}
 
-/* 3. Estilo para o wrapper dos botões de ação (Funcionando) */
+/* 3. Estilo para o wrapper dos botões de ação */
 .action-buttons-wrapper {
   display: flex;
   justify-content: flex-start;
   align-items: center;
   gap: 6px;
   
+  /* Estilo base para todos os botões de ação */
   .mat-icon-button {
     transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
     &:hover {
@@ -101,9 +134,12 @@
     }
   }
 
+  /* Cores específicas para Ações */
   .action-button-edit mat-icon {
     color: #3f51b5; // Azul
   }
+  
+  /* Estilos específicos para o Ícone PDF */
   .pdf-icon-button {
       cursor: help; 
       
@@ -113,22 +149,16 @@
         height: 28px;
         width: 28px;
       }
+  }
+  
+  /* Estilos específicos para o botão de Upload */
+  .pdf-upload-button {
+      color: #757575; // Cinza padrão
       
       &:hover {
-        transform: scale(1.1); 
-        box-shadow: none;
-        mat-icon {
-          color: #a91c1a !important; // Vermelho mais escuro
-        }
+          color: #3f51b5; // Azul no hover
       }
-    }
-    .pdf-upload-button {
-      color: #757575; // Cinza padrão
-
-      &:hover {
-        color: #3f51b5; // Azul no hover
-      }
-    }
+  }
 }
 
 mat-card-actions {

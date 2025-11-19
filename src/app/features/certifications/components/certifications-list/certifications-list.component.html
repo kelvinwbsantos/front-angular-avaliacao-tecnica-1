@@ -18,6 +18,26 @@
       </td>
     </ng-container>
 
+      <ng-container matColumnDef="modality">
+      <th mat-header-cell *matHeaderCellDef> Modalidade </th>
+      <td mat-cell *matCellDef="let cert" class="text-center"> 
+        
+        <div class="modality-display" 
+            [ngClass]="{
+                'modality-online': getModalityText(cert.modality) === 'Online', 
+                'modality-presencial': getModalityText(cert.modality) === 'Presencial' 
+            }">
+          <mat-icon matTooltip="{{ getModalityText(cert.modality) }}">
+            {{ getModalityIcon(cert.modality) }}
+          </mat-icon>
+          <span class="modality-text">
+            {{ getModalityText(cert.modality) }}
+          </span>
+        </div>
+        
+      </td>
+    </ng-container>
+
     <ng-container matColumnDef="status">
       <th mat-header-cell *matHeaderCellDef> Status </th>
       <td mat-cell *matCellDef="let cert" class="text-center">
@@ -27,10 +47,7 @@
       </td>
     </ng-container>
 
-    <ng-container matColumnDef="questionsCount">
-      <th mat-header-cell *matHeaderCellDef> Modalidade </th>
-      <td mat-cell *matCellDef="let cert" class="text-center"> {{ cert.modality || 0 }} </td>
-    </ng-container>
+  
 
     <ng-container matColumnDef="validUntil">
       <th mat-header-cell *matHeaderCellDef> Início </th>
@@ -39,29 +56,47 @@
     
     <ng-container matColumnDef="pdfFile">
       <th mat-header-cell *matHeaderCellDef> Arquivo PDF </th>
-      <td mat-cell *matCellDef="let cert" class="text-center">
-        
-        <div class="action-buttons-wrapper pdf-wrapper"> 
-          @if (cert.pdfPath) {
-            <span matTooltip="{{ cert.pdfFileName || 'PDF disponível' }}">
-              <button mat-icon-button disabled class="pdf-icon-button">
-                <mat-icon>picture_as_pdf</mat-icon>
-              </button>
-            </span>
-            <button mat-icon-button 
-                    class="pdf-upload-button" 
-                    (click)="pdfUpload.emit(cert.id)" matTooltip="Substituir PDF">
-              <mat-icon>upload</mat-icon>
-            </button>
-          } @else {
-            <button mat-icon-button 
-                    class="pdf-upload-button" 
-                    (click)="pdfUpload.emit(cert.id)" matTooltip="Adicionar PDF">
-              <mat-icon>upload_file</mat-icon>
-            </button>
-          }
-        </div>
-      </td>
+       <td mat-cell *matCellDef="let cert" class="text-center">
+         
+            <div class="action-buttons-wrapper pdf-wrapper"> 
+                
+                <!-- 1. CASO O PDF JÁ EXISTA (MOSTRAR VISUALIZAÇÃO E BOTÃO SUBSTITUIR) -->
+                @if (cert.pdfPath) {
+                    
+                    <!-- Ícone de Visualização (Sempre desabilitado e com tooltip) -->
+                    <span matTooltip="{{ cert.pdfFileName || 'PDF disponível' }}">
+                        <button mat-icon-button disabled class="pdf-icon-button" style="pointer-events: none;">
+                            <mat-icon>picture_as_pdf</mat-icon>
+                        </button>
+                    </span>
+                    
+                    <!-- Botão de Substituir (DESABILITADO com Tooltip) -->
+                    <span matTooltip="Substituir PDF (Funcionalidade disponível em breve)"
+                          [style.cursor]="'not-allowed'">
+                        <button mat-icon-button 
+                                class="pdf-upload-button"
+                                disabled
+                                style="pointer-events: none;"> 
+                            <mat-icon>upload</mat-icon>
+                        </button>
+                    </span>
+                    
+                } @else {
+                    <!-- 2. CASO O PDF NÃO EXISTA (MOSTRAR BOTÃO ADICIONAR) -->
+                    
+                    <!-- Botão de Adicionar (DESABILITADO com Tooltip) -->
+                    <span matTooltip="Adicionar PDF (Funcionalidade disponível em breve)"
+                          [style.cursor]="'not-allowed'">
+                        <button mat-icon-button 
+                                class="pdf-upload-button" 
+                                disabled
+                                style="pointer-events: none;">
+                            <mat-icon>upload_file</mat-icon>
+                        </button>
+                    </span>
+                }
+            </div>
+        </td>
     </ng-container>
 
     <ng-container matColumnDef="actions">
