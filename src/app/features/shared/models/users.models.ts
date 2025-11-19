@@ -38,8 +38,8 @@ export interface User {
   name: string;
   email: string;
   cpf?: string;
-  role: string;
   isActive?: boolean;
+  role?: { id: number, name: string };
 }
 
 // --- Interface para Registro (Usada pelo AuthService) ---

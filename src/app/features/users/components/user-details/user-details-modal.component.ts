@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit, inject } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormControl} from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
@@ -11,8 +11,11 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { CommonModule } from '@angular/common';
 import { UserService } from '../../services/user.service';
 import { User } from '../../../shared/models/users.models';
-import { finalize } from 'rxjs';
-
+import { Role } from '../../../shared/models/role.model';
+import { finalize, Observable } from 'rxjs';
+import { MatSelectModule } from '@angular/material/select'; 
+import { MatOptionModule } from '@angular/material/core';
+import { RoleService } from '../../services/role.service';
 // Interface para os dados recebidos
 export interface UserModalData {
     userId: number | null; // Aceita null para criação
@@ -32,7 +35,9 @@ export interface UserModalData {
         MatIconModule,
         MatCardModule,
         MatSlideToggleModule,
-        MatProgressSpinnerModule
+        MatProgressSpinnerModule,
+        MatSelectModule, 
+        MatOptionModule
     ],
     templateUrl: './user-details-modal.component.html',
     styleUrls: ['./user-details-modal.component.scss']
@@ -40,10 +45,13 @@ export interface UserModalData {
 export class UserDetailsModalComponent implements OnInit {
     private fb = inject(FormBuilder);
     private userService = inject(UserService);
+    private roleService = inject(RoleService);
     public dialogRef = inject(MatDialogRef<UserDetailsModalComponent>);
 
     user: User | null = null;
     userForm!: FormGroup;
+    roleIdControl = new FormControl<number | null>(null, Validators.required);
+    availableRoles$!: Observable<Role[]>;
     
     // Estados de Loading
     isLoadingDetails = false;
@@ -55,10 +63,17 @@ export class UserDetailsModalComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        this.availableRoles$ = this.roleService.findAllActiveRoles();
+        
         if (!this.data.isCreation && this.data.userId) {
             this.loadUser(this.data.userId);
+        } else if (this.data.isCreation) {
+            // Define a role padrão (ex: 1) apenas na criação se nenhuma estiver selecionada
+            this.roleIdControl.setValue(1); 
         }
     }
+
+      
 
     private initForm(): void {
         this.userForm = this.fb.group({
@@ -69,7 +84,8 @@ export class UserDetailsModalComponent implements OnInit {
                 '', 
                 this.data.isCreation ? [Validators.required, Validators.minLength(6)] : []
             ],
-            isActive: [true]
+            isActive: [true],
+            roleId: this.roleIdControl
         });
     }
 
