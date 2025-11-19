@@ -8,7 +8,7 @@
   },
   "include": [
     "src/**/*.ts"
-, "src/app/services/certifications.service", "src/app/services/certifications.service.js", "src/app/services/certifications.service"  ],
+, "src/app/services/certifications.service", "src/app/services/certifications.service.js", "src/app/services/certifications.service", "src/utils/seed.config.js"  ],
   "exclude": [
     "src/**/*.spec.ts"
   ]

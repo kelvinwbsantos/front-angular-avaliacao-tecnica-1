@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
 import { Observable, tap } from 'rxjs';
-
+import { environment } from '../../../environments/environment';
 export interface SendInviteDto {
   sender: string;
   email: string;
@@ -23,14 +23,16 @@ export interface InvitesResponseDto {
   providedIn: 'root'
 })
 export class InviteService {
-  private baseUrl = 'http://localhost:3000/invites';
+  private readonly API_URL = environment.apiUrl;
+  private readonly BASE_PATH = `${this.API_URL}/invites`;
+  
   private http = inject(HttpClient);
 
   private refreshSignal = signal(0);
   public refreshNeeded = this.refreshSignal.asReadonly();
 
   sendInvite(invite: SendInviteDto): Observable<any> {
-    return this.http.post(this.baseUrl, invite, { responseType: 'text' }).pipe(
+    return this.http.post(this.API_URL, invite, { responseType: 'text' }).pipe(
       tap(() => {
         this.refreshSignal.set(this.refreshSignal() + 1);
       })
@@ -51,6 +53,6 @@ export class InviteService {
       .set('page', page.toString())
       .set('limit', limit.toString());
 
-    return this.http.get<InvitesResponseDto>(this.baseUrl, { params: params });
+    return this.http.get<InvitesResponseDto>(this.API_URL, { params: params });
   }
 }

@@ -1,8 +1,10 @@
 import fs from 'fs/promises';
 import fetch from 'node-fetch';
+import { BASE_URL } from './seed.config.js'; // Ajuste o caminho conforme a localização real
 
-const API_URL = 'http://localhost:3000/certifications';
-const LOGIN_URL = 'http://localhost:3000/auth/login';
+// Usamos a variável BASE_URL importada
+const API_URL = `${BASE_URL}/certifications`;
+const LOGIN_URL = `${BASE_URL}/auth/login`;
 
 const USER_CPF = "000.000.000-00";
 const USER_PASSWORD = "Senha@123";

@@ -3,10 +3,7 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, map } from 'rxjs'; // <-- IMPORTAR 'map'
 import { Certificate } from '../../shared/models/certificate.model';
-
-// Configuração da API
-const API_URL = 'http://localhost:3000'; // Ajuste sua URL
-const BASE_PATH = `${API_URL}/certificates`;
+import { environment } from '../../../environments/environment';
 
 /**
  * Interface para a resposta paginada que o Postman mostrou
@@ -24,6 +21,8 @@ interface PaginatedCertResponse {
   providedIn: 'root'
 })
 export class CertificateService {
+  private readonly API_URL = environment.apiUrl;
+  private readonly BASE_PATH = `${this.API_URL}/certificates`;
 
   private http = inject(HttpClient);
 
@@ -33,7 +32,7 @@ export class CertificateService {
    */
   getUserCertificates(): Observable<Certificate[]> {
     // 1. Espera o objeto paginado
-    return this.http.get<PaginatedCertResponse>(BASE_PATH).pipe(
+    return this.http.get<PaginatedCertResponse>(this.BASE_PATH).pipe(
       // 2. Extrai e retorna APENAS o array 'data'
       map(response => response.data) 
     );
@@ -44,7 +43,7 @@ export class CertificateService {
    * Gera e baixa o certificado em PDF.
    */
   generateCertificate(certificationId: string): Observable<Blob> {
-    return this.http.post(`${BASE_PATH}/generate/${certificationId}`, {}, {
+    return this.http.post(`${this.BASE_PATH}/generate/${certificationId}`, {}, {
       responseType: 'blob' 
     });
   }
@@ -60,6 +59,6 @@ export class CertificateService {
     //
     // Note que usamos <any> porque ainda não definimos um 
     // modelo (interface) para a resposta pública.
-    return this.http.get<any>(`${BASE_PATH}/public/${uuid}`);
+    return this.http.get<any>(`${this.BASE_PATH}/public/${uuid}`);
   }
 }

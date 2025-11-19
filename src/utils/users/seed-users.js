@@ -1,7 +1,8 @@
 import fetch from 'node-fetch';
 import fs from 'fs/promises';
+import { BASE_URL } from './seed.config.js'; // Ajuste o caminho conforme a localização real
 
-const API_URL = 'http://localhost:3000/auth/registerWithoutInvitation';
+const API_URL = `${BASE_URL}/auth/registerWithoutInvitation`;
 
 async function main() {
   try {

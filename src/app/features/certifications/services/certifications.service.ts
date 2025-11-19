@@ -10,17 +10,16 @@ import {
     
 } from '../../shared/models/certification.models';
 import { ApiResponse } from '../../shared/models/question-models';     
-
-// --- CONFIGURAÇÃO DA API ---
-const API_URL = 'http://localhost:3000'; 
-const BASE_PATH = `${API_URL}/certifications`;
+import { environment } from '../../../environments/environment';
 
 
 @Injectable({
     providedIn: 'root'
 })
 export class CertificationsService {
-    // Injeta o HttpClient
+    private readonly API_URL = environment.apiUrl;
+    private readonly BASE_PATH = `${this.API_URL}/certifications`;
+
     private http = inject(HttpClient);
     
     /**
@@ -42,7 +41,7 @@ export class CertificationsService {
             params = params.set('isActive', isActiveString);
         }
         
-        return this.http.get<PaginatedCertificationsResponse>(BASE_PATH, { params }).pipe(
+        return this.http.get<PaginatedCertificationsResponse>(this.BASE_PATH, { params }).pipe(
             map((response) => {
                 // A resposta já vem no formato { data: [], meta: {} }
                 // Só precisamos processar o PDF dentro de response.data
@@ -63,7 +62,7 @@ export class CertificationsService {
      * Busca uma certificação pelo ID (GET /certification/{id})
      */
     findCertificationById(id: number | string): Observable<CompleteCertification> {
-        return this.http.get<CompleteCertification>(`${BASE_PATH}/${id}`).pipe(
+        return this.http.get<CompleteCertification>(`${this.BASE_PATH}/${id}`).pipe(
         
         map((cert: CompleteCertification) => {
             if (cert.pdfPath) {
@@ -92,7 +91,7 @@ export class CertificationsService {
         if (file) {
             formData.append('file', file, file.name);
         }
-        return this.http.post<CompleteCertification>(BASE_PATH, formData);
+        return this.http.post<CompleteCertification>(this.BASE_PATH, formData);
     }
 
     /**
@@ -130,14 +129,14 @@ export class CertificationsService {
         }
         
         // 4. Envia o FormData usando PATCH
-        console.log("[Service] Enviando FormData (PATCH) para:", `${BASE_PATH}/${id}`);
-        return this.http.patch<CompleteCertification>(`${BASE_PATH}/${id}`, formData);
+        console.log("[Service] Enviando FormData (PATCH) para:", `${this.BASE_PATH}/${id}`);
+        return this.http.patch<CompleteCertification>(`${this.BASE_PATH}/${id}`, formData);
     }
     /**
      * Apaga uma certificação (DELETE /certification/{id})
      */
     deleteCertification(id: string): Observable<void> {
-        return this.http.delete<void>(`${BASE_PATH}/${id}`);
+        return this.http.delete<void>(`${this.BASE_PATH}/${id}`);
     }
 
 
@@ -146,7 +145,7 @@ export class CertificationsService {
      * Gera questões de IA a partir de um PDF (POST /questions/generate-from-pdf)
      */
     generateAiQuestions(certificationId: string, file: File | null): Observable<ApiResponse> {
-        const url = `${API_URL}/questions/generate-from-pdf`;
+        const url = `${this.API_URL}/questions/generate-from-pdf`;
         const formData = new FormData();
         formData.append('certificationId', certificationId)
         if (file) {
@@ -162,7 +161,7 @@ export class CertificationsService {
     uploadCertificationPdf(id: string, file: File): Observable<CompleteCertification> {
         const formData = new FormData();
         formData.append('file', file, file.name);
-        const url = `${BASE_PATH}/${id}/pdf`; 
+        const url = `${this.BASE_PATH}/${id}/pdf`; 
         return this.http.post<CompleteCertification>(url, formData); 
     }
     
