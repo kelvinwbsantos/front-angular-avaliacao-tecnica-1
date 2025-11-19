@@ -1,6 +1,6 @@
 import fs from 'fs/promises';
 import fetch from 'node-fetch';
-import { BASE_URL } from './seed.config.js'; // Ajuste o caminho conforme a localização real
+import { BASE_URL } from '../seed.config.js'; 
 
 // Usamos a variável BASE_URL importada
 const API_URL = `${BASE_URL}/certifications`;
