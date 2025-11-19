@@ -1,10 +1,10 @@
 // src/app/core/services/certificate.service.ts
 import { Injectable, inject } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable, map } from 'rxjs'; // <-- IMPORTAR 'map'
+import { Observable, map } from 'rxjs'; 
 import { Certificate } from '../../shared/models/certificate.model';
 import { environment } from '../../../environments/environment';
-
+import { VerificationResult } from '../../shared/models/certificate.model';
+import { HttpClient, HttpParams } from '@angular/common/http';
 /**
  * Interface para a resposta paginada que o Postman mostrou
  */
@@ -61,4 +61,15 @@ export class CertificateService {
     // modelo (interface) para a resposta pública.
     return this.http.get<any>(`${this.BASE_PATH}/public/${uuid}`);
   }
+  
+  verifyCertificate(uuid: string): Observable<VerificationResult> {
+        const url = `${this.BASE_PATH}/verify`; // Rota sem o UUID no final
+        
+        // Envia o UUID como um parâmetro de consulta
+        let params = new HttpParams().set('uuid', uuid);
+        
+        // Assumindo que BASE_PATH = API_URL/certificates
+        return this.http.get<VerificationResult>(url, { params: params });
+    }
+
 }
