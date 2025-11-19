@@ -9,7 +9,7 @@ async function main() {
     console.log('🏁 Iniciando seed de usuários...');
 
     // Lê o arquivo JSON com os usuários
-    const fileContent = await fs.readFile('./src/utils/users-data.json', 'utf-8');
+    const fileContent = await fs.readFile('./src/utils/users/users-data.json', 'utf-8');
     const users = JSON.parse(fileContent);
 
     let successCount = 0;
