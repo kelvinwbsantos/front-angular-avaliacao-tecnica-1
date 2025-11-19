@@ -1,93 +1,92 @@
-/* src/app/features/users/components/users-list/users-list.component.scss */
-
-/* Container da Tabela */
-.table-container {
-  position: relative;
-  display: block;
-  overflow-x: auto;
-  min-height: 200px; // Altura mínima para o loading não colapsar
+.dialog-content {
+    padding: 20px 24px;
+    min-width: 550px;
+    display: flex;
+    flex-direction: column;
+    // max-height para evitar que o modal estoure a tela em monitores pequenos
+    max-height: 80vh; 
 }
 
-/* Overlay de Carregamento */
 .spinner-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(255, 255, 255, 0.7);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  z-index: 10;
-  backdrop-filter: blur(1px);
-}
-
-/* Estilos da Tabela Material */
-.mat-elevation-z8 {
-  box-shadow: none !important; // Remove sombra extra pois já está no card
-  width: 100%;
-}
-
-table {
-  width: 100%;
-}
-
-/* Colunas */
-.mat-column-actions {
-  width: 140px; // Largura fixa para ações
-  text-align: right;
-  padding-right: 24px !important;
-}
-
-.mat-column-email {
-  color: #555; // Cor suave para email
-}
-
-/* Célula de Ações */
-.actions-cell {
-  white-space: nowrap; 
-  
-  button {
-    margin-left: 4px;
-    transition: transform 0.2s ease-out, background-color 0.2s;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.8);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+    border-radius: 12px;
     
-    &:hover {
-      transform: scale(1.1);
-      background-color: rgba(0, 0, 0, 0.04);
+    p {
+        margin-top: 16px;
+        color: #666;
+        font-weight: 500;
     }
-  }
-
-  // Cores específicas para os ícones nos botões
-  button[color="primary"] mat-icon {
-    color: #3f51b5; // Azul
-  }
-  
-  // Se usar accent futuramente
-  button[color="accent"] mat-icon {
-    color: #ffd700; // Dourado/Amarelo
-  }
-
-  button[color="warn"] mat-icon {
-    color: #c9302c; // Vermelho
-  }
 }
 
-/* Linhas */
-tr.mat-row {
-  transition: background-color 0.2s;
-  
-  &:hover {
-    background-color: #f9f9ff; // Highlight suave ao passar o mouse
-  }
+.config-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
 }
 
-/* Mensagem de "Nenhum dado" */
-.mat-row .mat-cell[colspan] {
-  text-align: center;
-  padding: 48px 0;
-  color: #777;
-  font-style: italic;
-  font-size: 1.1em;
+.config-fields {
+    padding-top: 16px;
+    // Se você não tiver Tailwind configurado, estas classes grid abaixo garantem o layout
+    display: grid;
+    grid-template-columns: 1fr; // Mobile first
+    gap: 16px;
+}
+
+// Media query para simular o 'md:grid-cols-2' do Tailwind se não tiver
+@media (min-width: 768px) {
+    .config-fields {
+        grid-template-columns: 1fr 1fr;
+    }
+    .md\:col-span-2 {
+        grid-column: span 2;
+    }
+}
+
+.mt-4 {
+    margin-top: 1rem;
+}
+
+// Garante o alinhamento correto do ícone e texto dentro do span no botão
+.button-content-wrapper {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.mr-auto {
+    margin-right: auto;
+}
+
+// Responsividade para telas menores
+@media (max-width: 600px) {
+    .dialog-content {
+        min-width: 100%; // Ocupa largura total em mobile
+        padding: 16px;
+    }
+    
+    // Empilha os botões em telas muito pequenas
+    mat-dialog-actions {
+        flex-direction: column-reverse;
+        gap: 8px;
+        align-items: stretch;
+        
+        button {
+            margin-left: 0 !important;
+            margin-right: 0 !important;
+        }
+        
+        .mr-auto {
+            margin-bottom: 16px; // Separa o botão excluir
+        }
+    }
 }

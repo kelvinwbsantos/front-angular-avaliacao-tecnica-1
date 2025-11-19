@@ -44,7 +44,7 @@ export class CertificationsPage implements AfterViewInit {
   private readonly dialog = inject(MatDialog);
   private snackBar = inject(MatSnackBar);
 
-  displayedColumns: string[] = ['title', 'status', 'questionsCount', 'validUntil', 'pdfFile','actions'];
+  displayedColumns: string[] = ['title', 'status', 'modality', 'validUntil', 'pdfFile','actions'];
   dataSource = new MatTableDataSource<CompleteCertification>([]); 
   
   totalCertifications = 0;
