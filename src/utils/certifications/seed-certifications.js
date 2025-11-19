@@ -1,8 +1,13 @@
 import fs from 'fs/promises';
 import fetch from 'node-fetch';
-import { BASE_URL } from '../seed.config.js'; 
+// Troque a linha problemática por esta:
+import { Config } from '../seed.config.js'; // Ajuste o caminho para a pasta src/utils/
 
-// Usamos a variável BASE_URL importada
+// Determina o ambiente e pega a URL base
+const ENV = process.env.NODE_ENV || 'development';
+const BASE_URL = Config[ENV].API_BASE_URL;
+
+// Constrói as URLs usando a variável BASE_URL
 const API_URL = `${BASE_URL}/certifications`;
 const LOGIN_URL = `${BASE_URL}/auth/login`;
 
@@ -10,48 +15,57 @@ const USER_CPF = "000.000.000-00";
 const USER_PASSWORD = "Senha@123";
 
 async function main() {
-  try {
-    const loginRes = await fetch(LOGIN_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ cpf: USER_CPF, password: USER_PASSWORD })
-    });
+    console.log(`📡 Conectando a: ${BASE_URL} (Ambiente: ${ENV})`);
+    
+    try {
+        const loginRes = await fetch(LOGIN_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ cpf: USER_CPF, password: USER_PASSWORD })
+        });
 
-    const { access_token } = await loginRes.json();
+        // Verificação se o login foi OK
+        if (!loginRes.ok) {
+            const err = await loginRes.json();
+            throw new Error(`Falha no login: ${err.message || 'Erro desconhecido.'}`);
+        }
 
-    console.log("✅ Token obtido");
+        const { access_token } = await loginRes.json();
 
-    const file = await fs.readFile('./src/utils/certifications/certifications-data.json', 'utf-8');
-    const certifications = JSON.parse(file);
+        console.log("✅ Token obtido");
 
-    for (const cert of certifications) {
-      const existsRes = await fetch(`${API_URL}?name=${encodeURIComponent(cert.name)}`);
-      const exists = await existsRes.json();
+        // O resto do seu código de leitura e inserção...
+        const file = await fs.readFile('./src/utils/certifications/certifications-data.json', 'utf-8');
+        const certifications = JSON.parse(file);
 
-      if (exists.length > 0) {
-        console.log(`⚠️ Já existe: ${cert.name}`);
-        continue;
-      }
+        for (const cert of certifications) {
+            const existsRes = await fetch(`${API_URL}?name=${encodeURIComponent(cert.name)}`);
+            const exists = await existsRes.json();
 
-      const res = await fetch(API_URL, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${access_token}`
-        },
-        body: JSON.stringify(cert)
-      });
+            if (exists.length > 0) {
+                console.log(`⚠️ Já existe: ${cert.name}`);
+                continue;
+            }
 
-      if (!res.ok) {
-        const err = await res.json();
-        console.error(`❌ Erro ao inserir ${cert.name}:`, err);
-      } else {
-        console.log(`✅ Inserido: ${cert.name}`);
-      }
+            const res = await fetch(API_URL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${access_token}`
+                },
+                body: JSON.stringify(cert)
+            });
+
+            if (!res.ok) {
+                const err = await res.json();
+                console.error(`❌ Erro ao inserir ${cert.name}:`, err);
+            } else {
+                console.log(`✅ Inserido: ${cert.name}`);
+            }
+        }
+    } catch (error) {
+        console.error('💥 Falha no seed:', error.message || error);
     }
-  } catch (error) {
-    console.error('💥 Falha no seed:', error);
-  }
 }
 
 main();
